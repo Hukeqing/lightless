@@ -53,20 +53,16 @@ namespace CameraScripts
         public void ApplyDamage(int damage)
         {
             _curHealth -= damage;
-            if (_curHealth <= 0)
-            {
-                _curHealth = 0;
-                // TODO die
-            }
+            if (_curHealth > 0) return;
+            _curHealth = 0;
+            Debug.Log("Die");
         }
 
         public void AddHealth(int cure)
         {
             _curHealth += cure;
-            if (_curHealth > maxHealth)
-            {
-                _curHealth = maxHealth;
-            }
+            if (_curHealth <= maxHealth) return;
+            _curHealth = maxHealth;
         }
     }
 }

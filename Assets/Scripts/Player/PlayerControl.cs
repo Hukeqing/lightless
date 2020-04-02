@@ -24,17 +24,16 @@ namespace Player
                                 Vector3.forward);
             transform.Rotate(Time.deltaTime * Input.GetAxis("Horizontal") * rotateSpeed * cc.HealthValue * Vector3.up);
 
-            if (Time.time >= _nextCostTime)
-            {
-                _nextCostTime = Time.time + costTime;
-                cc.ApplyDamage(1);
-            }
+            if (!(Time.time >= _nextCostTime)) return;
+            _nextCostTime = Time.time + costTime;
+            cc.ApplyDamage(1);
         }
 
         public void ApplyDamage(int damage)
         {
             cc.ApplyDamage(damage);
         }
+
         public void AddHealth(int cure)
         {
             cc.AddHealth(cure);
