@@ -13,6 +13,9 @@ namespace Player
 
         private float _nextCostTime;
 
+        // TODO remove the following code
+        public Weapon.Weapon weapon;
+
         private void Start()
         {
             _nextCostTime = Time.time + costTime;
@@ -24,6 +27,15 @@ namespace Player
                                 Vector3.forward);
             transform.Rotate(Time.deltaTime * Input.GetAxis("Horizontal") * rotateSpeed * cc.HealthValue * Vector3.up);
 
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                weapon.Attack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // TODO take thing
+            }
             if (!(Time.time >= _nextCostTime)) return;
             _nextCostTime = Time.time + costTime;
             cc.ApplyDamage(1);
