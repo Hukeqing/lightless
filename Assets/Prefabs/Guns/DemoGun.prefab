@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2913987547965142907}
   - component: {fileID: 5435929616837178340}
-  m_Layer: 0
+  - component: {fileID: 1440996087}
+  m_Layer: 10
   m_Name: DemoGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,6 +130,26 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &1440996087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465347034132991400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7620a8c8343058548b06734fa1f25a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown: 0.1
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  damage: 3
+  maxRange: 100
+  lineDisableInt: 0.01
+  firePoint: {fileID: 6079610458407084339}
 --- !u!1 &2866369483293518903
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +162,7 @@ GameObject:
   - component: {fileID: 3996496235493388715}
   - component: {fileID: 9165028163003704007}
   - component: {fileID: 5222491325077318973}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6079610458407084339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -42,6 +42,7 @@
 				    return finalColor;
 				} else if (distance < _ColorGreyRange) {
 				    float _LuminosityAmount = (distance - _ColorGreyRange + _ColorMixRange) / _ColorMixRange;
+				    // fixed4 greyColor = _LuminosityAmount;
 				    return lerp(luminosity, greyTex, _LuminosityAmount);
 				} else {
 				    return greyTex;

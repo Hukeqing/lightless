@@ -7,8 +7,8 @@ namespace Player
     {
         public float moveSpeed;
         public float rotateSpeed;
-
-        public CameraControl cc;
+        public Camera mainCamera;
+        private CameraControl _cc;
         public float costTime;
 
         private float _nextCostTime;
@@ -19,15 +19,22 @@ namespace Player
         private void Start()
         {
             _nextCostTime = Time.time + costTime;
+            _cc = mainCamera.GetComponent<CameraControl>();
         }
 
         private void Update()
         {
-            transform.Translate(Time.deltaTime * Input.GetAxis("Vertical") * moveSpeed * cc.HealthValue *
-                                Vector3.forward);
-            transform.Rotate(Time.deltaTime * Input.GetAxis("Horizontal") * rotateSpeed * cc.HealthValue * Vector3.up);
+            transform.Translate(Time.deltaTime * moveSpeed * _cc.HealthValue *
+                                new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), Space.World);
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hitInfo, 1000.0f, 1 << 9))
+            {
+                var target = hitInfo.point;
+                target.y = transform.position.y;
+                transform.LookAt(target);
+            }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButton(0))
             {
                 weapon.Attack();
             }
@@ -36,19 +43,20 @@ namespace Player
             {
                 // TODO take thing
             }
+
             if (!(Time.time >= _nextCostTime)) return;
             _nextCostTime = Time.time + costTime;
-            cc.ApplyDamage(1);
+            _cc.ApplyDamage(1);
         }
 
         public void ApplyDamage(int damage)
         {
-            cc.ApplyDamage(damage);
+            _cc.ApplyDamage(damage);
         }
 
         public void AddHealth(int cure)
         {
-            cc.AddHealth(cure);
+            _cc.AddHealth(cure);
         }
     }
 }
