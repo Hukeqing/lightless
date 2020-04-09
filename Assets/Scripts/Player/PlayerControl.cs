@@ -6,14 +6,12 @@ namespace Player
     public class PlayerControl : MonoBehaviour
     {
         public float moveSpeed;
-        public float rotateSpeed;
         public Camera mainCamera;
         private CameraControl _cc;
         public float costTime;
 
         private float _nextCostTime;
 
-        // TODO remove the following code
         public Weapon.Weapon weapon;
 
         private void Start()

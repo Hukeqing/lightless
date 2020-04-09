@@ -29,7 +29,8 @@ namespace Enemy
         private void Die()
         {
             // TODO remove the following code
-            Instantiate(score, transform.position, transform.rotation);
+            var transform1 = transform;
+            Instantiate(score, transform1.position, transform1.rotation);
             Destroy(gameObject);
         }
     }

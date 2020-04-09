@@ -12,7 +12,7 @@ namespace Item
     {
         public ItemClass itemClass;
 
-        protected virtual void ApplyItem(Player.PlayerControl pc)
+        public virtual void ApplyItem(Player.PlayerControl pc)
         {
             Debug.Log("Item miss~");
         }

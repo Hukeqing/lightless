@@ -12,7 +12,6 @@ namespace CameraScripts
         {
             transform.position =
                 Vector3.Lerp(transform.position, player.position, cameraSpeed * Time.deltaTime * cc.HealthValue);
-            // transform.position = player.position;
         }
     }
 }
