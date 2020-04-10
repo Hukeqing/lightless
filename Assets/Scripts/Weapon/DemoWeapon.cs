@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Weapon
 {
@@ -17,7 +18,7 @@ namespace Weapon
         private void Start()
         {
             _attackLine = GetComponent<LineRenderer>();
-            Init();
+            _attackLine.enabled = false;
         }
 
         private void Update()

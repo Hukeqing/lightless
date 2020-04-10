@@ -8,12 +8,7 @@ namespace Weapon
         public LayerMask enemyLayerMask;
         private float _nextAttack;
 
-        protected void Init()
-        {
-            _nextAttack = 0;
-        }
-
-        public void Attack()
+        public virtual void Attack()
         {
             if (_nextAttack > Time.time) return;
             _nextAttack = Time.time + coolDown;

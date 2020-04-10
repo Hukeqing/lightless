@@ -11,6 +11,7 @@ namespace Player
         public float costTime;
 
         private float _nextCostTime;
+        private PackageControl _pc;
 
         public Weapon.Weapon weapon;
 
@@ -18,6 +19,7 @@ namespace Player
         {
             _nextCostTime = Time.time + costTime;
             _cc = mainCamera.GetComponent<CameraControl>();
+            _pc = GetComponent<PackageControl>();
         }
 
         private void Update()
@@ -32,14 +34,14 @@ namespace Player
                 transform.LookAt(target);
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && weapon != null)
             {
                 weapon.Attack();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                // TODO take thing
+                _pc.ApplyItem();
             }
 
             if (!(Time.time >= _nextCostTime)) return;

@@ -32,7 +32,6 @@ namespace CameraScripts
 
         private void Update()
         {
-            if (!(Math.Abs(_curHealth - _showHealth) > Mathf.Epsilon)) return;
             _showHealth = Mathf.Lerp(_showHealth, _curHealth, decreaseSpeed);
             colorGreyRange = _showHealth / maxHealth;
         }

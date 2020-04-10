@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Player
@@ -8,7 +7,7 @@ namespace Player
     {
         public Text curItemText;
 
-        private GameObject _curItem;
+        private Item.Item _curItem;
         private PlayerControl _pc;
 
         private void Start()
@@ -19,26 +18,28 @@ namespace Player
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer != 12) return;
-            _curItem = other.gameObject;
+            _curItem = other.gameObject.GetComponent<Item.Item>();
             UpdateLabel();
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject != _curItem) return;
+            if (other.GetComponent<Item.Item>() != _curItem) return;
             _curItem = null;
             UpdateLabel();
         }
 
         private void UpdateLabel()
         {
-            curItemText.text = _curItem == null ? "" : _curItem.name;
+            curItemText.text = _curItem == null ? "" : _curItem.itemName;
         }
 
         public void ApplyItem()
         {
-            if (_curItem != null)
-                _curItem.GetComponent<Item.Item>().ApplyItem(_pc);
+            if (_curItem == null) return;
+            _curItem.ApplyItem(_pc);
+            _curItem.BeGet();
+            curItemText.text = "";
         }
     }
 }
