@@ -12,7 +12,7 @@ namespace Enemy
         // TODO remove the following code
         public GameObject score;
 
-        private void Start()
+        protected void InitUnit()
         {
             _curHealth = maxHealth;
             IsDie = false;

@@ -1107,7 +1107,6 @@ GameObject:
   - component: {fileID: 1149373580}
   - component: {fileID: 1149373579}
   - component: {fileID: 1149373583}
-  - component: {fileID: 1149373584}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Untagged
@@ -1198,26 +1197,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149373578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 773ec2576700dde48ba8d5ddbf31e7d5, type: 3}
+  m_Script: {fileID: 11500000, guid: b60a16f9b484df4468b6eea5e127bcba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
   score: {fileID: 4051276857520258133, guid: 2bca0c56767fa8a44824d0c9be90ff11, type: 3}
---- !u!114 &1149373584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1149373578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88e968c1db3ea5478b89a1d3cc66274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   player: {fileID: 364473806}
   moveSpeed: 3
+  rotateSpeed: 10
   viewRange: 10
+  attackRange: 3
+  attackCoolDown: 1
+  damage: 10
 --- !u!1 &1290228452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,8 +1435,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
