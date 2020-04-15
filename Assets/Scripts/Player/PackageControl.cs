@@ -6,6 +6,7 @@ namespace Player
     public class PackageControl : MonoBehaviour
     {
         public Text curItemText;
+        public Text describeText;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -32,6 +33,7 @@ namespace Player
         private void UpdateLabel()
         {
             curItemText.text = _curItem == null ? "" : _curItem.itemName;
+            describeText.text = _curItem == null ? "" : _curItem.describe;
         }
 
         public void ApplyItem()
@@ -40,6 +42,7 @@ namespace Player
             _curItem.ApplyItem(_pc);
             _curItem.BeGet();
             curItemText.text = "";
+            describeText.text = "";
         }
     }
 }

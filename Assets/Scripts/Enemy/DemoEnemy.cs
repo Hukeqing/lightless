@@ -4,18 +4,18 @@ namespace Enemy
 {
     public class DemoEnemy : Enemy
     {
-        private PlayerControl pc;
+        private PlayerControl _pc;
         public int damage;
 
         private void Start()
         {
             Init();
-            pc = player.GetComponent<PlayerControl>();
+            _pc = player.GetComponent<PlayerControl>();
         }
 
         protected override void Attack()
         {
-            pc.ApplyDamage(damage);
+            _pc.ApplyDamage(damage);
         }
     }
 }

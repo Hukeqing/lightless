@@ -12,6 +12,7 @@ namespace Item
     {
         public ItemClass itemClass;
         public string itemName;
+        public string describe;
 
         public virtual void ApplyItem(Player.PlayerControl pc)
         {

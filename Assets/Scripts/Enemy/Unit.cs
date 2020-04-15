@@ -5,7 +5,8 @@ namespace Enemy
     public class Unit : MonoBehaviour
     {
         public int maxHealth;
-        public bool IsDie { get; private set; }
+
+        public bool IsDie => _curHealth <= 0;
 
         private int _curHealth;
 
@@ -15,7 +16,6 @@ namespace Enemy
         protected void InitUnit()
         {
             _curHealth = maxHealth;
-            IsDie = false;
         }
 
         public void ApplyDamage(int damage)
@@ -23,12 +23,11 @@ namespace Enemy
             _curHealth -= damage;
             if (_curHealth > 0) return;
             _curHealth = 0;
-            SendMessage("Die");
+            Die();
         }
 
-        private void Die()
+        protected virtual void Die()
         {
-            // TODO remove the following code
             var transform1 = transform;
             Instantiate(score, transform1.position, transform1.rotation);
             Destroy(gameObject);

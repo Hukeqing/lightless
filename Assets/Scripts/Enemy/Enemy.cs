@@ -7,7 +7,8 @@ namespace Enemy
     {
         Stand,
         Move,
-        Attack
+        Attack,
+        Death
     }
 
     public class Enemy : Unit
@@ -31,6 +32,12 @@ namespace Enemy
 
         private void Update()
         {
+            if (IsDie)
+            {
+                EnemyState = EnemyState.Death;
+                return;
+            }
+
             EnemyState = EnemyState.Stand;
             var target = (player.position - transform.position).normalized;
             if (!(Vector3.Dot(target, transform.forward) >= 0.866f)) return;
@@ -47,11 +54,9 @@ namespace Enemy
             else
             {
                 EnemyState = EnemyState.Attack;
-                if (_nextAttack < Time.time)
-                {
-                    _nextAttack = Time.time + attackCoolDown;
-                    Attack();
-                }
+                if (!(_nextAttack < Time.time)) return;
+                _nextAttack = Time.time + attackCoolDown;
+                Attack();
             }
         }
 
