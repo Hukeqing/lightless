@@ -25,6 +25,10 @@ namespace Enemy
 
         protected void Init()
         {
+            if (player == null)
+            {
+                player = GameObject.FindWithTag("GameController").GetComponent<Room.RoomManager>().player;
+            } 
             EnemyState = EnemyState.Stand;
             _nextAttack = 0;
             InitUnit();
