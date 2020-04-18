@@ -10,9 +10,6 @@ namespace Enemy
 
         private int _curHealth;
 
-        // TODO remove the following code
-        public GameObject score;
-
         protected void InitUnit()
         {
             _curHealth = maxHealth;
@@ -28,9 +25,7 @@ namespace Enemy
 
         protected virtual void Die()
         {
-            var transform1 = transform;
-            Instantiate(score, transform1.position, transform1.rotation);
-            Destroy(gameObject);
+            Debug.Log("Enemy Miss~");
         }
     }
 }
