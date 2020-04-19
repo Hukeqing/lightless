@@ -142,15 +142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7620a8c8343058548b06734fa1f25a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolDown: 0.1
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 8192
-  coolDown: 0.1
+  weaponItem: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
+    type: 3}
   damage: 3
   maxRange: 100
   lineDisableInt: 0.03
   firePoint: {fileID: 6079610458407084339}
-  _nextAttack: 7.8716288
 --- !u!1 &2866369483293518903
 GameObject:
   m_ObjectHideFlags: 0

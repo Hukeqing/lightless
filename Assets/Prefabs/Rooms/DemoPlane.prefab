@@ -43,9 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d32314368d16ee4b95c185faec1de89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - item: {fileID: 2105369960170222706, guid: 3523d3c9a9c29dc49b2568b9bf59765b, type: 3}
-    probability: 1
+  pointClass: 2
 --- !u!1 &2412462183494477918
 GameObject:
   m_ObjectHideFlags: 0

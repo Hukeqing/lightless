@@ -142,9 +142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb179d6052836cb43bf3af46b6e6521a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemClass: 0
-  itemName: DemoWeapon
-  describe: A Demo Weapon in the test game
+  itemData:
+    itemClass: 0
+    itemRarity: 0
+    itemName: Demo Gun
+    describe: Demo Gun Des
+    itemPrefab: {fileID: 5240020490694776369}
   weaponPrefab: {fileID: 465347034132991400, guid: 15e956bd581a31f4796963dbda6385bc,
     type: 3}
 --- !u!135 &2080278146

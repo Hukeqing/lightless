@@ -6,6 +6,7 @@ namespace Weapon
     {
         public float coolDown;
         public LayerMask enemyLayerMask;
+        public GameObject weaponItem;
         private float _nextAttack;
 
         public virtual void Attack()

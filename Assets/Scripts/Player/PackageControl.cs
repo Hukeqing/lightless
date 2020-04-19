@@ -7,6 +7,7 @@ namespace Player
     {
         public Text curItemText;
         public Text describeText;
+        public GameManager.GameDataManager gdm;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -32,8 +33,8 @@ namespace Player
 
         private void UpdateLabel()
         {
-            curItemText.text = _curItem == null ? "" : _curItem.itemName;
-            describeText.text = _curItem == null ? "" : _curItem.describe;
+            curItemText.text = _curItem == null ? "" : _curItem.itemData.itemName;
+            describeText.text = _curItem == null ? "" : _curItem.itemData.describe;
         }
 
         public void ApplyItem()

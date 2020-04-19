@@ -1,34 +1,85 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Point
 {
-    [Serializable]
-    public struct Probably
+    public enum PointClass
     {
-        public GameObject item;
-        public int probability;
+        Item,
+        Enemy,
+        ItemAndEnemy,
+        MostItem,
+        MostEnemy
     }
 
     public class Point : MonoBehaviour
     {
-        public Probably[] itemList;
+        public PointClass pointClass;
         private GameObject _item;
 
         private void Start()
         {
-            var cnt = itemList.Sum(probably => probably.probability);
-            var cur = Random.Range(0, cnt);
-            cnt = 0;
-            for (var i = 0; i < itemList.Length; i++)
+            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
+            var selfTransform = transform;
+            var itemData = gdm.GetRandomItem();
+            var enemyData = gdm.GetRandomEnemy();
+            var tmp = Random.Range(0, 100);
+            switch (pointClass)
             {
-                cnt += itemList[i].probability;
-                if (cnt < cur) continue;
-                _item = Instantiate(itemList[i].item, transform);
-                _item.transform.localScale = Vector3.one * 0.2f;
-                break;
+                case PointClass.Item:
+                    _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+                    _item.transform.parent = selfTransform.parent;
+                    _item.GetComponent<Item.Item>().itemData = itemData;
+                    break;
+                case PointClass.Enemy:
+                    _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+                    _item.transform.parent = selfTransform.parent;
+                    break;
+                case PointClass.ItemAndEnemy:
+                    if (tmp < 50)
+                    {
+                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                        _item.GetComponent<Item.Item>().itemData = itemData;
+                    }
+                    else
+                    {
+                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                    }
+
+                    break;
+                case PointClass.MostItem:
+                    if (tmp < 80)
+                    {
+                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                        _item.GetComponent<Item.Item>().itemData = itemData;
+                    }
+                    else
+                    {
+                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                    }
+
+                    break;
+                case PointClass.MostEnemy:
+                    if (tmp < 20)
+                    {
+                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                        _item.GetComponent<Item.Item>().itemData = itemData;
+                    }
+                    else
+                    {
+                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+                        _item.transform.parent = selfTransform.parent;
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }
