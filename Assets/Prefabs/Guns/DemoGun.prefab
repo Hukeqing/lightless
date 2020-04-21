@@ -143,9 +143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown: 0.1
-  enemyLayerMask:
+  hitLayerMask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 40960
   weaponItem: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
     type: 3}
   damage: 3

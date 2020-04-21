@@ -35,12 +35,15 @@ namespace Weapon
             _ray = new Ray(firePointPosition, firePoint.forward);
             _attackLine.enabled = true;
             _attackLine.SetPosition(0, firePointPosition);
-            if (Physics.Raycast(_ray, out var hitInfo, maxRange, enemyLayerMask))
+            if (Physics.Raycast(_ray, out var hitInfo, maxRange, hitLayerMask))
             {
                 _attackLine.SetPosition(1, hitInfo.point);
-                var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
-                if (enemyUnit.IsDie) return;
-                enemyUnit.ApplyDamage(damage);
+                if (hitInfo.collider.gameObject.layer == 13)
+                {
+                    var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
+                    if (enemyUnit.IsDie) return;
+                    enemyUnit.ApplyDamage(damage);
+                }
             }
             else
             {

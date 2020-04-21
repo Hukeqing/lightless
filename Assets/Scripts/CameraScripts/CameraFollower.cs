@@ -8,7 +8,7 @@ namespace CameraScripts
         public CameraControl cc;
         public float cameraSpeed;
 
-        private void LateUpdate()
+        public void CameraFollow()
         {
             transform.position =
                 Vector3.Lerp(transform.position, player.position, cameraSpeed * Time.deltaTime * cc.HealthValue);

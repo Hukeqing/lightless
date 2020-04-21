@@ -20,67 +20,69 @@ namespace Point
 
         private void Start()
         {
-            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
-            var selfTransform = transform;
-            var itemData = gdm.GetRandomItem();
-            var enemyData = gdm.GetRandomEnemy();
             var tmp = Random.Range(0, 100);
             switch (pointClass)
             {
                 case PointClass.Item:
-                    _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
-                    _item.transform.parent = selfTransform.parent;
-                    _item.GetComponent<Item.Item>().itemData = itemData;
+                    InsItem();
                     break;
                 case PointClass.Enemy:
-                    _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
-                    _item.transform.parent = selfTransform.parent;
                     break;
                 case PointClass.ItemAndEnemy:
                     if (tmp < 50)
                     {
-                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
-                        _item.GetComponent<Item.Item>().itemData = itemData;
+                        InsItem();
                     }
                     else
                     {
-                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
+                        InsEnemy();
                     }
 
                     break;
                 case PointClass.MostItem:
                     if (tmp < 80)
                     {
-                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
-                        _item.GetComponent<Item.Item>().itemData = itemData;
+                        InsItem();
                     }
                     else
                     {
-                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
+                        InsEnemy();
                     }
 
                     break;
                 case PointClass.MostEnemy:
                     if (tmp < 20)
                     {
-                        _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
-                        _item.GetComponent<Item.Item>().itemData = itemData;
+                        InsItem();
                     }
                     else
                     {
-                        _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
-                        _item.transform.parent = selfTransform.parent;
+                        InsEnemy();
                     }
 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void InsItem()
+        {
+            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
+            var selfTransform = transform;
+            var itemData = gdm.GetRandomItem();
+            _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+            _item.transform.parent = selfTransform.parent;
+            _item.GetComponent<Item.Item>().itemData = itemData;
+        }
+
+        private void InsEnemy()
+        {
+            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
+            var selfTransform = transform;
+            var enemyData = gdm.GetRandomEnemy();
+            _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+            _item.transform.parent = selfTransform.parent;
         }
     }
 }

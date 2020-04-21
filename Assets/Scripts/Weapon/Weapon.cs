@@ -5,7 +5,7 @@ namespace Weapon
     public class Weapon : MonoBehaviour
     {
         public float coolDown;
-        public LayerMask enemyLayerMask;
+        public LayerMask hitLayerMask;
         public GameObject weaponItem;
         private float _nextAttack;
 
