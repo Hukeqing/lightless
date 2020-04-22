@@ -1,5 +1,4 @@
-﻿using System;
-using CameraScripts;
+﻿using CameraScripts;
 using UnityEngine;
 
 namespace Player
@@ -9,17 +8,17 @@ namespace Player
         public float moveSpeed;
         public Camera mainCamera;
         public CameraFollower cf;
-        public float costTime;
+        public float damageTime;
         public Weapon.Weapon weapon;
 
-        private float _nextCostTime;
+        private float _nextDamageTime;
         private PackageControl _pc;
         private CameraControl _cc;
 
 
         private void Start()
         {
-            _nextCostTime = Time.time + costTime;
+            _nextDamageTime = Time.time + damageTime;
             _cc = mainCamera.GetComponent<CameraControl>();
             _pc = GetComponent<PackageControl>();
         }
@@ -48,8 +47,8 @@ namespace Player
                 _pc.ApplyItem();
             }
 
-            if (!(Time.time >= _nextCostTime)) return;
-            _nextCostTime = Time.time + costTime;
+            if (!(Time.time >= _nextDamageTime)) return;
+            _nextDamageTime = Time.time + damageTime;
             _cc.ApplyDamage(1);
         }
 
