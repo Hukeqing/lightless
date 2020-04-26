@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4640971331919016638}
   - component: {fileID: 7033949159433334625}
   - component: {fileID: 4039988385732145590}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
