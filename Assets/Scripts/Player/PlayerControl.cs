@@ -9,8 +9,10 @@ namespace Player
         public Camera mainCamera;
         public CameraFollower cf;
         public float damageTime;
+        public float damageUpgradeTime = 0.99f;
         public Weapon.Weapon weapon;
 
+        private float _curDamageTime;
         private float _nextDamageTime;
         private PackageControl _pc;
         private CameraControl _cc;
@@ -18,7 +20,8 @@ namespace Player
 
         private void Start()
         {
-            _nextDamageTime = Time.time + damageTime;
+            _curDamageTime = damageTime;
+            _nextDamageTime = Time.time + _curDamageTime;
             _cc = mainCamera.GetComponent<CameraControl>();
             _pc = GetComponent<PackageControl>();
         }
@@ -48,7 +51,8 @@ namespace Player
             }
 
             if (!(Time.time >= _nextDamageTime)) return;
-            _nextDamageTime = Time.time + damageTime;
+            _nextDamageTime = Time.time + _curDamageTime;
+            _curDamageTime *= damageUpgradeTime;
             _cc.ApplyDamage(1);
         }
 
@@ -60,6 +64,11 @@ namespace Player
         public void AddHealth(int cure)
         {
             _cc.AddHealth(cure);
+        }
+
+        public void ApplySlowDamage(float value)
+        {
+            _curDamageTime *= value;
         }
     }
 }

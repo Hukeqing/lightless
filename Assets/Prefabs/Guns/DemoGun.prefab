@@ -145,7 +145,7 @@ MonoBehaviour:
   coolDown: 0.1
   hitLayerMask:
     serializedVersion: 2
-    m_Bits: 40960
+    m_Bits: 237568
   weaponItem: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
     type: 3}
   damage: 3
