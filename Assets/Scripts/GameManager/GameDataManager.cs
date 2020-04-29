@@ -25,10 +25,10 @@ namespace GameManager
     [Serializable]
     public struct ItemData
     {
-        public ItemClass itemClass;
-        public Rarity itemRarity;
         public string itemName;
         public string describe;
+        public ItemClass itemClass;
+        public Rarity itemRarity;
         public GameObject itemPrefab;
     }
 

@@ -316,4 +316,7 @@ MonoBehaviour:
   viewRange: 10
   attackRange: 3
   attackCoolDown: 1
+  lookObstacle:
+    serializedVersion: 2
+    m_Bits: 230400
   damage: 10

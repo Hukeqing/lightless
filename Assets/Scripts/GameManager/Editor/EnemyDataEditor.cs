@@ -1,0 +1,60 @@
+﻿using UnityEngine;
+using UnityEditor;
+
+namespace GameManager.Editor
+{
+    [CustomPropertyDrawer(typeof(EnemyData))]
+    public class EnemyDataEditor : PropertyDrawer
+    {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return base.GetPropertyHeight(property, label) * 2;
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            var tmp = Color.white;
+            switch (property.FindPropertyRelative("enemyRarity").enumValueIndex)
+            {
+                case 1:
+                    tmp = Color.green;
+                    break;
+                case 2:
+                    tmp = Color.blue;
+                    break;
+                case 3:
+                    tmp = Color.magenta;
+                    break;
+                case 4:
+                    tmp = Color.yellow;
+                    break;
+                case 5:
+                    tmp = Color.red;
+                    break;
+            }
+
+            position = EditorGUI.PrefixLabel(position, label);
+            var index = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+
+            EditorGUI.DrawRect(position, tmp);
+            
+            position.height /= 2;
+            var enemyName = new Rect(position.x, position.y, 130, position.height);
+            var enemyRarity = new Rect(position.x + 135, position.y, position.width - 135, position.height);
+
+            var enemyPrefab = new Rect(position.x, position.y + position.height, position.width, position.height);
+
+            //绘制属性
+            EditorGUI.PropertyField(enemyName, property.FindPropertyRelative("enemyName"), GUIContent.none);
+            EditorGUI.PropertyField(enemyRarity, property.FindPropertyRelative("enemyRarity"), GUIContent.none);
+            EditorGUI.PropertyField(enemyPrefab, property.FindPropertyRelative("enemyPrefab"), GUIContent.none);
+
+            //重新设置为原来的层级
+            EditorGUI.indentLevel = index;
+
+            EditorGUI.EndProperty();
+        }
+    }
+}

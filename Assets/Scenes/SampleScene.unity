@@ -400,6 +400,7 @@ MonoBehaviour:
   mainCamera: {fileID: 534669904}
   cf: {fileID: 622117344}
   damageTime: 1
+  damageUpgradeTime: 0.99
   weapon: {fileID: 0}
 --- !u!54 &364473808
 Rigidbody:
@@ -1415,16 +1416,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataList:
-  - itemClass: 0
-    itemRarity: 0
-    itemName: DemoGun
+  - itemName: DemoGun
     describe: DemoGun Describe
+    itemClass: 0
+    itemRarity: 1
     itemPrefab: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
       type: 3}
-  - itemClass: 1
-    itemRarity: 0
-    itemName: Demo Medication
+  - itemName: Demo Medication
     describe: Demo Medication Describe
+    itemClass: 1
+    itemRarity: 0
     itemPrefab: {fileID: 5813134997915923621, guid: 86effb7d482c0dc44a626493ccc15b11,
       type: 3}
   enemyDataList:

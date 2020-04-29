@@ -18,6 +18,7 @@ namespace Enemy
         public float viewRange;
         public float attackRange;
         public float attackCoolDown;
+        public LayerMask lookObstacle;
         public EnemyState EnemyState { private set; get; }
 
         private float _nextAttack;
@@ -45,7 +46,7 @@ namespace Enemy
             var target = (player.position - transform.position).normalized;
             if (!(Vector3.Dot(target, transform.forward) >= 0.866f)) return;
             var ray = new Ray(transform.position, target);
-            if (!Physics.Raycast(ray, out var hitInfo, viewRange)) return;
+            if (!Physics.Raycast(ray, out var hitInfo, viewRange, lookObstacle)) return;
             if (hitInfo.collider.gameObject.layer != 10) return;
             var rotation = Quaternion.LookRotation(player.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
