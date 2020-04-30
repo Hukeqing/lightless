@@ -42,6 +42,10 @@ namespace Room
                 Destroy(_existenceRoom[i ^ 1]);
                 Destroy(_existenceRoom[i ^ 2]);
                 Destroy(_existenceRoom[i ^ 3]);
+
+                curRoom.GetComponent<Room>().Exit();
+                _existenceRoom[i].GetComponent<Room>().Enter();
+
                 _existenceRoom[i ^ 1] = curRoom;
                 curRoom = _existenceRoom[i];
                 _existenceRoom[i] = null;

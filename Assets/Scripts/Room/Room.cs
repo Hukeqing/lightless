@@ -5,13 +5,14 @@ namespace Room
 {
     public class Room : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> point = new List<GameObject>();
-        public GameObject pointPrefab;
+        public string roomName;
 
-        public void AddPoint()
+        public virtual void Enter()
         {
-            var newPoint = Instantiate(pointPrefab, transform);
-            point.Add(newPoint);
+        }
+
+        public virtual void Exit()
+        {
         }
     }
 }
