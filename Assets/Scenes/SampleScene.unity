@@ -340,7 +340,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ee4f37e65e3c2942b0bcc5030e5ccb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1267,7 +1267,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 30
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1433,7 +1433,7 @@ MonoBehaviour:
     enemyRarity: 0
     enemyPrefab: {fileID: 2105369960170222706, guid: 3523d3c9a9c29dc49b2568b9bf59765b,
       type: 3}
-  rarityValue: 0.2
+  rarityValue: 0.8
 --- !u!1001 &2080278144
 PrefabInstance:
   m_ObjectHideFlags: 0

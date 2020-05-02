@@ -44,7 +44,7 @@ namespace GameManager
     {
         public List<ItemData> itemDataList;
         public List<EnemyData> enemyDataList;
-        public float rarityValue = 0.2f;
+        [Range(0.1f, 0.9f)] public float rarityValue = 0.8f;
 
         private float _itemRaritySum;
         private float _enemyRaritySum;
@@ -65,7 +65,7 @@ namespace GameManager
                 tmp += 1;
             }
 
-            return res * (rarity == Rarity.Red ? 1 : 0.8f);
+            return res;
         }
 
         public ItemData GetRandomItem()

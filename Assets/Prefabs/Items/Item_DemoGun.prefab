@@ -316,10 +316,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData:
-    itemClass: 0
-    itemRarity: 0
     itemName: Demo Gun
     describe: Demo Gun Des
+    itemClass: 0
+    itemRarity: 0
     itemPrefab: {fileID: 5240020490694776369}
   weaponPrefab: {fileID: 465347034132991400, guid: 15e956bd581a31f4796963dbda6385bc,
     type: 3}
@@ -393,7 +393,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7735be8685934b243a16df34096e17fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
