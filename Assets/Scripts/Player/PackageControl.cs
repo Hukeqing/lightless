@@ -6,8 +6,6 @@ namespace Player
     public class PackageControl : MonoBehaviour
     {
         public Text curItemText;
-        public Text describeText;
-        public GameManager.GameDataManager gdm;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -15,6 +13,7 @@ namespace Player
         private void Start()
         {
             _pc = GetComponent<PlayerControl>();
+            _curItem = null;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -33,8 +32,15 @@ namespace Player
 
         private void UpdateLabel()
         {
-            curItemText.text = _curItem == null ? "" : _curItem.itemData.itemName;
-            describeText.text = _curItem == null ? "" : _curItem.itemData.describe;
+            if (_curItem != null)
+            {
+                curItemText.text = _curItem.itemData.itemName;
+                curItemText.color = GameManager.GameDataManager.GetColor(_curItem.itemData.itemRarity);
+            }
+            else
+            {
+                curItemText.text = "";
+            }
         }
 
         public void ApplyItem()
@@ -43,7 +49,6 @@ namespace Player
             _curItem.ApplyItem(_pc);
             _curItem.BeGet();
             curItemText.text = "";
-            describeText.text = "";
         }
     }
 }

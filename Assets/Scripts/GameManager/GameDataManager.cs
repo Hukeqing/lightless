@@ -40,19 +40,39 @@ namespace GameManager
         public GameObject enemyPrefab;
     }
 
+    [Serializable]
+    public struct RoomData
+    {
+        public string roomName;
+        public Rarity roomRarity;
+        public GameObject roomPrefab;
+    }
+
     public class GameDataManager : MonoBehaviour
     {
         public List<ItemData> itemDataList;
         public List<EnemyData> enemyDataList;
-        [Range(0.1f, 0.9f)] public float rarityValue = 0.8f;
+        public List<RoomData> roomDataList;
+        [Range(0.1f, 0.9f)] public float rarityValue = 0.5f;
 
         private float _itemRaritySum;
         private float _enemyRaritySum;
+        private float _roomRaritySum;
+
+        private Room.RoomManager _rm;
 
         private void Start()
         {
+            _rm = GetComponent<Room.RoomManager>();
             _itemRaritySum = itemDataList.Sum(itemData => GetRarity(itemData.itemRarity));
             _enemyRaritySum = enemyDataList.Sum(enemyData => GetRarity(enemyData.enemyRarity));
+            _roomRaritySum = roomDataList.Sum(data => GetRarity(data.roomRarity));
+            foreach (var itemData in itemDataList)
+            {
+                itemData.itemPrefab.GetComponent<Item.Item>().itemData = itemData;
+            }
+
+            _rm.Init(this);
         }
 
         private float GetRarity(Rarity rarity)
@@ -66,6 +86,35 @@ namespace GameManager
             }
 
             return res;
+        }
+
+        public static Color GetColor(Rarity rarity)
+        {
+            var tmp = Color.white;
+            switch (rarity)
+            {
+                case Rarity.White:
+                    break;
+                case Rarity.Green:
+                    tmp = Color.green;
+                    break;
+                case Rarity.Blue:
+                    tmp = Color.blue;
+                    break;
+                case Rarity.Purple:
+                    tmp = Color.magenta;
+                    break;
+                case Rarity.Orange:
+                    tmp = Color.yellow;
+                    break;
+                case Rarity.Red:
+                    tmp = Color.red;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null);
+            }
+
+            return tmp;
         }
 
         public ItemData GetRandomItem()
@@ -99,5 +148,21 @@ namespace GameManager
 
             return enemyDataList[0];
         }
+        
+        public RoomData GetRandomRoom()
+        {
+            var cur = Random.Range(0, _roomRaritySum);
+            var tmp = 0.0f;
+            foreach (var roomData in roomDataList)
+            {
+                tmp += GetRarity(roomData.roomRarity);
+                if (tmp >= cur)
+                {
+                    return roomData;
+                }
+            }
+            return roomDataList[0];
+        }
+
     }
 }

@@ -1,23 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using GameManager;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Room
 {
     public class RoomManager : MonoBehaviour
     {
-        public List<GameObject> roomList;
-
+        public GameObject curRoom;
+        public Transform player;
+        public GameDataManager gdm;
         /**
          * 0 for left
          * 1 for right
          * 2 for up
          * 3 for bottom
          */
-        public GameObject curRoom;
-
-        public Transform player;
-
         private readonly Vector3[] _arr = new Vector3[4]
         {
             new Vector3(-50, 0, 0),
@@ -25,11 +21,12 @@ namespace Room
             new Vector3(0, 0, 50),
             new Vector3(0, 0, -50)
         };
-
         private readonly GameObject[] _existenceRoom = new GameObject[4];
 
-        private void Start()
+        
+        public void Init(GameDataManager gm)
         {
+            gdm = gm;
             NewRoom();
         }
 
@@ -64,7 +61,7 @@ namespace Room
             {
                 if (_existenceRoom[i] == null)
                 {
-                    _existenceRoom[i] = Instantiate(roomList[Random.Range(0, roomList.Count)],
+                    _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().roomPrefab,
                         curRoom.transform.position + _arr[i], curRoom.transform.rotation);
                 }
             }
