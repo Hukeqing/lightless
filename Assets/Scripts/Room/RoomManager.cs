@@ -1,5 +1,7 @@
-﻿using GameManager;
+﻿using System.Collections;
+using GameManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Room
 {
@@ -8,6 +10,9 @@ namespace Room
         public GameObject curRoom;
         public Transform player;
         public GameDataManager gdm;
+
+        private MessageManager _messageManager;
+
         /**
          * 0 for left
          * 1 for right
@@ -21,13 +26,15 @@ namespace Room
             new Vector3(0, 0, 50),
             new Vector3(0, 0, -50)
         };
+
         private readonly GameObject[] _existenceRoom = new GameObject[4];
 
-        
+
         public void Init(GameDataManager gm)
         {
             gdm = gm;
             NewRoom();
+            _messageManager = GetComponent<MessageManager>();
         }
 
         private void Update()
@@ -42,6 +49,8 @@ namespace Room
 
                 curRoom.GetComponent<Room>().Exit();
                 _existenceRoom[i].GetComponent<Room>().Enter();
+
+                _messageManager.RoomMessage(_existenceRoom[i].GetComponent<Room>().roomData);
 
                 _existenceRoom[i ^ 1] = curRoom;
                 curRoom = _existenceRoom[i];

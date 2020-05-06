@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using GameManager;
+using UnityEngine;
 
 namespace Player
 {
     public class PackageControl : MonoBehaviour
     {
-        public Text curItemText;
+        public MessageManager messageManager;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -34,12 +34,11 @@ namespace Player
         {
             if (_curItem != null)
             {
-                curItemText.text = _curItem.itemData.itemName;
-                curItemText.color = GameManager.GameDataManager.GetColor(_curItem.itemData.itemRarity);
+                messageManager.PackageMessage(_curItem.itemData);
             }
             else
             {
-                curItemText.text = "";
+                messageManager.ClearPackageMessage();
             }
         }
 
@@ -48,7 +47,7 @@ namespace Player
             if (_curItem == null) return;
             _curItem.ApplyItem(_pc);
             _curItem.BeGet();
-            curItemText.text = "";
+            messageManager.ClearPackageMessage();
         }
     }
 }

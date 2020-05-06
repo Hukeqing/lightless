@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using GameManager;
 using UnityEngine;
 
 namespace Room
 {
     public class Room : MonoBehaviour
     {
-        public string roomName;
+        public RoomData roomData;
 
         public virtual void Enter()
         {

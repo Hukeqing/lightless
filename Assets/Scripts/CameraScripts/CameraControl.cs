@@ -35,17 +35,11 @@ namespace CameraScripts
             colorGreyRange = _showHealth / maxHealth;
         }
 
-        private void OnRenderImage(RenderTexture sourceTexture, RenderTexture destTexture)
+        private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            if (_curShader != null)
-            {
-                _material.SetFloat(ColorGreyRangeId, colorGreyRange);
-                Graphics.Blit(sourceTexture, destTexture, _material);
-            }
-            else
-            {
-                Graphics.Blit(sourceTexture, destTexture);
-            }
+            
+            _material.SetFloat(ColorGreyRangeId, colorGreyRange);
+            Graphics.Blit(src, dest, _material);
         }
 
         public void ApplyDamage(int damage)

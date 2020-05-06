@@ -11,12 +11,12 @@ namespace Player
         public float damageTime;
         public float damageUpgradeTime = 0.99f;
         public Weapon.Weapon weapon;
+        public float HealthValue => _cc.HealthValue;
 
         private float _curDamageTime;
         private float _nextDamageTime;
         private PackageControl _pc;
         private CameraControl _cc;
-
 
         private void Start()
         {
@@ -28,7 +28,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            transform.Translate(Time.deltaTime * moveSpeed * _cc.HealthValue *
+            transform.Translate(Time.deltaTime * moveSpeed * HealthValue *
                                 new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), Space.World);
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hitInfo, 1000.0f, 1 << 9)) return;

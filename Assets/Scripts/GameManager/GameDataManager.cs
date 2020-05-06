@@ -44,6 +44,7 @@ namespace GameManager
     public struct RoomData
     {
         public string roomName;
+        public string roomDescribe;
         public Rarity roomRarity;
         public GameObject roomPrefab;
     }
@@ -70,6 +71,11 @@ namespace GameManager
             foreach (var itemData in itemDataList)
             {
                 itemData.itemPrefab.GetComponent<Item.Item>().itemData = itemData;
+            }
+
+            foreach (var roomData in roomDataList)
+            {
+                roomData.roomPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
 
             _rm.Init(this);
@@ -148,7 +154,7 @@ namespace GameManager
 
             return enemyDataList[0];
         }
-        
+
         public RoomData GetRandomRoom()
         {
             var cur = Random.Range(0, _roomRaritySum);
@@ -161,8 +167,8 @@ namespace GameManager
                     return roomData;
                 }
             }
+
             return roomDataList[0];
         }
-
     }
 }
