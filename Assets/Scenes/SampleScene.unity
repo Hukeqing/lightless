@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 364473806}
-  baseFlushTime: 0.5
+  baseFlushTime: 0
 --- !u!20 &1565547193
 Camera:
   m_ObjectHideFlags: 0
@@ -1685,11 +1685,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Plane
-      objectReference: {fileID: 0}
-    - target: {fileID: 7210842624949720838, guid: ff35802066f85544593820468c922b58,
-        type: 3}
-      propertyPath: roomData.roomDescribe
-      value: Demo Room Des
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff35802066f85544593820468c922b58, type: 3}

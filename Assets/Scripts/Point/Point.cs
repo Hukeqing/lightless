@@ -8,7 +8,7 @@ namespace Point
     {
         Item,
         Enemy,
-        ItemAndEnemy,
+        ItemOrEnemy,
         MostItem,
         MostEnemy
     }
@@ -16,6 +16,8 @@ namespace Point
     public class Point : MonoBehaviour
     {
         public PointClass pointClass;
+        public GameManager.Rarity rarity;
+        
         private GameObject _item;
 
         private void Start()
@@ -28,7 +30,7 @@ namespace Point
                     break;
                 case PointClass.Enemy:
                     break;
-                case PointClass.ItemAndEnemy:
+                case PointClass.ItemOrEnemy:
                     if (tmp < 50)
                     {
                         InsItem();
@@ -70,7 +72,7 @@ namespace Point
         {
             var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
             var selfTransform = transform;
-            var itemData = gdm.GetRandomItem();
+            var itemData = gdm.GetRandomItem(rarity);
             _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
             _item.transform.parent = selfTransform.parent;
             _item.GetComponent<Item.Item>().itemData = itemData;
@@ -80,7 +82,7 @@ namespace Point
         {
             var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
             var selfTransform = transform;
-            var enemyData = gdm.GetRandomEnemy();
+            var enemyData = gdm.GetRandomEnemy(rarity);
             _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
             _item.transform.parent = selfTransform.parent;
         }
