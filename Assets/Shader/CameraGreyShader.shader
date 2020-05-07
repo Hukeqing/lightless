@@ -3,7 +3,6 @@
 	Properties 
 	{
 		_MainTex ("Base (RGB)", 2D) = "white" {}
-//		_Grey ("Object (RGBA)", Color) = (0.3, 0.3, 0.3, 1)
 		_GreyTex ("Grey (RGB)", 2D) = "white" {}
 		_ColorGreyRange("Grey Range", float) = 0.2
 		_ColorMixRange("Mix Range", float) = 0.2
@@ -15,12 +14,13 @@
 			CGPROGRAM
 			#pragma vertex vert_img
 			#pragma fragment frag
+			// WARNING FOR NEXT LINE
+            #pragma multi_compile_fog
 			
 			#include "UnityCG.cginc"
 			
 			uniform sampler2D _MainTex;
 			uniform sampler2D _GreyTex;
-			// uniform fixed4 _Grey;
 			uniform fixed4 _Center;
 			uniform fixed _ColorGreyRange;
 			uniform fixed _ColorMixRange;

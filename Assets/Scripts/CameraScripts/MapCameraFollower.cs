@@ -6,21 +6,25 @@ namespace CameraScripts
     public class MapCameraFollower : MonoBehaviour
     {
         public Transform player;
-        public float baseFlushTime;
 
         private Player.PlayerControl _pc;
-        private float _nextFlushTime;
+        private Shader _curShader;
+        private Material _material;
+        private static readonly int Probability = Shader.PropertyToID("_Probability");
 
         private void Start()
         {
+            _curShader = Shader.Find("Unlit/MapCameraShader");
+            _material = new Material(_curShader) {hideFlags = HideFlags.HideAndDontSave};
             _pc = player.GetComponent<Player.PlayerControl>();
         }
 
-        private void LateUpdate()
+        private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            if (!(Time.time > _nextFlushTime)) return;
-            transform.position = player.position + new Vector3(0, 5, 0);
-            _nextFlushTime = Time.time + baseFlushTime + 1 - _pc.HealthValue;
+            
+            _material.SetFloat(Probability, 1 - _pc.HealthValue);
+            Graphics.Blit(src, dest, _material);
         }
+
     }
 }

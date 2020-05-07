@@ -119,7 +119,7 @@ namespace GameManager
         public ItemData GetRandomItem(Rarity baseRarity)
         {
             var raritySum = itemDataList.Sum(itemData =>
-                itemData.itemRarity > baseRarity ? GetRarity(itemData.itemRarity) : 0);
+                itemData.itemRarity >= baseRarity ? GetRarity(itemData.itemRarity) : 0);
             var cur = Random.Range(0, raritySum);
             var tmp = 0.0f;
             foreach (var itemData in itemDataList.Where(itemData => itemData.itemRarity >= baseRarity))
@@ -137,7 +137,7 @@ namespace GameManager
         public EnemyData GetRandomEnemy(Rarity baseRarity)
         {
             var raritySum = enemyDataList.Sum(enemyData =>
-                enemyData.enemyRarity > baseRarity ? GetRarity(enemyData.enemyRarity) : 0);
+                enemyData.enemyRarity >= baseRarity ? GetRarity(enemyData.enemyRarity) : 0);
             var cur = Random.Range(0, raritySum);
             var tmp = 0.0f;
             foreach (var enemyData in enemyDataList.Where(enemyData => enemyData.enemyRarity >= baseRarity))
@@ -152,7 +152,7 @@ namespace GameManager
         public RoomData GetRandomRoom(Rarity baseRarity = Rarity.White)
         {
             var raritySum = roomDataList.Sum(roomData =>
-                roomData.roomRarity > baseRarity ? GetRarity(roomData.roomRarity) : 0);
+                roomData.roomRarity >= baseRarity ? GetRarity(roomData.roomRarity) : 0);
             var cur = Random.Range(0, raritySum);
             var tmp = 0.0f;
             foreach (var roomData in roomDataList.Where(roomData => roomData.roomRarity >= baseRarity))
