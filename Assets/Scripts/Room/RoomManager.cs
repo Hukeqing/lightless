@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using GameManager;
+﻿using GameManager;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Room
 {
@@ -19,8 +17,7 @@ namespace Room
          * 2 for up
          * 3 for bottom
          */
-        private readonly Vector3[] _arr = new Vector3[4]
-        {
+        private readonly Vector3[] _arr = {
             new Vector3(-50, 0, 0),
             new Vector3(50, 0, 0),
             new Vector3(0, 0, 50),

@@ -4,67 +4,23 @@ using Random = UnityEngine.Random;
 
 namespace Point
 {
-    public enum PointClass
-    {
-        Item,
-        Enemy,
-        ItemOrEnemy,
-        MostItem,
-        MostEnemy
-    }
-
     public class Point : MonoBehaviour
     {
-        public PointClass pointClass;
         public GameManager.Rarity rarity;
-        
+        [Range(0, 1)] public float itemValue;
+
         private GameObject _item;
 
         private void Start()
         {
-            var tmp = Random.Range(0, 100);
-            switch (pointClass)
+            var tmp = Random.Range(0.0f, 1.0f);
+            if (tmp < itemValue)
             {
-                case PointClass.Item:
-                    InsItem();
-                    break;
-                case PointClass.Enemy:
-                    break;
-                case PointClass.ItemOrEnemy:
-                    if (tmp < 50)
-                    {
-                        InsItem();
-                    }
-                    else
-                    {
-                        InsEnemy();
-                    }
-
-                    break;
-                case PointClass.MostItem:
-                    if (tmp < 80)
-                    {
-                        InsItem();
-                    }
-                    else
-                    {
-                        InsEnemy();
-                    }
-
-                    break;
-                case PointClass.MostEnemy:
-                    if (tmp < 20)
-                    {
-                        InsItem();
-                    }
-                    else
-                    {
-                        InsEnemy();
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                InsItem();
+            }
+            else
+            {
+                InsEnemy();
             }
         }
 

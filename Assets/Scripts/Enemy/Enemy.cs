@@ -19,6 +19,8 @@ namespace Enemy
         public float attackRange;
         public float attackCoolDown;
         public LayerMask lookObstacle;
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public EnemyState EnemyState { private set; get; }
 
         private float _nextAttack;

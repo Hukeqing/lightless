@@ -18,12 +18,15 @@ namespace Player
         private PackageControl _pc;
         private CameraControl _cc;
 
+        private float _gameStartTime;
+
         private void Start()
         {
             _curDamageTime = damageTime;
             _nextDamageTime = Time.time + _curDamageTime;
             _cc = mainCamera.GetComponent<CameraControl>();
             _pc = GetComponent<PackageControl>();
+            _gameStartTime = Time.time;
         }
 
         private void FixedUpdate()
