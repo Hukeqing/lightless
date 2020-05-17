@@ -17,11 +17,17 @@ namespace GameManager.Editor
 
             var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("roomRarity").enumValueIndex);
 
+            var rectPosition = position;
+
             position = EditorGUI.PrefixLabel(position, label);
             var index = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            EditorGUI.DrawRect(position, tmp);
+            rectPosition.width -= position.width;
+            rectPosition.y += rectPosition.height / 3;
+            rectPosition.height = rectPosition.height / 3 * 2;
+
+            EditorGUI.DrawRect(rectPosition, tmp);
 
             position.height /= 3;
             var roomName = new Rect(position.x, position.y, 130, position.height);

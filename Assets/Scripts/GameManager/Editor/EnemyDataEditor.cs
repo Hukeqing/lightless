@@ -16,12 +16,18 @@ namespace GameManager.Editor
             EditorGUI.BeginProperty(position, label, property);
 
             var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("enemyRarity").enumValueIndex);
+            
+            var rectPosition = position;
 
             position = EditorGUI.PrefixLabel(position, label);
             var index = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
+            
+            rectPosition.width -= position.width;
+            rectPosition.y += rectPosition.height / 2;
+            rectPosition.height /= 2;
 
-            EditorGUI.DrawRect(position, tmp);
+            EditorGUI.DrawRect(rectPosition, tmp);
 
             position.height /= 2;
             var enemyName = new Rect(position.x, position.y, 130, position.height);
