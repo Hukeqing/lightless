@@ -15,8 +15,11 @@ namespace CameraScripts
         public int maxHealth;
         public float decreaseSpeed;
 
+        public GameManager.GameManager gm;
+
         private int _curHealth;
         private float _showHealth;
+        private bool _gameOver;
 
         public float HealthValue => Mathf.Clamp01(_showHealth / maxHealth + 0.3f);
 
@@ -37,17 +40,18 @@ namespace CameraScripts
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            
             _material.SetFloat(ColorGreyRangeId, colorGreyRange);
             Graphics.Blit(src, dest, _material);
         }
 
         public void ApplyDamage(int damage)
         {
+            if (_gameOver) return;
             _curHealth -= damage;
             if (_curHealth > 0) return;
             _curHealth = 0;
-            Debug.Log("Die");
+            _gameOver = true;
+            gm.GameOver();
         }
 
         public void AddHealth(int cure)

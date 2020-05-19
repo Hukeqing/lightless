@@ -31,7 +31,7 @@
 
 			fixed4 frag(v2f_img i) : COLOR
 			{
-			    float rand = random(i.uv.xy, 50);
+			    float rand = random(i.uv.xy, 30);
 			    if (rand < _Probability) {
 			        return random1(rand);
 			    }
