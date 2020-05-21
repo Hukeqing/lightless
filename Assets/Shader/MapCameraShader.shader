@@ -15,14 +15,13 @@
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-			
+
 			uniform sampler2D _MainTex;
 			uniform float _Probability;
-			
-            
+
             float random(float2 st, float n) {
                 st = floor(st * n);
-                return frac(sin(dot(st.xy, float2(12.9898,78.233)))*43758.5453123);
+                return frac(sin(dot(st.xy, float2(12.9898, 78.233))) * 43758.5453123);
             }
 
             float random1(float s) {
