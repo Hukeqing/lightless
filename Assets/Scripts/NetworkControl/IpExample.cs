@@ -4,6 +4,9 @@ namespace NetworkControl
 {
     public class IpExample : MonoBehaviour
     {
-        public const string Host = "127.0.0.1";
+        /// <summary>
+        /// mysql host
+        /// </summary>
+        public const string Host = "localhost";
     }
 }

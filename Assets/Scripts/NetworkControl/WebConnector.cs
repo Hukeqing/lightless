@@ -19,15 +19,18 @@ namespace NetworkControl
     public class WebConnector : MonoBehaviour
     {
         private int _accountId;
+
+        // ReSharper disable once ConvertToConstant.Local
         private readonly string _basicUrl = "http://" + Ip.Host + "/gameAPI/lightless/";
+        private AccountManager _accountManager;
 
         public bool onConnect;
-        public Text messageText;
 
         private void Start()
         {
             _accountId = -1;
             onConnect = false;
+            _accountManager = GetComponent<AccountManager>();
         }
 
         public void GetAccount(string email, string password)
@@ -48,7 +51,18 @@ namespace NetworkControl
 #if UNITY_EDITOR
                         Debug.Log(response.errorMsg);
 #endif
-                        messageText.text = response.errorMsg;
+                        switch (response.errorId)
+                        {
+                            case 404:
+                                _accountManager.Error(response.errorMsg, 0);
+                                break;
+                            case 200:
+                                _accountManager.Error(response.errorMsg, 1);
+                                break;
+                            default:
+                                _accountManager.Error(response.errorMsg, 3);
+                                break;
+                        }
                     }
 
                     onConnect = false;
@@ -72,7 +86,18 @@ namespace NetworkControl
 #if UNITY_EDITOR
                         Debug.Log(response.errorMsg);
 #endif
-                        messageText.text = response.errorMsg;
+                        switch (response.errorId)
+                        {
+                            case 404:
+                                _accountManager.Error(response.errorMsg, 0);
+                                break;
+                            case 200:
+                                _accountManager.Error(response.errorMsg, 1);
+                                break;
+                            default:
+                                _accountManager.Error(response.errorMsg, 3);
+                                break;
+                        }
                     }
                 }));
         }
