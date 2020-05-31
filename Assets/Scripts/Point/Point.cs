@@ -26,7 +26,7 @@ namespace Point
 
         private void InsItem()
         {
-            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
+            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameManager.GameDataManager>();
             var selfTransform = transform;
             var itemData = gdm.GetRandomItem(rarity);
             _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
@@ -36,7 +36,7 @@ namespace Point
 
         private void InsEnemy()
         {
-            var gdm = GameObject.FindWithTag("GameController").GetComponent<GameManager.GameDataManager>();
+            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameManager.GameDataManager>();
             var selfTransform = transform;
             var enemyData = gdm.GetRandomEnemy(rarity);
             _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);

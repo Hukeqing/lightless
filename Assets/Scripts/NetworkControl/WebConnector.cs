@@ -4,46 +4,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace NetworkControl
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class AccountResponse
     {
-        public int errorId = 0;
-        public string errorMsg = "";
-        public int accountId = -1;
+        // ReSharper disable once UnassignedField.Global
+        public int errorId;
+
+        // ReSharper disable once UnassignedField.Global
+        public string errorMsg;
+
+        // ReSharper disable once UnassignedField.Global
+        public int accountId;
+
+        // ReSharper disable once UnassignedField.Global
+        public int accountSc;
+
+        // ReSharper disable once UnassignedField.Global
+        public string accountNa;
+    }
+
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class FriendsResponse
+    {
+        public int cnt;
+        public List<int> accountId;
+        public List<int> accountSc;
+        public List<string> accountNa;
+        public List<int> waitId;
+        public List<string> waitNa;
     }
 
     public class WebConnector : MonoBehaviour
     {
-        private int _accountId;
+        private AccountResponse _account;
+        private FriendsResponse _friends;
 
         // ReSharper disable once ConvertToConstant.Local
         private readonly string _basicUrl = "http://" + Ip.Host + "/gameAPI/lightless/";
         private AccountManager _accountManager;
 
-        public bool onConnect;
+        public bool OnConnect { get; private set; }
 
         private void Start()
         {
-            _accountId = -1;
-            onConnect = false;
+            OnConnect = false;
             _accountManager = GetComponent<AccountManager>();
         }
 
         public void GetAccount(string email, string password)
         {
             var param = new Dictionary<string, string> {["account"] = email, ["pwd"] = password};
-            onConnect = true;
+            OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "login_in.php",
                 param, response =>
                 {
                     if (response.errorId == 0)
                     {
-                        _accountId = response.accountId;
-                        Debug.Log(_accountId);
+                        _account = response;
+                        Debug.Log(_account.accountNa);
                         SceneManager.LoadScene(1);
                     }
                     else
@@ -65,20 +86,21 @@ namespace NetworkControl
                         }
                     }
 
-                    onConnect = false;
+                    OnConnect = false;
                 }));
         }
 
-        public void CreateAccount(string email, string password)
+        public void CreateAccount(string accountName, string email, string password)
         {
-            var param = new Dictionary<string, string> {["account"] = email, ["pwd"] = password};
+            var param = new Dictionary<string, string>
+                {["account"] = email, ["pwd"] = password, ["name"] = accountName};
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "register.php",
                 param, response =>
                 {
                     if (response.errorId == 0)
                     {
-                        _accountId = response.accountId;
-                        Debug.Log(_accountId);
+                        _account = response;
+                        Debug.Log(_account.accountNa);
                         SceneManager.LoadScene(1);
                     }
                     else
@@ -98,6 +120,26 @@ namespace NetworkControl
                                 _accountManager.Error(response.errorMsg, 3);
                                 break;
                         }
+                    }
+                }));
+        }
+
+        public void GetFriends(FriendsManager friendsManager)
+        {
+            var param = new Dictionary<string, string> {["account"] = _account.accountId.ToString()};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<FriendsResponse>(_basicUrl + "get_friends.php", param,
+                response =>
+                {
+                    _friends = response;
+                    for (var i = 0; i < _friends.accountId.Count; i++)
+                    {
+                        friendsManager.AddFriend(_friends.accountNa[i], _friends.accountSc[i], _friends.accountId[i]);
+                    }
+
+                    for (var i = 0; i < _friends.waitId.Count; i++)
+                    {
+                        friendsManager.AddWaitFriend(_friends.waitNa[i], _friends.waitId[i]);
                     }
                 }));
         }

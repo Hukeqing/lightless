@@ -7,6 +7,7 @@ namespace NetworkControl
     public class AccountManager : MonoBehaviour
     {
         public Animator loginRegister;
+        public InputField nameField;
         public InputField emailField;
         public InputField pwdField;
         public InputField repeatField;
@@ -16,6 +17,8 @@ namespace NetworkControl
         private bool _onRegister;
         private EventSystem _system;
         private WebConnector _webConnector;
+        private GameManager.GameController _gameController;
+        
         private static readonly int OnRegister = Animator.StringToHash("OnRegister");
 
         private void Start()
@@ -56,7 +59,11 @@ namespace NetworkControl
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                if (_system.currentSelectedGameObject.transform.parent == emailField.transform.parent)
+                if (_system.currentSelectedGameObject.transform.parent == nameField.transform.parent)
+                {
+                    _system.SetSelectedGameObject(emailField.gameObject, new BaseEventData(_system));
+                }
+                else if (_system.currentSelectedGameObject.transform.parent == emailField.transform.parent)
                 {
                     _system.SetSelectedGameObject(pwdField.gameObject, new BaseEventData(_system));
                 }
@@ -81,7 +88,7 @@ namespace NetworkControl
 
         private void Login()
         {
-            if (_webConnector.onConnect) return;
+            if (_webConnector.OnConnect) return;
             var email = emailField.text;
             var pwd = pwdField.text;
             const string expression =
@@ -97,7 +104,8 @@ namespace NetworkControl
 
         private void Register()
         {
-            if (_webConnector.onConnect) return;
+            if (_webConnector.OnConnect) return;
+            var accountName = nameField.text;
             var email = emailField.text;
             var pwd = pwdField.text;
             var repeat = repeatField.text;
@@ -121,7 +129,7 @@ namespace NetworkControl
                 return;
             }
 
-            _webConnector.CreateAccount(email, pwd);
+            _webConnector.CreateAccount(accountName, email, pwd);
         }
 
         public void OnInput(InputField inputField)
@@ -131,7 +139,7 @@ namespace NetworkControl
             inputField.colors = colorBlock;
             messageText.text = "";
         }
-        
+
         /// <summary>
         /// Error Show
         /// </summary>

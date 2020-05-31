@@ -29,7 +29,7 @@ namespace Enemy
         {
             if (player == null)
             {
-                player = GameObject.FindWithTag("GameController").GetComponent<Room.RoomManager>().player;
+                player = GameObject.FindWithTag("GameManager").GetComponent<Room.RoomManager>().player;
             } 
             EnemyState = EnemyState.Stand;
             _nextAttack = 0;
