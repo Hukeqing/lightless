@@ -17,7 +17,8 @@ namespace Room
          * 2 for up
          * 3 for bottom
          */
-        private readonly Vector3[] _arr = {
+        private readonly Vector3[] _arr =
+        {
             new Vector3(-50, 0, 0),
             new Vector3(50, 0, 0),
             new Vector3(0, 0, 50),
