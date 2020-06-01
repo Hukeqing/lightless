@@ -6,16 +6,21 @@ namespace NetworkControl
 {
     public enum FriendStatus
     {
-        Normal, OnFight, OnHold
+        Normal,
+        OnFight,
+        OnHold,
+        OnSelect
     }
-    
+
     public class Friend : MonoBehaviour
     {
         public int friendId;
         public Text friendScore;
         public Text friendName;
-        private FriendStatus _friendStatus;
         public Button button;
+        public FriendsManager friendsManager;
+
+        private FriendStatus _friendStatus;
 
         public void SetStatus(FriendStatus friendStatus)
         {
@@ -31,6 +36,10 @@ namespace NetworkControl
                 case FriendStatus.OnHold:
                     button.GetComponentInChildren<Text>().text = "Accept";
                     break;
+                case FriendStatus.OnSelect:
+                    button.GetComponentInChildren<Text>().text = "DisSelect";
+                    break;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(friendStatus), friendStatus, null);
             }
@@ -41,10 +50,15 @@ namespace NetworkControl
             switch (_friendStatus)
             {
                 case FriendStatus.Normal:
+                    friendsManager.SelectFriend(this);
                     break;
                 case FriendStatus.OnFight:
                     break;
                 case FriendStatus.OnHold:
+                    friendsManager.AcceptFriend(friendId);
+                    break;
+                case FriendStatus.OnSelect:
+                    friendsManager.UnSelectFriend();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

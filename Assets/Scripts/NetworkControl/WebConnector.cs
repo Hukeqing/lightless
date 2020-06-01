@@ -30,10 +30,25 @@ namespace NetworkControl
     public class FriendsResponse
     {
         public int cnt;
+
+        // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<int> accountId;
+
+        // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<int> accountSc;
+
+        // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<string> accountNa;
+
+        // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<int> waitId;
+
+        // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once CollectionNeverUpdated.Global
         public List<string> waitNa;
     }
 
@@ -94,6 +109,7 @@ namespace NetworkControl
         {
             var param = new Dictionary<string, string>
                 {["account"] = email, ["pwd"] = password, ["name"] = accountName};
+            OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "register.php",
                 param, response =>
                 {
@@ -121,6 +137,8 @@ namespace NetworkControl
                                 break;
                         }
                     }
+
+                    OnConnect = false;
                 }));
         }
 
@@ -141,7 +159,17 @@ namespace NetworkControl
                     {
                         friendsManager.AddWaitFriend(_friends.waitNa[i], _friends.waitId[i]);
                     }
+
+                    OnConnect = false;
                 }));
+        }
+
+        public void AcceptFriend(int friendId)
+        {
+            var param = new Dictionary<string, string>
+                {["from"] = friendId.ToString(), ["to"] = _account.accountId.ToString()};
+            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "accept_friend.php", param,
+                response => { OnConnect = false; }));
         }
 
         private static IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
