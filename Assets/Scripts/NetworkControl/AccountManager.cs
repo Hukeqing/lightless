@@ -73,16 +73,14 @@ namespace NetworkControl
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (!Input.GetKeyDown(KeyCode.Return)) return;
+            if (_onRegister)
             {
-                if (_onRegister)
-                {
-                    Register();
-                }
-                else
-                {
-                    Login();
-                }
+                Register();
+            }
+            else
+            {
+                Login();
             }
         }
 

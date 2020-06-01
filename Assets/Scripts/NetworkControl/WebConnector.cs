@@ -69,6 +69,8 @@ namespace NetworkControl
             _accountManager = GetComponent<AccountManager>();
         }
 
+        #region Account
+
         public void GetAccount(string email, string password)
         {
             var param = new Dictionary<string, string> {["account"] = email, ["pwd"] = password};
@@ -79,7 +81,9 @@ namespace NetworkControl
                     if (response.errorId == 0)
                     {
                         _account = response;
+#if UNITY_EDITOR
                         Debug.Log(_account.accountNa);
+#endif
                         SceneManager.LoadScene(1);
                     }
                     else
@@ -116,7 +120,9 @@ namespace NetworkControl
                     if (response.errorId == 0)
                     {
                         _account = response;
+#if UNITY_EDITOR
                         Debug.Log(_account.accountNa);
+#endif
                         SceneManager.LoadScene(1);
                     }
                     else
@@ -141,6 +147,10 @@ namespace NetworkControl
                     OnConnect = false;
                 }));
         }
+
+        #endregion
+
+        #region Friend
 
         public void GetFriends(FriendsManager friendsManager)
         {
@@ -168,11 +178,27 @@ namespace NetworkControl
         {
             var param = new Dictionary<string, string>
                 {["from"] = friendId.ToString(), ["to"] = _account.accountId.ToString()};
+            OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "accept_friend.php", param,
                 response => { OnConnect = false; }));
         }
 
-        private static IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
+        public void AddFriend(string email, Action<int> callBack)
+        {
+            var param = new Dictionary<string, string>
+                {["from"] = _account.accountId.ToString(), ["account"] = email};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "add_friend.php", param,
+                response =>
+                {
+                    OnConnect = false;
+                    callBack(response.errorId);
+                }));
+        }
+
+        #endregion
+
+        private IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
         {
             var webUrl = url;
             if (param != null)

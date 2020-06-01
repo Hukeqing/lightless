@@ -18,7 +18,8 @@ namespace NetworkControl
         public Text friendScore;
         public Text friendName;
         public Button button;
-        public FriendsManager friendsManager;
+        
+        [HideInInspector] public FriendsManager friendsManager;
 
         private FriendStatus _friendStatus;
 
@@ -38,7 +39,6 @@ namespace NetworkControl
                     break;
                 case FriendStatus.OnSelect:
                     button.GetComponentInChildren<Text>().text = "DisSelect";
-                    break;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(friendStatus), friendStatus, null);

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using GameManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace NetworkControl
 {
@@ -9,14 +11,18 @@ namespace NetworkControl
         public GameObject friendUi;
         public Friend curSelectFriend;
 
+        public InputField addFriendInputField;
+
         private WebConnector _webConnector;
         private int _pos;
         private List<Friend> _friends;
+        private HomeMessageManager _homeMessageManager;
 
         private void Start()
         {
             _friends = new List<Friend>();
             _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+            _homeMessageManager = GetComponent<HomeMessageManager>();
             _webConnector.GetFriends(this);
             _pos = -60;
         }
@@ -53,6 +59,7 @@ namespace NetworkControl
                 curSelectFriend.friendName.color = Color.black;
                 curSelectFriend.SetStatus(FriendStatus.Normal);
             }
+
             curSelectFriend = friend;
             friend.friendName.color = Color.cyan;
             friend.SetStatus(FriendStatus.OnSelect);
@@ -65,19 +72,43 @@ namespace NetworkControl
                 curSelectFriend.friendName.color = Color.black;
                 curSelectFriend.SetStatus(FriendStatus.Normal);
             }
+
             curSelectFriend = null;
         }
-        
+
         public void AcceptFriend(int friendId)
         {
             foreach (var friend in _friends)
             {
                 Destroy(friend.gameObject);
             }
+
             _friends.Clear();
             _pos = -60;
             _webConnector.AcceptFriend(friendId);
             _webConnector.GetFriends(this);
+        }
+
+        public void AddFriend()
+        {
+            _webConnector.AddFriend(addFriendInputField.text, errorId =>
+            {
+                switch (errorId)
+                {
+                    case 0:
+                        _homeMessageManager.ShowMessage("Friend request sent", 3.0f);
+                        break;
+                    case 404:
+                        _homeMessageManager.ShowMessage("Email is not found", 3.0f);
+                        break;
+                    case 100:
+                        _homeMessageManager.ShowMessage("You have this friend", 3.0f);
+                        break;
+                    case 200:
+                        _homeMessageManager.ShowMessage("You are add yourself", 3.0f);
+                        break;
+                }
+            });
         }
     }
 }

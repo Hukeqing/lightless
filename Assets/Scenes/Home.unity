@@ -641,7 +641,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000065280865}
+  m_AnchoredPosition: {x: 0, y: 0.00000012191495}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &487850064
@@ -692,6 +692,7 @@ GameObject:
   - component: {fileID: 586229738}
   - component: {fileID: 586229739}
   - component: {fileID: 586229740}
+  - component: {fileID: 586229741}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -728,6 +729,8 @@ MonoBehaviour:
   content: {fileID: 484190118}
   friendUi: {fileID: 9055796281605099884, guid: 6422bb662021ac34d9770d5ea33e5a23,
     type: 3}
+  curSelectFriend: {fileID: 0}
+  addFriendInputField: {fileID: 1021628409}
 --- !u!114 &586229740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +744,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
+--- !u!114 &586229741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586229737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1c72b1b7ad5624191bf20bfa273506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageGameObject: {fileID: 7604246806885213613, guid: 064da56da63d737488b703c3424afbed,
+    type: 3}
+  canvas: {fileID: 1044412007}
 --- !u!1 &873322313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1558,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1054040631}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586229739}
+        m_MethodName: AddFriend
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1054040631
 MonoBehaviour:
   m_ObjectHideFlags: 0

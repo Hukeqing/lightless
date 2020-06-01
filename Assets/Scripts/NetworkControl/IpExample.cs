@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace NetworkControl
+﻿namespace NetworkControl
 {
-    public class IpExample : MonoBehaviour
+    public static class IpExample
     {
         /// <summary>
         /// mysql host
