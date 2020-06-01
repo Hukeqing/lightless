@@ -14,11 +14,13 @@ namespace NetworkControl
 
         public Text messageText;
 
+        public AccountResponse Account { get; private set; }
+
         private bool _onRegister;
         private EventSystem _system;
         private WebConnector _webConnector;
         private GameManager.GameController _gameController;
-        
+
         private static readonly int OnRegister = Animator.StringToHash("OnRegister");
 
         private void Start()

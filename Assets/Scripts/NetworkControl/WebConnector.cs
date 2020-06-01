@@ -54,7 +54,7 @@ namespace NetworkControl
 
     public class WebConnector : MonoBehaviour
     {
-        private AccountResponse _account;
+        public AccountResponse Account { get; private set; }
         private FriendsResponse _friends;
 
         // ReSharper disable once ConvertToConstant.Local
@@ -80,9 +80,9 @@ namespace NetworkControl
                 {
                     if (response.errorId == 0)
                     {
-                        _account = response;
+                        Account = response;
 #if UNITY_EDITOR
-                        Debug.Log(_account.accountNa);
+                        Debug.Log(Account.accountNa);
 #endif
                         SceneManager.LoadScene(1);
                     }
@@ -119,9 +119,9 @@ namespace NetworkControl
                 {
                     if (response.errorId == 0)
                     {
-                        _account = response;
+                        Account = response;
 #if UNITY_EDITOR
-                        Debug.Log(_account.accountNa);
+                        Debug.Log(Account.accountNa);
 #endif
                         SceneManager.LoadScene(1);
                     }
@@ -154,7 +154,7 @@ namespace NetworkControl
 
         public void GetFriends(FriendsManager friendsManager)
         {
-            var param = new Dictionary<string, string> {["account"] = _account.accountId.ToString()};
+            var param = new Dictionary<string, string> {["account"] = Account.accountId.ToString()};
             OnConnect = true;
             StartCoroutine(WebRequestGet<FriendsResponse>(_basicUrl + "get_friends.php", param,
                 response =>
@@ -177,7 +177,7 @@ namespace NetworkControl
         public void AcceptFriend(int friendId, FriendsManager friendsManager)
         {
             var param = new Dictionary<string, string>
-                {["from"] = friendId.ToString(), ["to"] = _account.accountId.ToString()};
+                {["from"] = friendId.ToString(), ["to"] = Account.accountId.ToString()};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "accept_friend.php", param,
                 response =>
@@ -190,7 +190,7 @@ namespace NetworkControl
         public void AddFriend(string email, Action<int> callBack)
         {
             var param = new Dictionary<string, string>
-                {["from"] = _account.accountId.ToString(), ["account"] = email};
+                {["from"] = Account.accountId.ToString(), ["account"] = email};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "add_friend.php", param,
                 response =>
@@ -203,10 +203,14 @@ namespace NetworkControl
         public void DeleteFriend(int friendId, FriendsManager friendsManager)
         {
             var param = new Dictionary<string, string>
-                {["from"] = _account.accountId.ToString(), ["to"] = friendId.ToString()};
+                {["from"] = Account.accountId.ToString(), ["to"] = friendId.ToString()};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "delete_friend.php", param,
-                response => { OnConnect = false; GetFriends(friendsManager); }));
+                response =>
+                {
+                    OnConnect = false;
+                    GetFriends(friendsManager);
+                }));
         }
 
         #endregion

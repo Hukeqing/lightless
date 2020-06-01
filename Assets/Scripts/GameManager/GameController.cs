@@ -47,7 +47,9 @@ namespace GameManager
                 case GameStatus.LeisureGame:
                     break;
                 case GameStatus.HighScoreGame:
+#if UNITY_EDITOR
                     Debug.Log("Send score: " + score.ToString(CultureInfo.InvariantCulture));
+#endif
                     break;
                 case GameStatus.AcceptGame:
                     break;

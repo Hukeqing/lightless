@@ -7,6 +7,9 @@ namespace NetworkControl
 {
     public class FriendsManager : MonoBehaviour
     {
+        public Text nameText;
+        public Text scoreText;
+
         public Transform content;
         public GameObject friendUi;
         public Friend curSelectFriend;
@@ -25,6 +28,13 @@ namespace NetworkControl
             _homeMessageManager = GetComponent<HomeMessageManager>();
             _webConnector.GetFriends(this);
             _pos = -60;
+            SetMine(_webConnector.Account);
+        }
+
+        private void SetMine(AccountResponse accountResponse)
+        {
+            nameText.text = accountResponse.accountNa;
+            scoreText.text = "Score: " + accountResponse.accountSc;
         }
 
         public void AddFriend(string friendName, int score, int id)
