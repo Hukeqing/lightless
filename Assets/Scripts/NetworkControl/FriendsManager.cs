@@ -49,6 +49,7 @@ namespace NetworkControl
             newFriend.friendScore.text = "";
             newFriend.SetStatus(FriendStatus.OnHold);
             newFriend.friendsManager = this;
+            _friends.Add(newFriend);
             _pos -= 40;
         }
 
@@ -78,6 +79,50 @@ namespace NetworkControl
 
         public void AcceptFriend(int friendId)
         {
+            ClearFriend();
+            _webConnector.AcceptFriend(friendId, this);
+        }
+
+        public void AddFriend()
+        {
+            _webConnector.AddFriend(addFriendInputField.text, errorId =>
+            {
+                var msg = "Unknown Error";
+                switch (errorId)
+                {
+                    case 0:
+                        msg = "Friend request sent";
+                        break;
+                    case 404:
+                        msg = "Email is not found";
+                        break;
+                    case 100:
+                        msg = "You have this friend";
+                        break;
+                    case 200:
+                        msg = "You are add yourself";
+                        break;
+                }
+
+                _homeMessageManager.ShowMessage(msg, 3.0f);
+            });
+        }
+
+        public void DeleteFriend()
+        {
+            if (curSelectFriend == null)
+            {
+                _homeMessageManager.ShowMessage("Please select a friend", 3);
+                return;
+            }
+
+            ClearFriend();
+            var friendId = curSelectFriend.friendId;
+            _webConnector.DeleteFriend(friendId, this);
+        }
+
+        private void ClearFriend()
+        {
             foreach (var friend in _friends)
             {
                 Destroy(friend.gameObject);
@@ -85,30 +130,6 @@ namespace NetworkControl
 
             _friends.Clear();
             _pos = -60;
-            _webConnector.AcceptFriend(friendId);
-            _webConnector.GetFriends(this);
-        }
-
-        public void AddFriend()
-        {
-            _webConnector.AddFriend(addFriendInputField.text, errorId =>
-            {
-                switch (errorId)
-                {
-                    case 0:
-                        _homeMessageManager.ShowMessage("Friend request sent", 3.0f);
-                        break;
-                    case 404:
-                        _homeMessageManager.ShowMessage("Email is not found", 3.0f);
-                        break;
-                    case 100:
-                        _homeMessageManager.ShowMessage("You have this friend", 3.0f);
-                        break;
-                    case 200:
-                        _homeMessageManager.ShowMessage("You are add yourself", 3.0f);
-                        break;
-                }
-            });
         }
     }
 }

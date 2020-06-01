@@ -174,13 +174,17 @@ namespace NetworkControl
                 }));
         }
 
-        public void AcceptFriend(int friendId)
+        public void AcceptFriend(int friendId, FriendsManager friendsManager)
         {
             var param = new Dictionary<string, string>
                 {["from"] = friendId.ToString(), ["to"] = _account.accountId.ToString()};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "accept_friend.php", param,
-                response => { OnConnect = false; }));
+                response =>
+                {
+                    OnConnect = false;
+                    GetFriends(friendsManager);
+                }));
         }
 
         public void AddFriend(string email, Action<int> callBack)
@@ -196,9 +200,18 @@ namespace NetworkControl
                 }));
         }
 
+        public void DeleteFriend(int friendId, FriendsManager friendsManager)
+        {
+            var param = new Dictionary<string, string>
+                {["from"] = _account.accountId.ToString(), ["to"] = friendId.ToString()};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "delete_friend.php", param,
+                response => { OnConnect = false; GetFriends(friendsManager); }));
+        }
+
         #endregion
 
-        private IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
+        private static IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
         {
             var webUrl = url;
             if (param != null)
