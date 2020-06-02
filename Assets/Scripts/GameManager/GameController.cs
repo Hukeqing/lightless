@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using NetworkControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,11 +19,19 @@ namespace GameManager
     {
         public float gameMode;
 
+        private static bool _onScene;
+        
         private GameStatus _gameStatus;
+        private WebConnector _webConnector;
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
+            if (!_onScene)
+            {
+                DontDestroyOnLoad(gameObject);
+                _onScene = true;
+            }
+            _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
         }
 
         public void Leisure()
@@ -36,7 +45,17 @@ namespace GameManager
         {
             gameMode = -1;
             _gameStatus = GameStatus.HighScoreGame;
-            SceneManager.LoadScene(2);
+            _webConnector.StartGame(response =>
+            {
+                if (response)
+                {
+                    SceneManager.LoadScene(2);
+                }
+                else
+                {
+                    // TODO unknown error
+                }
+            });
         }
 
         public void GameOver(float score)
@@ -50,6 +69,7 @@ namespace GameManager
 #if UNITY_EDITOR
                     Debug.Log("Send score: " + score.ToString(CultureInfo.InvariantCulture));
 #endif
+                    _webConnector.ReportGame(score);
                     break;
                 case GameStatus.AcceptGame:
                     break;

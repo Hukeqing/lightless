@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 namespace NetworkControl
 {
+    #region Response
+
     // ReSharper disable once ClassNeverInstantiated.Global
     public class AccountResponse
     {
@@ -52,10 +55,26 @@ namespace NetworkControl
         public List<string> waitNa;
     }
 
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class GameResponse
+    {
+        // ReSharper disable once UnassignedField.Global
+        public int errorId;
+
+        // ReSharper disable once UnassignedField.Global
+        public string errorMsg;
+
+        // ReSharper disable once UnassignedField.Global
+        public int gameId;
+    }
+
+    #endregion
+
     public class WebConnector : MonoBehaviour
     {
         public AccountResponse Account { get; private set; }
         private FriendsResponse _friends;
+        private int _curGameId;
 
         // ReSharper disable once ConvertToConstant.Local
         private readonly string _basicUrl = "http://" + Ip.Host + "/gameAPI/lightless/";
@@ -179,8 +198,8 @@ namespace NetworkControl
             var param = new Dictionary<string, string>
                 {["from"] = friendId.ToString(), ["to"] = Account.accountId.ToString()};
             OnConnect = true;
-            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "accept_friend.php", param,
-                response =>
+            StartCoroutine(WebRequestGet(_basicUrl + "accept_friend.php", param,
+                () =>
                 {
                     OnConnect = false;
                     GetFriends(friendsManager);
@@ -205,12 +224,50 @@ namespace NetworkControl
             var param = new Dictionary<string, string>
                 {["from"] = Account.accountId.ToString(), ["to"] = friendId.ToString()};
             OnConnect = true;
-            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "delete_friend.php", param,
-                response =>
+            StartCoroutine(WebRequestGet(_basicUrl + "delete_friend.php", param,
+                () =>
                 {
                     OnConnect = false;
                     GetFriends(friendsManager);
                 }));
+        }
+
+        #endregion
+
+        #region Game
+
+        public void StartGame(Action<bool> callback)
+        {
+            var param = new Dictionary<string, string>
+                {["account"] = Account.accountId.ToString()};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "start_game.php", param,
+                response =>
+                {
+                    OnConnect = false;
+                    switch (response.errorId)
+                    {
+                        case 200:
+#if UNITY_EDITOR
+                            Debug.Log(response.errorMsg);
+#endif
+                            callback(false);
+                            break;
+                        case 0:
+                            _curGameId = response.gameId;
+                            callback(true);
+                            break;
+                    }
+                }));
+        }
+
+        public void ReportGame(float score)
+        {
+            var param = new Dictionary<string, string>
+                {["id"] = _curGameId.ToString(), ["score"] = score.ToString(CultureInfo.InvariantCulture)};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet(_basicUrl + "report_game.php", param,
+                () => { OnConnect = false; }));
         }
 
         #endregion
@@ -232,6 +289,25 @@ namespace NetworkControl
             var webRequest = UnityWebRequest.Get(webUrl);
             yield return webRequest.SendWebRequest();
             callback(JsonUtility.FromJson<T>(webRequest.downloadHandler.text));
+        }
+
+        private static IEnumerator WebRequestGet(string url, Dictionary<string, string> param, Action callback)
+        {
+            var webUrl = url;
+            if (param != null)
+            {
+                var i = 0;
+                foreach (var p in param)
+                {
+                    webUrl += i != 0 ? "&" : "?";
+                    webUrl += p.Key + "=" + p.Value;
+                    i++;
+                }
+            }
+
+            var webRequest = UnityWebRequest.Get(webUrl);
+            yield return webRequest.SendWebRequest();
+            callback();
         }
     }
 }
