@@ -73,8 +73,10 @@ namespace NetworkControl
     public class WebConnector : MonoBehaviour
     {
         public AccountResponse Account { get; private set; }
+
         private FriendsResponse _friends;
         private int _curGameId;
+        private int _curQueueId;
 
         // ReSharper disable once ConvertToConstant.Local
         private readonly string _basicUrl = "http://" + Ip.Host + "/gameAPI/lightless/";
@@ -244,7 +246,6 @@ namespace NetworkControl
             StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "start_game.php", param,
                 response =>
                 {
-                    OnConnect = false;
                     switch (response.errorId)
                     {
                         case 200:
@@ -255,7 +256,28 @@ namespace NetworkControl
                             break;
                         case 0:
                             _curGameId = response.gameId;
-                            callback(true);
+
+                            param.Clear();
+                            param["id"] = _curGameId.ToString();
+                            param["player"] = Account.accountId.ToString();
+                            StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "add_queue.php", param,
+                                response2 =>
+                                {
+                                    OnConnect = false;
+                                    switch (response2.errorId)
+                                    {
+                                        case 200:
+#if UNITY_EDITOR
+                                            Debug.Log(response2.errorMsg);
+#endif
+                                            callback(false);
+                                            break;
+                                        case 0:
+                                            _curQueueId = response2.gameId;
+                                            callback(true);
+                                            break;
+                                    }
+                                }));
                             break;
                     }
                 }));
@@ -267,7 +289,17 @@ namespace NetworkControl
                 {["id"] = _curGameId.ToString(), ["score"] = score.ToString(CultureInfo.InvariantCulture)};
             OnConnect = true;
             StartCoroutine(WebRequestGet(_basicUrl + "report_game.php", param,
-                () => { OnConnect = false; }));
+                () =>
+                {
+                    param.Clear();
+                    param["id"] = _curQueueId.ToString();
+
+                    StartCoroutine(WebRequestGet(_basicUrl + "report_queue.php", param,
+                        () =>
+                        {
+                            OnConnect = false;
+                        }));
+                }));
         }
 
         #endregion
