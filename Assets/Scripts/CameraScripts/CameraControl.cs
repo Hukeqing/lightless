@@ -1,13 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CameraScripts
 {
+    public enum GameStatus
+    {
+        Normal,
+        ToStop,
+        Stop,
+        UnStop
+    }
+
     [ExecuteInEditMode]
     public class CameraControl : MonoBehaviour
     {
         private static readonly int ColorGreyRangeId = Shader.PropertyToID("_ColorGreyRange");
-
-        [Range(0, 1)] public float colorGreyRange;
+        private static readonly int ColorReRange = Shader.PropertyToID("_ColorReRange");
+        private static readonly int ColorStop = Shader.PropertyToID("_ColorStop");
 
         private Shader _curShader;
         private Material _material;
@@ -16,6 +25,10 @@ namespace CameraScripts
         public float decreaseSpeed;
 
         public GameManager.GameManager gm;
+
+        public float stopCostTime;
+        private GameStatus _gameStatus;
+        private float _stopTime;
 
         private int _curHealth;
         private float _showHealth;
@@ -29,18 +42,57 @@ namespace CameraScripts
             _material = new Material(_curShader) {hideFlags = HideFlags.HideAndDontSave};
             _curHealth = maxHealth;
             _showHealth = _curHealth;
-            colorGreyRange = _showHealth / maxHealth;
+            _gameStatus = GameStatus.Normal;
         }
 
         private void Update()
         {
             _showHealth = Mathf.Lerp(_showHealth, _curHealth, decreaseSpeed);
-            colorGreyRange = _showHealth / maxHealth;
+
+            switch (_gameStatus)
+            {
+                case GameStatus.Normal:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        GameStop();
+                    }
+
+                    break;
+                case GameStatus.ToStop:
+                    if (Time.time - _stopTime > stopCostTime)
+                    {
+                        _gameStatus = GameStatus.Stop;
+                        Time.timeScale = 0;
+                    }
+
+                    break;
+                case GameStatus.Stop:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        GameStop();
+                    }
+
+                    break;
+                case GameStatus.UnStop:
+                    if (Time.time - _stopTime > stopCostTime)
+                    {
+                        _gameStatus = GameStatus.Normal;
+                        _material.SetFloat(ColorStop, -1);
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            _material.SetFloat(ColorGreyRangeId, colorGreyRange);
+            _material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * 1.1f);
+            _material.SetFloat(ColorReRange,
+                _gameStatus == GameStatus.ToStop || _gameStatus == GameStatus.Stop
+                    ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
+                    : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
             Graphics.Blit(src, dest, _material);
         }
 
@@ -59,6 +111,28 @@ namespace CameraScripts
             _curHealth += cure;
             if (_curHealth <= maxHealth) return;
             _curHealth = maxHealth;
+        }
+
+        private void GameStop()
+        {
+            _stopTime = Time.time;
+            switch (_gameStatus)
+            {
+                case GameStatus.Normal:
+                    _gameStatus = GameStatus.ToStop;
+                    _material.SetFloat(ColorStop, -1);
+                    break;
+                case GameStatus.ToStop:
+                    break;
+                case GameStatus.Stop:
+                    _gameStatus = GameStatus.UnStop;
+                    Time.timeScale = 1;
+                    break;
+                case GameStatus.UnStop:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
