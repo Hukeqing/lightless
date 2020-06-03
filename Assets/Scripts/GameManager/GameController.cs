@@ -20,7 +20,8 @@ namespace GameManager
         public float gameMode;
 
         private static bool _onScene;
-        
+
+        private HomeMessageManager _homeMessageManager;
         private GameStatus _gameStatus;
         private WebConnector _webConnector;
 
@@ -31,7 +32,9 @@ namespace GameManager
                 DontDestroyOnLoad(gameObject);
                 _onScene = true;
             }
+
             _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+            _homeMessageManager = GetComponent<HomeMessageManager>();
         }
 
         public void Leisure()
@@ -43,19 +46,52 @@ namespace GameManager
 
         public void HighScore()
         {
-            gameMode = -1;
-            _gameStatus = GameStatus.HighScoreGame;
-            _webConnector.StartGame(response =>
-            {
-                if (response)
+            _homeMessageManager.GetYesOrNoMessage(
+                "This game will be recorded by the server and will affect your ranking",
+                b =>
                 {
-                    SceneManager.LoadScene(2);
-                }
-                else
+                    if (!b) return;
+                    gameMode = -1;
+                    _gameStatus = GameStatus.HighScoreGame;
+                    _webConnector.StartGame(response =>
+                    {
+                        if (response)
+                        {
+                            SceneManager.LoadScene(2);
+                        }
+                        else
+                        {
+#if UNITY_EDITOR
+                            Debug.Log("Unknown error on High Score");
+#endif
+                        }
+                    });
+                });
+        }
+
+        public void AcceptGame()
+        {
+            _homeMessageManager.GetYesOrNoMessage(
+                "This game will be recorded by the server and will affect your ranking", b =>
                 {
-                    // TODO unknown error
-                }
-            });
+                    if (!b) return;
+                    _gameStatus = GameStatus.AcceptGame;
+                    _webConnector.GetGame(f =>
+                    {
+                        gameMode = f;
+                        if (gameMode < 0)
+                        {
+#if UNITY_EDITOR
+                            Debug.Log("Unknown error on accept game");
+#endif
+                            _homeMessageManager.ShowImportantMessage("There is no game for you", b1 => { });
+                        }
+                        else
+                        {
+                            SceneManager.LoadScene(2);
+                        }
+                    });
+                });
         }
 
         public void GameOver(float score)
@@ -72,6 +108,10 @@ namespace GameManager
                     _webConnector.ReportGame(score);
                     break;
                 case GameStatus.AcceptGame:
+#if UNITY_EDITOR
+                    Debug.Log("Send score: " + score.ToString(CultureInfo.InvariantCulture));
+#endif
+                    _webConnector.ReportGetGame(score);
                     break;
                 case GameStatus.FriendGame:
                     break;

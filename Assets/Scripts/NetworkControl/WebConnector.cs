@@ -32,6 +32,7 @@ namespace NetworkControl
     // ReSharper disable once ClassNeverInstantiated.Global
     public class FriendsResponse
     {
+        // ReSharper disable once UnusedMember.Global
         public int cnt;
 
         // ReSharper disable once UnassignedField.Global
@@ -66,6 +67,18 @@ namespace NetworkControl
 
         // ReSharper disable once UnassignedField.Global
         public int gameId;
+    }
+
+    public class ScoreResponse
+    {
+        // ReSharper disable once UnassignedField.Global
+        public int errorId;
+
+        // ReSharper disable once UnassignedField.Global
+        public string errorMsg;
+
+        // ReSharper disable once UnassignedField.Global
+        public float score;
     }
 
     #endregion
@@ -169,6 +182,41 @@ namespace NetworkControl
                 }));
         }
 
+        public void GetScore()
+        {
+            var param = new Dictionary<string, string>
+                {["id"] = Account.accountId.ToString()};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "account_score.php",
+                param, response =>
+                {
+                    if (response.errorId == 0)
+                    {
+                        Account = response;
+                    }
+                    else
+                    {
+#if UNITY_EDITOR
+                        Debug.Log(response.errorMsg);
+#endif
+                        switch (response.errorId)
+                        {
+                            case 404:
+                                _accountManager.Error(response.errorMsg, 0);
+                                break;
+                            case 200:
+                                _accountManager.Error(response.errorMsg, 1);
+                                break;
+                            default:
+                                _accountManager.Error(response.errorMsg, 3);
+                                break;
+                        }
+                    }
+
+                    OnConnect = false;
+                }));
+        }
+
         #endregion
 
         #region Friend
@@ -183,12 +231,12 @@ namespace NetworkControl
                     _friends = response;
                     for (var i = 0; i < _friends.accountId.Count; i++)
                     {
-                        friendsManager.AddFriend(_friends.accountNa[i], _friends.accountSc[i], _friends.accountId[i]);
+                        friendsManager.AddFriendUi(_friends.accountNa[i], _friends.accountSc[i], _friends.accountId[i]);
                     }
 
                     for (var i = 0; i < _friends.waitId.Count; i++)
                     {
-                        friendsManager.AddWaitFriend(_friends.waitNa[i], _friends.waitId[i]);
+                        friendsManager.AddWaitFriendUi(_friends.waitNa[i], _friends.waitId[i]);
                     }
 
                     OnConnect = false;
@@ -295,10 +343,86 @@ namespace NetworkControl
                     param["id"] = _curQueueId.ToString();
 
                     StartCoroutine(WebRequestGet(_basicUrl + "report_queue.php", param,
-                        () =>
-                        {
-                            OnConnect = false;
-                        }));
+                        () => { OnConnect = false; }));
+                }));
+        }
+
+        public void GetGame(Action<float> callback)
+        {
+            var param = new Dictionary<string, string>
+                {["account"] = Account.accountId.ToString()};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "start_game.php", param,
+                response =>
+                {
+                    switch (response.errorId)
+                    {
+                        case 200:
+#if UNITY_EDITOR
+                            Debug.Log(response.errorMsg);
+#endif
+                            callback(-1);
+                            break;
+                        case 0:
+                            _curGameId = response.gameId;
+
+                            param.Clear();
+                            param["account"] = Account.accountId.ToString();
+                            param["re"] = _curGameId.ToString();
+                            StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "get_queue.php", param,
+                                response2 =>
+                                {
+                                    switch (response2.errorId)
+                                    {
+                                        case 200:
+#if UNITY_EDITOR
+                                            Debug.Log(response2.errorMsg);
+#endif
+                                            callback(-1);
+                                            break;
+                                        case 0:
+                                            _curQueueId = response2.gameId;
+                                            param.Clear();
+                                            param["id"] = _curQueueId.ToString();
+                                            StartCoroutine(WebRequestGet<ScoreResponse>(_basicUrl + "get_score.php",
+                                                param,
+                                                response3 =>
+                                                {
+                                                    OnConnect = false;
+                                                    switch (response2.errorId)
+                                                    {
+                                                        case 200:
+#if UNITY_EDITOR
+                                                            Debug.Log(response3.errorMsg);
+#endif
+                                                            callback(-1);
+                                                            break;
+                                                        case 0:
+                                                            callback(response3.score);
+                                                            break;
+                                                    }
+                                                }));
+                                            break;
+                                    }
+                                }));
+                            break;
+                    }
+                }));
+        }
+
+        public void ReportGetGame(float score)
+        {
+            var param = new Dictionary<string, string>
+                {["id"] = _curGameId.ToString(), ["score"] = score.ToString(CultureInfo.InvariantCulture)};
+            OnConnect = true;
+            StartCoroutine(WebRequestGet(_basicUrl + "report_game.php", param,
+                () =>
+                {
+                    param.Clear();
+                    param["id"] = _curQueueId.ToString();
+
+                    StartCoroutine(WebRequestGet(_basicUrl + "report_competition.php", param,
+                        () => { OnConnect = false; }));
                 }));
         }
 

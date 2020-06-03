@@ -10,17 +10,18 @@ namespace GameManager
         public Text gameScoreText;
 
         public Animator gameOverImage;
-        
+
         private float _gameStartTime;
         private float _gameEndTime;
         private bool _gameOver;
 
         private GameController _gameController;
         private float _gameMode;
-        
+
         private static readonly int Over = Animator.StringToHash("GameOver");
 
-        private float GameScore => Mathf.Pow(_gameOver ? _gameEndTime : Time.time - _gameStartTime, gameScoreValue);
+        private float GameScore => Mathf.Pow(_gameOver ? _gameEndTime - _gameStartTime : Time.time - _gameStartTime,
+            gameScoreValue);
 
         private void Start()
         {
@@ -35,7 +36,7 @@ namespace GameManager
             gameScoreText.text = ((int) (GameScore * 10.0f) / 10.0f).ToString(CultureInfo.InvariantCulture);
             if (_gameMode > 0 && _gameMode < GameScore && !_gameOver)
             {
-                GameOver();
+                gameScoreText.color = Color.green;
             }
         }
 

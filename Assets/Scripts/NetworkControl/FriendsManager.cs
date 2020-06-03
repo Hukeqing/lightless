@@ -27,6 +27,7 @@ namespace NetworkControl
             _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
             _homeMessageManager = GetComponent<HomeMessageManager>();
             _webConnector.GetFriends(this);
+            _webConnector.GetScore();
             _pos = -60;
             SetMine(_webConnector.Account);
         }
@@ -37,7 +38,7 @@ namespace NetworkControl
             scoreText.text = "Score: " + accountResponse.accountSc;
         }
 
-        public void AddFriend(string friendName, int score, int id)
+        public void AddFriendUi(string friendName, int score, int id)
         {
             var newFriend = Instantiate(friendUi, content).GetComponent<Friend>();
             newFriend.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, _pos);
@@ -50,7 +51,7 @@ namespace NetworkControl
             _pos -= 40;
         }
 
-        public void AddWaitFriend(string friendName, int id)
+        public void AddWaitFriendUi(string friendName, int id)
         {
             var newFriend = Instantiate(friendUi, content).GetComponent<Friend>();
             newFriend.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, _pos);
@@ -114,6 +115,7 @@ namespace NetworkControl
                         break;
                 }
 
+                addFriendInputField.text = "";
                 _homeMessageManager.ShowMessage(msg, 3.0f);
             });
         }
