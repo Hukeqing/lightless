@@ -40,6 +40,7 @@ namespace Point
             var selfTransform = transform;
             var enemyData = gdm.GetRandomEnemy(rarity);
             _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+            _item.transform.Rotate(Vector3.up * Random.Range(0, 360));
             _item.transform.parent = selfTransform.parent;
         }
     }
