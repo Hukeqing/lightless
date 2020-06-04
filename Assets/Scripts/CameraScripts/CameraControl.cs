@@ -17,12 +17,16 @@ namespace CameraScripts
         private static readonly int ColorGreyRangeId = Shader.PropertyToID("_ColorGreyRange");
         private static readonly int ColorReRange = Shader.PropertyToID("_ColorReRange");
         private static readonly int ColorStop = Shader.PropertyToID("_ColorStop");
+        private static readonly int SampleStrength = Shader.PropertyToID("_SampleStrength");
+        private static readonly int SampleDist = Shader.PropertyToID("_SampleDist");
 
-        private Shader _curShader;
         private Material _material;
+        private Material _noiseMaterial;
+        private Material _dimMaterial;
 
         public int maxHealth;
         public float decreaseSpeed;
+        [Range(0, 1.5f)]public float maxCameraValue;
 
         public GameManager.GameManager gm;
 
@@ -38,8 +42,12 @@ namespace CameraScripts
 
         private void Start()
         {
-            _curShader = Shader.Find("CameraGrey/CameraGreyShader");
-            _material = new Material(_curShader) {hideFlags = HideFlags.HideAndDontSave};
+            _material = new Material(Shader.Find("CameraGrey/CameraGreyShader"))
+                {hideFlags = HideFlags.HideAndDontSave};
+            _noiseMaterial = new Material(Shader.Find("CameraGrey/Drift"))
+                {hideFlags = HideFlags.HideAndDontSave};
+            _dimMaterial = new Material(Shader.Find("CameraGrey/Dim"))
+                {hideFlags = HideFlags.HideAndDontSave};
             _curHealth = maxHealth;
             _showHealth = _curHealth;
             _gameStatus = GameStatus.Normal;
@@ -88,12 +96,46 @@ namespace CameraScripts
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            _material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * 1.1f);
+            _material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * maxCameraValue);
             _material.SetFloat(ColorReRange,
                 _gameStatus == GameStatus.ToStop || _gameStatus == GameStatus.Stop
                     ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
                     : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
-            Graphics.Blit(src, dest, _material);
+
+            _dimMaterial.SetFloat(SampleStrength, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
+            _dimMaterial.SetFloat(SampleDist, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
+
+            var rt1 = RenderTexture.GetTemporary(src.width, src.height);
+
+            switch (_gameStatus)
+            {
+                case GameStatus.Normal:
+                    Graphics.Blit(src, rt1, _material);
+                    Graphics.Blit(rt1, dest, _dimMaterial);
+                    break;
+                case GameStatus.ToStop:
+                case GameStatus.Stop:
+                case GameStatus.UnStop:
+                    _noiseMaterial.SetFloat(ColorReRange,
+                        _gameStatus == GameStatus.ToStop || _gameStatus == GameStatus.Stop
+                            ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
+                            : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
+
+                    // _noiseMaterial.SetFloat(TwistIntensity, 1.1f - _showHealth / maxHealth * 1.1f);
+
+                    var rt2 = RenderTexture.GetTemporary(src.width, src.height);
+
+                    Graphics.Blit(src, rt1, _material);
+                    Graphics.Blit(rt1, rt2, _noiseMaterial);
+                    Graphics.Blit(rt2, dest, _dimMaterial);
+
+                    RenderTexture.ReleaseTemporary(rt2);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            RenderTexture.ReleaseTemporary(rt1);
         }
 
         public void ApplyDamage(int damage)

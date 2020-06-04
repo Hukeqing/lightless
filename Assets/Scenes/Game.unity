@@ -659,9 +659,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf98efb946e5f74780444e23ff4b6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGreyRange: 1
   maxHealth: 100
   decreaseSpeed: 0.1
+  maxCameraValue: 1.5
   gm: {fileID: 2078163236}
   stopCostTime: 0.2
 --- !u!1 &622117342

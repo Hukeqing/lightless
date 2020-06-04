@@ -73,12 +73,6 @@ namespace NetworkControl
                 }
             }
 
-#if UNITY_EDITOR
-            if (Input.GetKeyUp(KeyCode.Escape))
-            {
-                UnityEditor.EditorApplication.isPlaying = false;
-            }
-#endif
             if (!Input.GetKeyDown(KeyCode.Return)) return;
             if (_onRegister)
             {
