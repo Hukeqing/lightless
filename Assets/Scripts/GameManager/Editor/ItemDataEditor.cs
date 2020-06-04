@@ -36,14 +36,25 @@ namespace GameManager.Editor
 
             var describe = new Rect(position.x, position.y + position.height, position.width, position.height);
 
-            var itemPrefab = new Rect(position.x, position.y + 2 * position.height, position.width, position.height);
+            if ((ItemClass) property.FindPropertyRelative("itemClass").enumValueIndex == 0)
+            {
+                var itemPrefab = new Rect(position.x, position.y + 2 * position.height, position.width / 2 - 5, position.height);
+                var itemSprite = new Rect(position.x + position.width / 2 + 5, position.y + 2 * position.height, position.width / 2 - 5, position.height);
+                
+                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("itemPrefab"), GUIContent.none);
+                EditorGUI.PropertyField(itemSprite, property.FindPropertyRelative("itemSprite"), GUIContent.none);
+            }
+            else
+            {
+                var itemPrefab = new Rect(position.x, position.y + 2 * position.height, position.width, position.height);
+                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("itemPrefab"), GUIContent.none);
+            }
 
             //绘制属性
             EditorGUI.PropertyField(itemClass, property.FindPropertyRelative("itemClass"), GUIContent.none);
             EditorGUI.PropertyField(itemRarity, property.FindPropertyRelative("itemRarity"), GUIContent.none);
             EditorGUI.PropertyField(itemName, property.FindPropertyRelative("itemName"), GUIContent.none);
             EditorGUI.PropertyField(describe, property.FindPropertyRelative("describe"), GUIContent.none);
-            EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("itemPrefab"), GUIContent.none);
 
             //重新设置为原来的层级
             EditorGUI.indentLevel = index;

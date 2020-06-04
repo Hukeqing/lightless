@@ -46,9 +46,11 @@ namespace Enemy
 
             EnemyState = EnemyState.Stand;
             var target = (player.position - transform.position).normalized;
+            target.y = 0;
             if (!(Vector3.Dot(target, transform.forward) >= 0.866f)) return;
             var ray = new Ray(transform.position, target);
             if (!Physics.Raycast(ray, out var hitInfo, viewRange, lookObstacle)) return;
+            Debug.DrawRay(transform.position, target * 100, Color.blue);
             if (hitInfo.collider.gameObject.layer != 10) return;
             var rotation = Quaternion.LookRotation(player.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);

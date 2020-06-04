@@ -17,8 +17,9 @@ namespace Player
         private float _nextDamageTime;
         private PackageControl _pc;
         private CameraControl _cc;
+        private Animator _playerAnimator;
 
-        private float _gameStartTime;
+        private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
 
         private void Start()
         {
@@ -26,17 +27,19 @@ namespace Player
             _nextDamageTime = Time.time + _curDamageTime;
             _cc = mainCamera.GetComponent<CameraControl>();
             _pc = GetComponent<PackageControl>();
-            _gameStartTime = Time.time;
+            _playerAnimator = GetComponent<Animator>();
         }
 
         private void FixedUpdate()
         {
-            transform.Translate(Time.deltaTime * moveSpeed * HealthValue *
-                                new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), Space.World);
+            var moveVec3 = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveVec3.Normalize();
+            transform.Translate(Time.deltaTime * moveSpeed * HealthValue * moveVec3, Space.World);
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hitInfo, 1000.0f, 1 << 9)) return;
             var target = hitInfo.point;
             target.y = transform.position.y;
+            _playerAnimator.SetFloat(MoveSpeed, moveVec3.magnitude);
             transform.LookAt(target);
             cf.CameraFollow();
         }
