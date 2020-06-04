@@ -25,12 +25,12 @@
             }
 
             float random1(float s) {
-                return frac(sin(s) * 1000.0);
+                return frac(sin(s * _Time.y) * 1000.0);
             }
 
 			fixed4 frag(v2f_img i) : COLOR
 			{
-			    float rand = random(i.uv.xy, 30);
+			    float rand = random(i.uv.xy, 20);
 			    if (rand < _Probability) {
 			        return random1(rand);
 			    }
