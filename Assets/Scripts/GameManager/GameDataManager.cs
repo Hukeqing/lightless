@@ -30,6 +30,7 @@ namespace GameManager
         public ItemClass itemClass;
         public Rarity itemRarity;
         public GameObject itemPrefab;
+        public Sprite itemSprite;
     }
 
     [Serializable]
