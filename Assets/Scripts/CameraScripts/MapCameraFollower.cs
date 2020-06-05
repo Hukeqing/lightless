@@ -20,7 +20,6 @@ namespace CameraScripts
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            
             _material.SetFloat(Probability, 1 - _pc.HealthValue);
             Graphics.Blit(src, dest, _material);
         }

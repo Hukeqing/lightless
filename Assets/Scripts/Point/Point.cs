@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameManager;
+using Item;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,6 +33,10 @@ namespace Point
             _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
             _item.transform.parent = selfTransform.parent;
             _item.GetComponent<Item.Item>().itemData = itemData;
+            if (itemData.itemClass == ItemClass.Weapon)
+            {
+                _item.GetComponent<WeaponItem>().weaponCost = 1;
+            }
         }
 
         private void InsEnemy()

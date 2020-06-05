@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GameManager
@@ -27,8 +29,20 @@ namespace GameManager
         {
             _gameOver = false;
             _gameStartTime = Time.time;
+#if UNITY_EDITOR
+            try
+            {
+                _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+                _gameMode = _gameController.gameMode;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+#else
             _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
             _gameMode = _gameController.gameMode;
+#endif
         }
 
         private void Update()
@@ -44,12 +58,28 @@ namespace GameManager
         {
             _gameOver = true;
             _gameEndTime = Time.time;
-            gameOverImage.SetTrigger(Over);
+#if UNITY_EDITOR
+            try
+            {
+                _gameController.GameOver(GameScore);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+#else
+            _gameController.GameOver(GameScore);
+#endif
         }
 
         public void SendScore()
         {
-            _gameController.GameOver(GameScore);
+            SceneManager.LoadScene(1);
+        }
+
+        public void ShowScore()
+        {
+            gameOverImage.SetTrigger(Over);
         }
     }
 }

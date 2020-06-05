@@ -26,17 +26,18 @@ namespace CameraScripts
 
         public int maxHealth;
         public float decreaseSpeed;
-        [Range(0, 1.5f)]public float maxCameraValue;
+        [Range(0, 2f)] public float maxCameraValue;
 
         public GameManager.GameManager gm;
-
+        public Player.PlayerControl pc;
+        
         public float stopCostTime;
         private GameStatus _gameStatus;
         private float _stopTime;
 
         private int _curHealth;
         private float _showHealth;
-        private bool _gameOver;
+        public bool GameOver { get; private set; }
 
         public float HealthValue => Mathf.Clamp01(_showHealth / maxHealth + 0.3f);
 
@@ -106,12 +107,13 @@ namespace CameraScripts
             _dimMaterial.SetFloat(SampleDist, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
 
             var rt1 = RenderTexture.GetTemporary(src.width, src.height);
+            var rt2 = RenderTexture.GetTemporary(src.width, src.height);
+            Graphics.Blit(src, rt1, _material);
 
             switch (_gameStatus)
             {
                 case GameStatus.Normal:
-                    Graphics.Blit(src, rt1, _material);
-                    Graphics.Blit(rt1, dest, _dimMaterial);
+                    Graphics.Blit(rt1, rt2);
                     break;
                 case GameStatus.ToStop:
                 case GameStatus.Stop:
@@ -122,29 +124,25 @@ namespace CameraScripts
                             : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
 
                     // _noiseMaterial.SetFloat(TwistIntensity, 1.1f - _showHealth / maxHealth * 1.1f);
-
-                    var rt2 = RenderTexture.GetTemporary(src.width, src.height);
-
-                    Graphics.Blit(src, rt1, _material);
                     Graphics.Blit(rt1, rt2, _noiseMaterial);
-                    Graphics.Blit(rt2, dest, _dimMaterial);
-
-                    RenderTexture.ReleaseTemporary(rt2);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
+            Graphics.Blit(rt2, dest, _dimMaterial);
+            RenderTexture.ReleaseTemporary(rt2);
             RenderTexture.ReleaseTemporary(rt1);
         }
 
         public void ApplyDamage(int damage)
         {
-            if (_gameOver) return;
+            if (GameOver) return;
             _curHealth -= damage;
             if (_curHealth > 0) return;
+            GameOver = true;
             _curHealth = 0;
-            _gameOver = true;
+            pc.GameOver();
             gm.GameOver();
         }
 

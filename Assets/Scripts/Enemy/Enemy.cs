@@ -19,6 +19,7 @@ namespace Enemy
         public float attackRange;
         public float attackCoolDown;
         public LayerMask lookObstacle;
+
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public EnemyState EnemyState { private set; get; }
@@ -30,7 +31,8 @@ namespace Enemy
             if (player == null)
             {
                 player = GameObject.FindWithTag("GameManager").GetComponent<Room.RoomManager>().player;
-            } 
+            }
+
             EnemyState = EnemyState.Stand;
             _nextAttack = 0;
             InitUnit();
@@ -50,7 +52,10 @@ namespace Enemy
             if (!(Vector3.Dot(target, transform.forward) >= 0.866f)) return;
             var ray = new Ray(transform.position, target);
             if (!Physics.Raycast(ray, out var hitInfo, viewRange, lookObstacle)) return;
-            Debug.DrawRay(transform.position, target * 100, Color.blue);
+#if UNITY_EDITOR
+            var position = transform.position;
+            Debug.DrawRay(position, target * Vector3.Distance(position, player.position), Color.red);
+#endif
             if (hitInfo.collider.gameObject.layer != 10) return;
             var rotation = Quaternion.LookRotation(player.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);

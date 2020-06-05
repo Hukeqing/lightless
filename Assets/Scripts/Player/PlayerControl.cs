@@ -1,5 +1,7 @@
 ﻿using CameraScripts;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
@@ -8,6 +10,8 @@ namespace Player
         public float moveSpeed;
         public Camera mainCamera;
         public CameraFollower cf;
+        public GameManager.GameManager gm;
+        public Image weaponCostImage;
         public float damageTime;
         public float damageUpgradeTime = 0.99f;
         public Weapon.Weapon weapon;
@@ -20,6 +24,7 @@ namespace Player
         private Animator _playerAnimator;
 
         private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
+        private static readonly int Death = Animator.StringToHash("Death");
 
         private void Start()
         {
@@ -32,6 +37,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            if (_cc.GameOver) return;
             var moveVec3 = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveVec3.Normalize();
             transform.Translate(Time.deltaTime * moveSpeed * HealthValue * moveVec3, Space.World);
@@ -46,6 +52,7 @@ namespace Player
 
         private void Update()
         {
+            if (_cc.GameOver) return;
             if (Input.GetMouseButton(0) && weapon != null)
             {
                 weapon.Attack();
@@ -75,6 +82,17 @@ namespace Player
         public void ApplySlowDamage(float value)
         {
             _curDamageTime *= value;
+        }
+
+        public void GameOver()
+        {
+            _playerAnimator.SetTrigger(Death);
+        }
+
+        [UsedImplicitly]
+        public void RestartLevel()
+        {
+            gm.ShowScore();
         }
     }
 }

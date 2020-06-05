@@ -12,7 +12,7 @@ namespace Item
             Debug.Log("Item miss~");
         }
 
-        public virtual void BeGet()
+        public void BeGet()
         {
             Destroy(gameObject);
         }

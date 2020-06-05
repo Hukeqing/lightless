@@ -96,7 +96,6 @@ namespace GameManager
 
         public void GameOver(float score)
         {
-            SceneManager.LoadScene(1);
             switch (_gameStatus)
             {
                 case GameStatus.LeisureGame:

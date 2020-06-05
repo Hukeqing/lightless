@@ -148,6 +148,8 @@ MonoBehaviour:
     m_Bits: 237568
   weaponItem: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
     type: 3}
+  weaponImage: {fileID: 0}
+  weaponCost: 0.1
   damage: 3
   maxRange: 100
   lineDisableInt: 0.03

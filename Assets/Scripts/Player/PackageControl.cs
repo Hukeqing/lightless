@@ -1,11 +1,13 @@
 ﻿using GameManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
     public class PackageControl : MonoBehaviour
     {
         public MessageManager messageManager;
+        public Image weaponImage;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -45,6 +47,11 @@ namespace Player
         public void ApplyItem()
         {
             if (_curItem == null) return;
+            if (_curItem.itemData.itemClass == ItemClass.Weapon)
+            {
+                weaponImage.sprite = _curItem.itemData.itemSprite;
+            }
+
             _curItem.ApplyItem(_pc);
             _curItem.BeGet();
             messageManager.ClearPackageMessage();

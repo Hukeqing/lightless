@@ -1,4 +1,5 @@
-﻿using GameManager;
+﻿using System.Collections;
+using GameManager;
 using UnityEngine;
 
 namespace Room
@@ -31,7 +32,7 @@ namespace Room
         public void Init(GameDataManager gm)
         {
             gdm = gm;
-            NewRoom();
+            StartCoroutine(NewRoom());
             _messageManager = GetComponent<MessageManager>();
         }
 
@@ -56,21 +57,20 @@ namespace Room
                 _existenceRoom[i ^ 2] = null;
                 _existenceRoom[i ^ 3] = null;
                 transform.position += _arr[i];
-                NewRoom();
+                StartCoroutine(NewRoom());
                 return;
             }
         }
 
 
-        private void NewRoom()
+        private IEnumerator NewRoom()
         {
             for (var i = 0; i < 4; i++)
             {
-                if (_existenceRoom[i] == null)
-                {
-                    _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().roomPrefab,
-                        curRoom.transform.position + _arr[i], curRoom.transform.rotation);
-                }
+                if (_existenceRoom[i] != null) continue;
+                _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().roomPrefab,
+                    curRoom.transform.position + _arr[i], curRoom.transform.rotation);
+                yield return new WaitForFixedUpdate();
             }
         }
     }
