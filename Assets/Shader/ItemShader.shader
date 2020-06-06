@@ -48,7 +48,8 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 UNITY_APPLY_FOG(i.fogCoord, col);
-                col = lerp(col, 1, frac(_Time.y / 2));
+                float tmp = frac(_Time.y / 2) * 2;
+                col = lerp(col, 1, lerp(tmp, 2 - tmp,step(1, tmp)));
                 return col;
             }
             ENDCG

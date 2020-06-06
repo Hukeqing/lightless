@@ -312,8 +312,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   player: {fileID: 0}
-  moveSpeed: 3
-  rotateSpeed: 10
+  findPlayerMoveSpeed: 3
+  freeMoveSpeed: 1.5
+  findPlayerRotateSpeed: 10
+  freeRotateSpeed: 120
+  minNextMoveCoolDown: 1
+  maxNextMoveCoolDown: 5
+  minMoveDist: 1
   viewRange: 10
   attackRange: 3
   attackCoolDown: 1

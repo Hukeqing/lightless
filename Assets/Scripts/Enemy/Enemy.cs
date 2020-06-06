@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Enemy
 {
@@ -6,6 +8,8 @@ namespace Enemy
     {
         Stand,
         Move,
+        FreeMove,
+        LookRound,
         Attack,
         Death
     }
@@ -13,8 +17,15 @@ namespace Enemy
     public class Enemy : Unit
     {
         public Transform player;
-        public float moveSpeed;
-        public float rotateSpeed;
+        public float findPlayerMoveSpeed;
+        public float freeMoveSpeed;
+        public float findPlayerRotateSpeed;
+        public float freeRotateSpeed;
+
+        [Range(1, 2)] public float minNextMoveCoolDown;
+        [Range(2, 5)] public float maxNextMoveCoolDown;
+        public float minMoveDist;
+
         public float viewRange;
         public float attackRange;
         public float attackCoolDown;
@@ -25,6 +36,9 @@ namespace Enemy
         public EnemyState EnemyState { private set; get; }
 
         private float _nextAttack;
+        private float _nextMove;
+        private Vector3 _curTarget;
+        private float _rotateValue;
 
         protected void Init()
         {
@@ -35,6 +49,7 @@ namespace Enemy
 
             EnemyState = EnemyState.Stand;
             _nextAttack = 0;
+            _nextMove = Time.time + Random.Range(1, 5.0f);
             InitUnit();
         }
 
@@ -46,30 +61,102 @@ namespace Enemy
                 return;
             }
 
-            EnemyState = EnemyState.Stand;
-            var target = (player.position - transform.position).normalized;
+            var myPosition = transform.position;
+            var target = (player.position - myPosition).normalized;
             target.y = 0;
-            if (!(Vector3.Dot(target, transform.forward) >= 0.866f)) return;
-            var ray = new Ray(transform.position, target);
-            if (!Physics.Raycast(ray, out var hitInfo, viewRange, lookObstacle)) return;
+            var ray = new Ray(myPosition, target);
+            if (Vector3.Dot(target, transform.forward) >= 0.866f &&
+                Physics.Raycast(ray, out var hitInfo, viewRange, lookObstacle) &&
+                hitInfo.collider.gameObject.layer == 10)
+            {
+                //  看到玩家
 #if UNITY_EDITOR
-            var position = transform.position;
-            Debug.DrawRay(position, target * Vector3.Distance(position, player.position), Color.red);
+                var position = transform.position;
+                var tmp = Vector3.Distance(position, player.position);
+                Debug.DrawRay(position, target * tmp,
+                    Color.Lerp(Color.red, Color.green, Mathf.Clamp01((tmp - viewRange) / viewRange)));
 #endif
-            if (hitInfo.collider.gameObject.layer != 10) return;
-            var rotation = Quaternion.LookRotation(player.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
-            if (Vector3.Distance(player.position, transform.position) > attackRange)
-            {
-                EnemyState = EnemyState.Move;
-                transform.Translate(target * (moveSpeed * Time.deltaTime), Space.World);
+                _curTarget = player.position;
+
+                EnemyState = Vector3.Distance(_curTarget, transform.position) < attackRange
+                    ? EnemyState.Attack
+                    : EnemyState.Move;
             }
-            else
+            else if (EnemyState == EnemyState.Attack || EnemyState == EnemyState.Move)
             {
-                EnemyState = EnemyState.Attack;
-                if (!(_nextAttack < Time.time)) return;
-                _nextAttack = Time.time + attackCoolDown;
-                Attack();
+                EnemyState = EnemyState.Stand;
+                _nextMove = Time.time + Random.Range(minNextMoveCoolDown, maxNextMoveCoolDown);
+            }
+
+            // 没有看到玩家
+            Quaternion rotation;
+            var dist = _curTarget != null ? Vector3.Distance(_curTarget, transform.position) : 0;
+            switch (EnemyState)
+            {
+                case EnemyState.Stand:
+                    if (_nextMove <= Time.time)
+                    {
+                        while (true)
+                        {
+                            var dir = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
+                            dir.Normalize();
+                            ray.origin = myPosition;
+                            ray.direction = dir;
+                            if (!Physics.Raycast(ray, out hitInfo, 1000, lookObstacle)) continue;
+                            if (!(Vector3.Distance(hitInfo.point, myPosition) > minMoveDist)) continue;
+                            _curTarget = Vector3.Lerp(myPosition + dir * minMoveDist, hitInfo.point,
+                                Random.Range(0, 0.9f));
+                            EnemyState = EnemyState.FreeMove;
+                            break;
+                        }
+                    }
+
+                    break;
+                case EnemyState.Move:
+                    rotation = Quaternion.LookRotation(player.position - transform.position);
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation, rotation, findPlayerRotateSpeed * Time.deltaTime);
+                    transform.Translate(target * (findPlayerMoveSpeed * Time.deltaTime), Space.World);
+                    break;
+                case EnemyState.FreeMove:
+                    rotation = Quaternion.LookRotation(_curTarget - myPosition);
+                    Transform transform1;
+                    (transform1 = transform).rotation =
+                        Quaternion.Slerp(transform.rotation, rotation, findPlayerRotateSpeed * Time.deltaTime);
+
+                    // transform.LookAt(_curTarget);
+                    // Debug.DrawRay(myPosition, _curTarget - myPosition, Color.blue);
+                    // Debug.DrawRay(myPosition, transform.forward * 10, Color.white);
+                    transform.Translate(transform1.forward * (Time.deltaTime * freeMoveSpeed), Space.World);
+                    if (dist < 0.1)
+                    {
+                        EnemyState = EnemyState.LookRound;
+                        _rotateValue = 0;
+                    }
+
+                    break;
+                case EnemyState.LookRound:
+                    transform.Rotate(Vector3.up * (freeRotateSpeed * Time.deltaTime * (_rotateValue >= 270 ? -1 : 1)));
+                    _rotateValue += freeRotateSpeed * Time.deltaTime;
+                    if (_rotateValue >= Random.Range(300, 450))
+                    {
+                        _nextMove = Time.time + Random.Range(minNextMoveCoolDown, maxNextMoveCoolDown);
+                        EnemyState = EnemyState.Stand;
+                    }
+
+                    break;
+                case EnemyState.Attack:
+                    if (Time.time >= _nextAttack)
+                    {
+                        _nextAttack = Time.time + attackCoolDown;
+                        Attack();
+                    }
+
+                    break;
+                case EnemyState.Death:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

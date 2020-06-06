@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: be1fb153cf515ee419e9d4bf7f821624
+  m_OcclusionCullingData: {fileID: 36300000, guid: 41990e02ec946ed4c8e974df95ea1426,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -44,7 +45,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -2439,7 +2440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curRoom: {fileID: 405631464}
   player: {fileID: 773071781}
-  gdm: {fileID: 0}
+  gdm: {fileID: 2078163234}
 --- !u!114 &2078163234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2453,13 +2454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataList:
-  - dataName: "\u6B66\u5668_\u6D4B\u8BD5"
-    dataRarity: 1
-    dataPrefab: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
-      type: 3}
-    describe: DemoGun Describe
-    itemClass: 0
-    itemSprite: {fileID: 21300000, guid: 81e43a7daadac624dad6831a4c7df1b3, type: 3}
   - dataName: "\u836F\u54C1_\u6D4B\u8BD5"
     dataRarity: 0
     dataPrefab: {fileID: 5813134997915923621, guid: 86effb7d482c0dc44a626493ccc15b11,
@@ -2467,62 +2461,69 @@ MonoBehaviour:
     describe: Demo Medication Describe
     itemClass: 1
     itemSprite: {fileID: 0}
+  - dataName: "\u6B66\u5668_\u6D4B\u8BD5"
+    dataRarity: 1
+    dataPrefab: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 0
+    itemSprite: {fileID: 21300000, guid: 81e43a7daadac624dad6831a4c7df1b3, type: 3}
   enemyDataList:
   - dataName: "\u654C\u4EBA_\u6D4B\u8BD5"
     dataRarity: 0
     dataPrefab: {fileID: 2105369960170222706, guid: 3523d3c9a9c29dc49b2568b9bf59765b,
       type: 3}
   roomDataList:
-  - dataName: "\u4ED3\u5E93"
-    dataRarity: 1
-    dataPrefab: {fileID: 673135245381958153, guid: 480d29acbf4f66e48a7004f87b6767e8,
-      type: 3}
-    roomDescribe: "\u5728\u6838\u6CC4\u6F0F\u4E4B\u540E\uFF0C\u8FD9\u91CC\u7684\u98DF\u7269\u4FBF\u88AB\u54C4\u62A2\u4E00\u7A7A"
   - dataName: "\u57CE\u5E02"
     dataRarity: 0
     dataPrefab: {fileID: 5129479067036151964, guid: 2ccc1e9ddbe7afb4b8aa1be603c70388,
       type: 3}
     roomDescribe: "\u66FE\u7ECF\u8FD9\u91CC\u662F\u6700\u7E41\u8363\u7684\u5730\u5757\uFF0C\u73B0\u5728\u597D\u50CF\u4E5F\u662F"
-  - dataName: "\u5065\u8EAB\u623F"
-    dataRarity: 2
-    dataPrefab: {fileID: 8515350869508453855, guid: dca5f6fd6be12664699218cd86de528a,
-      type: 3}
-    roomDescribe: "\u6216\u8005\u53EB\u62F3\u9986\u66F4\u5408\u9002"
-  - dataName: "\u76D1\u72F1"
-    dataRarity: 3
-    dataPrefab: {fileID: 7465083231437918393, guid: 0982a1aaf8fd4024bbb381d8756a8974,
-      type: 3}
-    roomDescribe: "\u6781\u6743\u653F\u5E9C\u7684\u7EDF\u6CBB\u66FE\u7ECF\u5BFC\u81F4\u8FD9\u91CC\u975E\u5E38\u7E41\u5FD9"
-  - dataName: "\u56FE\u4E66\u9986"
-    dataRarity: 4
-    dataPrefab: {fileID: 3230867602478964773, guid: 03d5bbbc3eaabd742a79469179ff1729,
-      type: 3}
-    roomDescribe: "\u73B0\u5728\u5DF2\u7ECF\u65E0\u6687\u770B\u4E66\u4E86\u5427"
-  - dataName: "\u505C\u8F66\u573A"
-    dataRarity: 1
-    dataPrefab: {fileID: 3314482288842871207, guid: f9a2787f6e4fa624e898d1c733c441c0,
-      type: 3}
-    roomDescribe: "ISLAND\u7684\u6CD5\u5F8B\u5BF9\u4E71\u505C\u653E\u7684\u8F66\u8F86\u4F1A\u76F4\u63A5\u6CA1\u6536"
   - dataName: "\u6C34\u5904\u7406\u5382"
     dataRarity: 0
     dataPrefab: {fileID: 7940490599275245264, guid: e13be50a3e404a64988a496c949644f8,
       type: 3}
     roomDescribe: "\u63A7\u5236\u4E86\u6C34\u5904\u7406\u4E2D\u5FC3\u5C31\u662F\u63A7\u5236\u4E86\u8FD9\u5EA7\u5E9F\u57CE"
+  - dataName: "\u4ED3\u5E93"
+    dataRarity: 1
+    dataPrefab: {fileID: 673135245381958153, guid: 480d29acbf4f66e48a7004f87b6767e8,
+      type: 3}
+    roomDescribe: "\u5728\u6838\u6CC4\u6F0F\u4E4B\u540E\uFF0C\u8FD9\u91CC\u7684\u98DF\u7269\u4FBF\u88AB\u54C4\u62A2\u4E00\u7A7A"
+  - dataName: "\u505C\u8F66\u573A"
+    dataRarity: 1
+    dataPrefab: {fileID: 3314482288842871207, guid: f9a2787f6e4fa624e898d1c733c441c0,
+      type: 3}
+    roomDescribe: "ISLAND\u7684\u6CD5\u5F8B\u5BF9\u4E71\u505C\u653E\u7684\u8F66\u8F86\u4F1A\u76F4\u63A5\u6CA1\u6536"
   - dataName: "\u5DE5\u5382"
     dataRarity: 1
     dataPrefab: {fileID: 1781978838891768327, guid: 6786850bfffa9e24b8655640d630ed82,
       type: 3}
     roomDescribe: "\u8FD9\u662F\u7CAE\u98DF\u4E5F\u53EF\u4EE5\u901A\u8FC7\u673A\u5668\u751F\u4EA7\u7684\u65F6\u4EE3"
+  - dataName: "\u5065\u8EAB\u623F"
+    dataRarity: 2
+    dataPrefab: {fileID: 8515350869508453855, guid: dca5f6fd6be12664699218cd86de528a,
+      type: 3}
+    roomDescribe: "\u6216\u8005\u53EB\u62F3\u9986\u66F4\u5408\u9002"
   - dataName: "\u5B66\u6821"
     dataRarity: 2
     dataPrefab: {fileID: 1189693023697159587, guid: 2b37b42f66ec4e448af871f7035a6944,
       type: 3}
     roomDescribe: "\u7B80\u6613\u7684\u6559\u5B66\u5730\u70B9"
+  - dataName: "\u76D1\u72F1"
+    dataRarity: 3
+    dataPrefab: {fileID: 7465083231437918393, guid: 0982a1aaf8fd4024bbb381d8756a8974,
+      type: 3}
+    roomDescribe: "\u6781\u6743\u653F\u5E9C\u7684\u7EDF\u6CBB\u66FE\u7ECF\u5BFC\u81F4\u8FD9\u91CC\u975E\u5E38\u7E41\u5FD9"
   - dataName: "\u6CF3\u6C60"
     dataRarity: 3
     dataPrefab: {fileID: 5955826244195351034, guid: 150b69a8bc2c9534bb4a5312788fd8aa,
       type: 3}
     roomDescribe: "\u6709\u94B1\u4EBA\u7684\u5A31\u4E50\u8BBE\u65BD"
+  - dataName: "\u56FE\u4E66\u9986"
+    dataRarity: 4
+    dataPrefab: {fileID: 3230867602478964773, guid: 03d5bbbc3eaabd742a79469179ff1729,
+      type: 3}
+    roomDescribe: "\u73B0\u5728\u5DF2\u7ECF\u65E0\u6687\u770B\u4E66\u4E86\u5427"
   - dataName: "\u661F\u8C61\u9986"
     dataRarity: 5
     dataPrefab: {fileID: 9069719182147545765, guid: a3d342b2be872c4429cacf09e62cc3fd,

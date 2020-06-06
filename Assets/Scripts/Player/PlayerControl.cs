@@ -13,7 +13,7 @@ namespace Player
         public GameManager.GameManager gm;
         public Image weaponCostImage;
         public float damageTime;
-        public float damageUpgradeTime = 0.99f;
+        [Range(0.9f, 0.99f)] public float damageUpgradeTime = 0.99f;
         public Weapon.Weapon weapon;
         public float HealthValue => _cc.HealthValue;
 

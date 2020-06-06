@@ -73,9 +73,9 @@ namespace GameManager
             {
                 roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
-            itemDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
-            enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
-            roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+            // itemDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+            // enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+            // roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
             _rm.Init(this);
         }
 
