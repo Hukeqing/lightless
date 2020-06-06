@@ -25,8 +25,8 @@ namespace GameManager
         public void PackageMessage(ItemData itemData)
         {
             packageMessage.SetActive(true);
-            packageMessageText.text = itemData.itemName;
-            packageMessageText.color = GameDataManager.GetColor(itemData.itemRarity);
+            packageMessageText.text = itemData.dataName;
+            packageMessageText.color = GameDataManager.GetColor(itemData.dataRarity);
         }
 
         public void ClearPackageMessage()
@@ -41,8 +41,8 @@ namespace GameManager
         public void RoomMessage(RoomData roomData)
         {
             _roomMessageStartTime = Time.time;
-            roomMessageText.text = roomData.roomName;
-            roomMessageText.color = GameDataManager.GetColor(roomData.roomRarity);
+            roomMessageText.text = roomData.dataName;
+            roomMessageText.color = GameDataManager.GetColor(roomData.dataRarity);
             roomMessageTextDescribe.text = roomData.roomDescribe;
 
             StartCoroutine(OffShowRoomName());

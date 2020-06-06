@@ -68,7 +68,7 @@ namespace Room
             for (var i = 0; i < 4; i++)
             {
                 if (_existenceRoom[i] != null) continue;
-                _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().roomPrefab,
+                _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().dataPrefab,
                     curRoom.transform.position + _arr[i], curRoom.transform.rotation);
                 yield return new WaitForFixedUpdate();
             }

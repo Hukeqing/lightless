@@ -15,7 +15,7 @@ namespace GameManager.Editor
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("itemRarity").enumValueIndex);
+            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("dataRarity").enumValueIndex);
 
             var rectPosition = position;
 
@@ -30,9 +30,9 @@ namespace GameManager.Editor
             EditorGUI.DrawRect(rectPosition, tmp);
 
             position.height /= 3;
-            var itemName = new Rect(position.x, position.y, 130, position.height);
-            var itemClass = new Rect(position.x + 135, position.y, 50, position.height);
-            var itemRarity = new Rect(position.x + 190, position.y, position.width - 190, position.height);
+            var itemName = new Rect(position.x, position.y, 100, position.height);
+            var itemClass = new Rect(position.x + 105, position.y, 50, position.height);
+            var itemRarity = new Rect(position.x + 160, position.y, position.width - 160, position.height);
 
             var describe = new Rect(position.x, position.y + position.height, position.width, position.height);
 
@@ -41,19 +41,19 @@ namespace GameManager.Editor
                 var itemPrefab = new Rect(position.x, position.y + 2 * position.height, position.width / 2 - 5, position.height);
                 var itemSprite = new Rect(position.x + position.width / 2 + 5, position.y + 2 * position.height, position.width / 2 - 5, position.height);
                 
-                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("itemPrefab"), GUIContent.none);
+                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("dataPrefab"), GUIContent.none);
                 EditorGUI.PropertyField(itemSprite, property.FindPropertyRelative("itemSprite"), GUIContent.none);
             }
             else
             {
                 var itemPrefab = new Rect(position.x, position.y + 2 * position.height, position.width, position.height);
-                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("itemPrefab"), GUIContent.none);
+                EditorGUI.PropertyField(itemPrefab, property.FindPropertyRelative("dataPrefab"), GUIContent.none);
             }
 
             //绘制属性
             EditorGUI.PropertyField(itemClass, property.FindPropertyRelative("itemClass"), GUIContent.none);
-            EditorGUI.PropertyField(itemRarity, property.FindPropertyRelative("itemRarity"), GUIContent.none);
-            EditorGUI.PropertyField(itemName, property.FindPropertyRelative("itemName"), GUIContent.none);
+            EditorGUI.PropertyField(itemRarity, property.FindPropertyRelative("dataRarity"), GUIContent.none);
+            EditorGUI.PropertyField(itemName, property.FindPropertyRelative("dataName"), GUIContent.none);
             EditorGUI.PropertyField(describe, property.FindPropertyRelative("describe"), GUIContent.none);
 
             //重新设置为原来的层级

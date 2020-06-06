@@ -15,7 +15,7 @@ namespace GameManager.Editor
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("roomRarity").enumValueIndex);
+            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("dataRarity").enumValueIndex);
 
             var rectPosition = position;
 
@@ -37,9 +37,9 @@ namespace GameManager.Editor
             var roomDescribe = new Rect(position.x, position.y + position.height * 2, position.width, position.height);
 
             //绘制属性
-            EditorGUI.PropertyField(roomName, property.FindPropertyRelative("roomName"), GUIContent.none);
-            EditorGUI.PropertyField(roomRarity, property.FindPropertyRelative("roomRarity"), GUIContent.none);
-            EditorGUI.PropertyField(roomPrefab, property.FindPropertyRelative("roomPrefab"), GUIContent.none);
+            EditorGUI.PropertyField(roomName, property.FindPropertyRelative("dataName"), GUIContent.none);
+            EditorGUI.PropertyField(roomRarity, property.FindPropertyRelative("dataRarity"), GUIContent.none);
+            EditorGUI.PropertyField(roomPrefab, property.FindPropertyRelative("dataPrefab"), GUIContent.none);
             EditorGUI.PropertyField(roomDescribe, property.FindPropertyRelative("roomDescribe"), GUIContent.none);
 
             //重新设置为原来的层级

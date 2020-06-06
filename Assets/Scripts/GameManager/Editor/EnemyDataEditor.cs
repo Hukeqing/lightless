@@ -15,7 +15,7 @@ namespace GameManager.Editor
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("enemyRarity").enumValueIndex);
+            var tmp = GameDataManager.GetColor((Rarity) property.FindPropertyRelative("dataRarity").enumValueIndex);
             
             var rectPosition = position;
 
@@ -36,9 +36,9 @@ namespace GameManager.Editor
             var enemyPrefab = new Rect(position.x, position.y + position.height, position.width, position.height);
 
             //绘制属性
-            EditorGUI.PropertyField(enemyName, property.FindPropertyRelative("enemyName"), GUIContent.none);
-            EditorGUI.PropertyField(enemyRarity, property.FindPropertyRelative("enemyRarity"), GUIContent.none);
-            EditorGUI.PropertyField(enemyPrefab, property.FindPropertyRelative("enemyPrefab"), GUIContent.none);
+            EditorGUI.PropertyField(enemyName, property.FindPropertyRelative("dataName"), GUIContent.none);
+            EditorGUI.PropertyField(enemyRarity, property.FindPropertyRelative("dataRarity"), GUIContent.none);
+            EditorGUI.PropertyField(enemyPrefab, property.FindPropertyRelative("dataPrefab"), GUIContent.none);
 
             //重新设置为原来的层级
             EditorGUI.indentLevel = index;

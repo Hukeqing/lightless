@@ -30,7 +30,7 @@ namespace Point
             var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameDataManager>();
             var selfTransform = transform;
             var itemData = gdm.GetRandomItem(rarity);
-            _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
+            _item = Instantiate(itemData.dataPrefab, selfTransform.position, selfTransform.rotation);
             _item.transform.parent = selfTransform.parent;
             _item.GetComponent<Item.Item>().itemData = itemData;
             if (itemData.itemClass == ItemClass.Weapon)
@@ -44,7 +44,7 @@ namespace Point
             var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameDataManager>();
             var selfTransform = transform;
             var enemyData = gdm.GetRandomEnemy(rarity);
-            _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
+            _item = Instantiate(enemyData.dataPrefab, selfTransform.position, selfTransform.rotation);
             _item.transform.Rotate(Vector3.up * Random.Range(0, 360));
             _item.transform.parent = selfTransform.parent;
         }
