@@ -15,6 +15,7 @@ namespace NetworkControl
     public class Friend : MonoBehaviour
     {
         public int friendId;
+        public int friendSc;
         public Text friendScore;
         public Text friendName;
         public Button button;
@@ -38,7 +39,7 @@ namespace NetworkControl
                     button.GetComponentInChildren<Text>().text = "Accept";
                     break;
                 case FriendStatus.OnSelect:
-                    button.GetComponentInChildren<Text>().text = "DisSelect";
+                    button.GetComponentInChildren<Text>().text = "UnSelect";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(friendStatus), friendStatus, null);

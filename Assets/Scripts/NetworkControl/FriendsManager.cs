@@ -28,7 +28,7 @@ namespace NetworkControl
             _homeMessageManager = GetComponent<HomeMessageManager>();
             _webConnector.GetFriends(this);
             _webConnector.GetScore();
-            _pos = -60;
+            _pos = -130;
             SetMine(_webConnector.Account);
         }
 
@@ -46,11 +46,12 @@ namespace NetworkControl
             newFriend.friendId = id;
             newFriend.friendName.text = friendName;
             newFriend.friendName.color = ScoreColor(score);
+            newFriend.friendSc = score;
             newFriend.friendScore.text = score.ToString();
             newFriend.SetStatus(FriendStatus.Normal);
             newFriend.friendsManager = this;
             _friends.Add(newFriend);
-            _pos -= 40;
+            _pos -= 85;
         }
 
         public void AddWaitFriendUi(string friendName, int id)
@@ -64,19 +65,19 @@ namespace NetworkControl
             newFriend.SetStatus(FriendStatus.OnHold);
             newFriend.friendsManager = this;
             _friends.Add(newFriend);
-            _pos -= 40;
+            _pos -= 85;
         }
 
         public void SelectFriend(Friend friend)
         {
             if (curSelectFriend != null)
             {
-                curSelectFriend.friendName.color = Color.black;
+                curSelectFriend.friendName.color = ScoreColor(curSelectFriend.friendSc);
                 curSelectFriend.SetStatus(FriendStatus.Normal);
             }
 
             curSelectFriend = friend;
-            friend.friendName.color = Color.cyan;
+            friend.friendName.color = Color.white;
             friend.SetStatus(FriendStatus.OnSelect);
         }
 
@@ -84,7 +85,7 @@ namespace NetworkControl
         {
             if (curSelectFriend != null)
             {
-                curSelectFriend.friendName.color = Color.black;
+                curSelectFriend.friendName.color = ScoreColor(curSelectFriend.friendSc);
                 curSelectFriend.SetStatus(FriendStatus.Normal);
             }
 
@@ -144,7 +145,7 @@ namespace NetworkControl
             }
 
             _friends.Clear();
-            _pos = -60;
+            _pos = -130;
         }
 
         private static Color ScoreColor(int score)

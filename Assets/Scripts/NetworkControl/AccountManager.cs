@@ -24,6 +24,7 @@ namespace NetworkControl
         private void Start()
         {
             _onRegister = false;
+            messageText.text = "Login";
             _system = EventSystem.current;
             _webConnector = GetComponent<WebConnector>();
             DontDestroyOnLoad(gameObject);
@@ -35,6 +36,7 @@ namespace NetworkControl
             {
                 _onRegister = false;
                 loginRegister.SetBool(OnRegister, _onRegister);
+                messageText.text = "Login";
             }
             else
             {
@@ -52,6 +54,7 @@ namespace NetworkControl
             {
                 _onRegister = true;
                 loginRegister.SetBool(OnRegister, _onRegister);
+                messageText.text = "Register";
             }
         }
 
@@ -93,7 +96,7 @@ namespace NetworkControl
                 @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
             if (!System.Text.RegularExpressions.Regex.IsMatch(email, expression))
             {
-                Error("Email is not a email", 0);
+                Error("Email Error", 0);
                 return;
             }
 
@@ -107,11 +110,19 @@ namespace NetworkControl
             var email = emailField.text;
             var pwd = pwdField.text;
             var repeat = repeatField.text;
-            const string expression =
-                @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-            if (pwd != repeat)
+            const string nameExpression = @"[A-Za-z0-9]{3,10}";
+            if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, nameExpression))
             {
-                Error("Password is not same", 2);
+                Error("Name does not conform to the specification", -1);
+                return;
+            }
+
+            const string emailExpression =
+                @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email, emailExpression))
+            {
+                Error("Email Error", 0);
                 return;
             }
 
@@ -121,9 +132,9 @@ namespace NetworkControl
                 return;
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(email, expression))
+            if (pwd != repeat)
             {
-                Error("Email is not a email", 0);
+                Error("Password is not same", 2);
                 return;
             }
 
@@ -135,7 +146,7 @@ namespace NetworkControl
             var colorBlock = inputField.colors;
             colorBlock.normalColor = Color.white;
             inputField.colors = colorBlock;
-            messageText.text = "";
+            messageText.text = _onRegister ? "Register" : "Login";
         }
 
         /// <summary>
@@ -149,6 +160,11 @@ namespace NetworkControl
             messageText.text = msg;
             switch (errorId)
             {
+                case -1:
+                    colorBlock = nameField.colors;
+                    colorBlock.normalColor = Color.red;
+                    nameField.colors = colorBlock;
+                    break;
                 case 0:
                     colorBlock = emailField.colors;
                     colorBlock.normalColor = Color.red;
