@@ -35,7 +35,8 @@ namespace NetworkControl
         private void SetMine(AccountResponse accountResponse)
         {
             nameText.text = accountResponse.accountNa;
-            scoreText.text = "Score: " + accountResponse.accountSc;
+            nameText.color = ScoreColor(accountResponse.accountSc);
+            scoreText.text = "Rating: " + accountResponse.accountSc;
         }
 
         public void AddFriendUi(string friendName, int score, int id)
@@ -44,6 +45,7 @@ namespace NetworkControl
             newFriend.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, _pos);
             newFriend.friendId = id;
             newFriend.friendName.text = friendName;
+            newFriend.friendName.color = ScoreColor(score);
             newFriend.friendScore.text = score.ToString();
             newFriend.SetStatus(FriendStatus.Normal);
             newFriend.friendsManager = this;
@@ -57,6 +59,7 @@ namespace NetworkControl
             newFriend.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, _pos);
             newFriend.friendId = id;
             newFriend.friendName.text = friendName;
+            newFriend.friendName.color = Color.white;
             newFriend.friendScore.text = "";
             newFriend.SetStatus(FriendStatus.OnHold);
             newFriend.friendsManager = this;
@@ -142,6 +145,51 @@ namespace NetworkControl
 
             _friends.Clear();
             _pos = -60;
+        }
+
+        private static Color ScoreColor(int score)
+        {
+            if (score < 1200)
+            {
+                return Color.gray;
+            }
+
+            if (score < 1400)
+            {
+                return Color.green;
+            }
+
+            if (score < 1600)
+            {
+                return new Color(0.47f, 0.87f, 0.73f);
+            }
+
+            if (score < 1900)
+            {
+                return new Color(0.67f, 0.67f, 1f);
+            }
+
+            if (score < 2100)
+            {
+                return new Color(1f, 0.53f, 1f);
+            }
+
+            if (score < 2300)
+            {
+                return new Color(1f, 0.8f, 0.53f);
+            }
+
+            if (score < 2400)
+            {
+                return new Color(1f, 0.73f, 0.33f);
+            }
+
+            if (score < 2600)
+            {
+                return new Color(1f, 0.47f, 0.47f);
+            }
+
+            return score < 3000 ? new Color(1f, 0.2f, 0.2f) : new Color(0.67f, 0f, 0f);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Point
 {
     public class Point : MonoBehaviour
     {
-        public GameManager.Rarity rarity;
+        public Rarity rarity;
         [Range(0, 1)] public float itemValue;
 
         private GameObject _item;
@@ -27,7 +27,7 @@ namespace Point
 
         private void InsItem()
         {
-            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameManager.GameDataManager>();
+            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameDataManager>();
             var selfTransform = transform;
             var itemData = gdm.GetRandomItem(rarity);
             _item = Instantiate(itemData.itemPrefab, selfTransform.position, selfTransform.rotation);
@@ -41,7 +41,7 @@ namespace Point
 
         private void InsEnemy()
         {
-            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameManager.GameDataManager>();
+            var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameDataManager>();
             var selfTransform = transform;
             var enemyData = gdm.GetRandomEnemy(rarity);
             _item = Instantiate(enemyData.enemyPrefab, selfTransform.position, selfTransform.rotation);
