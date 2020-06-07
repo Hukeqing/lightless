@@ -1,0 +1,62 @@
+﻿using UnityEngine;
+
+namespace Weapon
+{
+    public class SniperRifle : Weapon
+    {
+        public int damage;
+        public float maxRange;
+        public float lineDisableInt;
+        public Transform firePoint;
+        public LineRenderer attackLine;
+        public float backForce;
+
+        private Ray _ray;
+        private float _lineDisableTime;
+        private Rigidbody _playerRigid;
+
+        private void Start()
+        {
+            attackLine.gameObject.SetActive(false);
+            _playerRigid = transform.parent.GetComponent<Rigidbody>();
+        }
+
+        private void Update()
+        {
+            if (attackLine.enabled && _lineDisableTime <= Time.time)
+            {
+                attackLine.gameObject.SetActive(false);
+                _playerRigid.velocity = Vector3.zero;
+            }
+        }
+
+        public override void AttackDown()
+        {
+            if (curWeaponCost <= 0) return;
+            if (nextAttack > Time.time) return;
+            nextAttack = Time.time + coolDown;
+            var firePointPosition = firePoint.position;
+            _ray = new Ray(firePointPosition, firePoint.forward);
+            attackLine.gameObject.SetActive(true);
+            attackLine.SetPosition(0, firePointPosition);
+            if (Physics.Raycast(_ray, out var hitInfo, maxRange, hitLayerMask))
+            {
+                attackLine.SetPosition(1, hitInfo.point);
+                if (hitInfo.collider.gameObject.layer == 13)
+                {
+                    var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
+                    if (enemyUnit.IsDie) return;
+                    enemyUnit.ApplyDamage(damage);
+                }
+            }
+            else
+            {
+                attackLine.SetPosition(1, firePointPosition + firePoint.forward * maxRange);
+            }
+
+            _lineDisableTime = Time.time + lineDisableInt;
+            WeaponCost(weaponCost);
+            _playerRigid.AddForce(-transform.forward * backForce);
+        }
+    }
+}

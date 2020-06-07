@@ -52,6 +52,7 @@ namespace GameManager
         {
             if (!_onRoomMessage)
             {
+                roomMessage.gameObject.SetActive(true);
                 roomMessage.SetTrigger(StartTrigger);
                 _onRoomMessage = true;
             }
@@ -60,6 +61,7 @@ namespace GameManager
             roomMessage.SetTrigger(EndTrigger);
             _onRoomMessage = false;
             yield return new WaitForSeconds(1);
+            roomMessage.gameObject.SetActive(false);
         }
 
         #endregion

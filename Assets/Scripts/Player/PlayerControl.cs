@@ -53,9 +53,22 @@ namespace Player
         private void Update()
         {
             if (_cc.GameOver) return;
-            if (Input.GetMouseButton(0) && weapon != null)
+            if (weapon != null)
             {
-                weapon.Attack();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    weapon.AttackDown();
+                }
+
+                if (Input.GetMouseButton(0))
+                {
+                    weapon.Attack();
+                }
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    weapon.AttackUp();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.E))

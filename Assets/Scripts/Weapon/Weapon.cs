@@ -10,28 +10,34 @@ namespace Weapon
         public GameObject weaponItem;
         [HideInInspector] public Image weaponImage;
         [Range(0, 1)] public float weaponCost;
+        [HideInInspector] public float curWeaponCost;
 
-        public float curWeaponCost;
-
-        private float _nextAttack;
+        protected float nextAttack;
 
         public virtual void Attack()
         {
-            if (_nextAttack > Time.time) return;
+            if (nextAttack > Time.time) return;
             if (curWeaponCost <= 0) return;
-            _nextAttack = Time.time + coolDown;
+            nextAttack = Time.time + coolDown;
             ToAttack();
-            WeaponCost();
+            WeaponCost(weaponCost);
         }
 
         protected virtual void ToAttack()
         {
-            Debug.Log("No Weapon~");
         }
 
-        protected virtual void WeaponCost()
+        public virtual void AttackDown()
         {
-            curWeaponCost -= weaponCost;
+        }
+
+        public virtual void AttackUp()
+        {
+        }
+
+        protected virtual void WeaponCost(float value)
+        {
+            curWeaponCost -= value;
             weaponImage.fillAmount = curWeaponCost;
         }
     }

@@ -251,8 +251,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: 20}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78237006
 MonoBehaviour:
@@ -826,8 +826,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -30}
-  m_SizeDelta: {x: 300, y: 30}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &706162947
 MonoBehaviour:
@@ -1603,7 +1603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -120}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1144856005
@@ -1890,8 +1890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -15}
-  m_SizeDelta: {x: 600, y: 288}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712675525
 MonoBehaviour:
@@ -2565,20 +2565,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataList:
-  - dataName: "\u836F\u54C1_\u6D4B\u8BD5"
-    dataRarity: 0
-    dataPrefab: {fileID: 5813134997915923621, guid: 86effb7d482c0dc44a626493ccc15b11,
-      type: 3}
-    describe: Demo Medication Describe
-    itemClass: 1
-    itemSprite: {fileID: 0}
-  - dataName: "\u6B66\u5668_\u6D4B\u8BD5"
-    dataRarity: 1
+  - dataName: "\u624B\u67AA"
+    dataRarity: 5
     dataPrefab: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
+      type: 3}
+    describe: 
+    itemClass: 0
+    itemSprite: {fileID: 21300000, guid: 080c837ff1b5da441a96504769534a82, type: 3}
+  - dataName: "\u51B2\u950B\u67AA"
+    dataRarity: 5
+    dataPrefab: {fileID: 99278544330772716, guid: 6c0991fb1fccec14fb7bec56f5cd480b,
       type: 3}
     describe: DemoGun Describe
     itemClass: 0
-    itemSprite: {fileID: 21300000, guid: 81e43a7daadac624dad6831a4c7df1b3, type: 3}
+    itemSprite: {fileID: 21300000, guid: 311381ca9e8fdb54494b7277a828eeda, type: 3}
+  - dataName: "\u72D9\u51FB\u6B65\u67AA"
+    dataRarity: 0
+    dataPrefab: {fileID: 5855209536220229825, guid: ee5f0da7afb54cc4993514adcbe98af1,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 0
+    itemSprite: {fileID: 21300000, guid: d8c0272507ab3894cb47222d4340a885, type: 3}
+  - dataName: "\u6FC0\u5149\u6B66\u5668"
+    dataRarity: 5
+    dataPrefab: {fileID: 3878941383052395943, guid: 6ec83e256915d0741bc69c63db62cd04,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 0
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
   enemyDataList:
   - dataName: "\u654C\u4EBA_\u6D4B\u8BD5"
     dataRarity: 0
