@@ -34,7 +34,10 @@ namespace Room
             gdm = gm;
             StartCoroutine(InitRoom());
             _messageManager = GetComponent<MessageManager>();
-            _messageManager.RoomMessage(curRoom.GetComponent<Room>().roomData);
+
+            var roomData = new RoomData {dataName = "ISLAND", dataRarity = Rarity.Red, roomDescribe = "一座因为核泄漏而被抛弃的城市"};
+
+            _messageManager.RoomMessage(roomData);
         }
 
         private void Update()

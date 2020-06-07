@@ -40,9 +40,11 @@ namespace GameManager
                 loadImage[_curImage].sprite = loadOverSprite;
                 _curImage++;
             }
+
             yield return new WaitForSeconds(1.0f);
             loadImage[_curImage].sprite = loadOverSprite;
             loadText.text = "Press any key to START";
+            loadText.color = Color.red;
             _curImage++;
         }
     }

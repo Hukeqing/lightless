@@ -2652,6 +2652,27 @@ MonoBehaviour:
     describe: DemoGun Describe
     itemClass: 0
     itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u6CBB\u7597\u836F\u6C34"
+    dataRarity: 0
+    dataPrefab: {fileID: 2944897226157324729, guid: b6d43ec144bb03548aa368c5d9dd6d1e,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u6291\u5236\u836F\u6C34"
+    dataRarity: 1
+    dataPrefab: {fileID: 3712071458715007267, guid: a4358110c99c6df499b826667ce8884f,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u6DF7\u5408\u836F\u6C34"
+    dataRarity: 2
+    dataPrefab: {fileID: 3948535194783322601, guid: 23064f3c42d954f4092957ac2b39c887,
+      type: 3}
+    describe: DemoGun Describe
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
   enemyDataList:
   - dataName: "\u654C\u4EBA_\u6D4B\u8BD5"
     dataRarity: 0

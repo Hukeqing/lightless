@@ -22,8 +22,8 @@ namespace Enemy
         public float findPlayerRotateSpeed;
         public float freeRotateSpeed;
 
-        [Range(1, 2)] public float minNextMoveCoolDown;
-        [Range(2, 5)] public float maxNextMoveCoolDown;
+        [Range(1, 5)] public float minNextMoveCoolDown;
+        [Range(5, 10)] public float maxNextMoveCoolDown;
         public float minMoveDist;
 
         public float viewRange;
@@ -157,6 +157,9 @@ namespace Enemy
 
                     break;
                 case EnemyState.Attack:
+                    rotation = Quaternion.LookRotation(player.position - transform.position);
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation, rotation, findPlayerRotateSpeed * Time.deltaTime);
                     if (Time.time >= _nextAttack)
                     {
                         _nextAttack = Time.time + attackCoolDown;
