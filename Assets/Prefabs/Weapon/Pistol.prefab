@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 6128303359472651740}
   - component: {fileID: 1458342431566956723}
   m_Layer: 10
-  m_Name: HeavyGun 1
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,6 +276,6 @@ MonoBehaviour:
   curWeaponCost: 0
   damage: 50
   maxRange: 15
-  lineDisableInt: 0.01
+  lineDisableInt: 0.03
   firePoint: {fileID: 2964378816605477780}
   attackLine: {fileID: 7136184554784861991}

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CameraScripts
 {
@@ -8,6 +10,7 @@ namespace CameraScripts
         Normal,
         ToStop,
         Stop,
+        CountDown,
         UnStop
     }
 
@@ -30,13 +33,19 @@ namespace CameraScripts
 
         public GameManager.GameManager gm;
         public Player.PlayerControl pc;
-        
+
+        public Text countDownText;
+
         public float stopCostTime;
         private GameStatus _gameStatus;
         private float _stopTime;
+        private AudioSource _countDownAudio;
+
+        // private AudioSource _beats;
 
         private int _curHealth;
         private float _showHealth;
+
         public bool GameOver { get; private set; }
 
         public float HealthValue => Mathf.Clamp01(_showHealth / maxHealth + 0.3f);
@@ -49,6 +58,9 @@ namespace CameraScripts
                 {hideFlags = HideFlags.HideAndDontSave};
             _dimMaterial = new Material(Shader.Find("CameraGrey/Dim"))
                 {hideFlags = HideFlags.HideAndDontSave};
+            _countDownAudio = countDownText.GetComponent<AudioSource>();
+            // _beats = pc.GetComponent<AudioSource>();
+            countDownText.text = "";
             _curHealth = maxHealth;
             _showHealth = _curHealth;
             _gameStatus = GameStatus.Normal;
@@ -57,6 +69,16 @@ namespace CameraScripts
         private void Update()
         {
             _showHealth = Mathf.Lerp(_showHealth, _curHealth, decreaseSpeed);
+            // if (HealthValue <= 0.8f)
+            // {
+            //     _beats.Play();
+            //     _beats.pitch = 2 - HealthValue;
+            //     _beats.volume = 1.3f - HealthValue;
+            // }
+            // else
+            // {
+            //     _beats.Stop();
+            // }
 
             switch (_gameStatus)
             {
@@ -82,6 +104,8 @@ namespace CameraScripts
                     }
 
                     break;
+                case GameStatus.CountDown:
+                    break;
                 case GameStatus.UnStop:
                     if (Time.time - _stopTime > stopCostTime)
                     {
@@ -99,7 +123,9 @@ namespace CameraScripts
         {
             _material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * maxCameraValue);
             _material.SetFloat(ColorReRange,
-                _gameStatus == GameStatus.ToStop || _gameStatus == GameStatus.Stop
+                _gameStatus == GameStatus.ToStop ||
+                _gameStatus == GameStatus.Stop ||
+                _gameStatus == GameStatus.CountDown
                     ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
                     : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
 
@@ -117,13 +143,14 @@ namespace CameraScripts
                     break;
                 case GameStatus.ToStop:
                 case GameStatus.Stop:
+                case GameStatus.CountDown:
                 case GameStatus.UnStop:
                     _noiseMaterial.SetFloat(ColorReRange,
-                        _gameStatus == GameStatus.ToStop || _gameStatus == GameStatus.Stop
+                        _gameStatus == GameStatus.ToStop ||
+                        _gameStatus == GameStatus.Stop ||
+                        _gameStatus == GameStatus.CountDown
                             ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
                             : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
-
-                    // _noiseMaterial.SetFloat(TwistIntensity, 1.1f - _showHealth / maxHealth * 1.1f);
                     Graphics.Blit(rt1, rt2, _noiseMaterial);
                     break;
                 default:
@@ -155,24 +182,42 @@ namespace CameraScripts
 
         private void GameStop()
         {
-            _stopTime = Time.time;
             switch (_gameStatus)
             {
                 case GameStatus.Normal:
+                    _stopTime = Time.time;
                     _gameStatus = GameStatus.ToStop;
                     _material.SetFloat(ColorStop, -1);
                     break;
                 case GameStatus.ToStop:
                     break;
                 case GameStatus.Stop:
-                    _gameStatus = GameStatus.UnStop;
-                    Time.timeScale = 1;
+                    _gameStatus = GameStatus.CountDown;
+                    StartCoroutine(CountDownShow());
+                    break;
+                case GameStatus.CountDown:
                     break;
                 case GameStatus.UnStop:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private IEnumerator CountDownShow()
+        {
+            _countDownAudio.Play();
+            for (var i = 3; i > 0; --i)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                countDownText.text = i.ToString();
+            }
+
+            yield return new WaitForSecondsRealtime(1);
+            countDownText.text = "";
+            _gameStatus = GameStatus.UnStop;
+            Time.timeScale = 1;
+            _stopTime = Time.time;
         }
     }
 }
