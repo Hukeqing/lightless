@@ -35,6 +35,7 @@ namespace Weapon
             if (curWeaponCost <= 0) return;
             if (nextAttack > Time.time) return;
             nextAttack = Time.time + coolDown;
+            WeaponCost(weaponCost);
             var firePointPosition = firePoint.position;
             _ray = new Ray(firePointPosition, firePoint.forward);
             attackLine.gameObject.SetActive(true);
@@ -55,7 +56,6 @@ namespace Weapon
             }
 
             _lineDisableTime = Time.time + lineDisableInt;
-            WeaponCost(weaponCost);
         }
     }
 }

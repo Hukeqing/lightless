@@ -21,13 +21,15 @@ namespace Weapon
             _playerRigid = transform.parent.GetComponent<Rigidbody>();
         }
 
+        public override void Attack()
+        {
+        }
+
         private void Update()
         {
-            if (attackLine.enabled && _lineDisableTime <= Time.time)
-            {
-                attackLine.gameObject.SetActive(false);
-                _playerRigid.velocity = Vector3.zero;
-            }
+            if (!attackLine.enabled || !(_lineDisableTime <= Time.time)) return;
+            attackLine.gameObject.SetActive(false);
+            _playerRigid.velocity = Vector3.zero;
         }
 
         public override void AttackDown()
@@ -35,6 +37,7 @@ namespace Weapon
             if (curWeaponCost <= 0) return;
             if (nextAttack > Time.time) return;
             nextAttack = Time.time + coolDown;
+            WeaponCost(weaponCost);
             var firePointPosition = firePoint.position;
             _ray = new Ray(firePointPosition, firePoint.forward);
             attackLine.gameObject.SetActive(true);
@@ -55,7 +58,6 @@ namespace Weapon
             }
 
             _lineDisableTime = Time.time + lineDisableInt;
-            WeaponCost(weaponCost);
             _playerRigid.AddForce(-transform.forward * backForce);
         }
     }
