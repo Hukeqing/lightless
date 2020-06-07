@@ -72,7 +72,7 @@ namespace GameManager
 #endif
         }
 
-        public void SendScore()
+        public void HomeLoad()
         {
             SceneManager.LoadScene(1);
         }

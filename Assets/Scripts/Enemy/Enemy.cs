@@ -39,6 +39,9 @@ namespace Enemy
         private float _nextMove;
         private Vector3 _curTarget;
         private float _rotateValue;
+        private float _rotateL;
+        private float _rotateR;
+        private int _rotateDir;
 
         protected void Init()
         {
@@ -71,10 +74,12 @@ namespace Enemy
             {
                 //  看到玩家
 #if UNITY_EDITOR
-                var position = transform.position;
-                var tmp = Vector3.Distance(position, player.position);
-                Debug.DrawRay(position, target * tmp,
-                    Color.Lerp(Color.red, Color.green, Mathf.Clamp01((tmp - viewRange) / viewRange)));
+                {
+                    var position = transform.position;
+                    var tmp = Vector3.Distance(position, player.position);
+                    Debug.DrawRay(position, target * tmp,
+                        Color.Lerp(Color.red, Color.green, Mathf.Clamp01((tmp - viewRange) / viewRange)));
+                }
 #endif
                 _curTarget = player.position;
 
@@ -96,19 +101,22 @@ namespace Enemy
                 case EnemyState.Stand:
                     if (_nextMove <= Time.time)
                     {
-                        while (true)
+                        for (var i = 0; i < 30; ++i)
                         {
                             var dir = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
                             dir.Normalize();
                             ray.origin = myPosition;
                             ray.direction = dir;
                             if (!Physics.Raycast(ray, out hitInfo, 1000, lookObstacle)) continue;
-                            if (!(Vector3.Distance(hitInfo.point, myPosition) > minMoveDist)) continue;
+                            if (!(Vector3.Distance(hitInfo.point, myPosition) * 0.9f > minMoveDist)) continue;
                             _curTarget = Vector3.Lerp(myPosition + dir * minMoveDist, hitInfo.point,
                                 Random.Range(0, 0.9f));
                             EnemyState = EnemyState.FreeMove;
                             break;
                         }
+
+                        Debug.Log("Find Fail");
+                        _nextMove = Time.time + Random.Range(minNextMoveCoolDown, maxNextMoveCoolDown);
                     }
 
                     break;
@@ -123,22 +131,25 @@ namespace Enemy
                     Transform transform1;
                     (transform1 = transform).rotation =
                         Quaternion.Slerp(transform.rotation, rotation, findPlayerRotateSpeed * Time.deltaTime);
-
-                    // transform.LookAt(_curTarget);
-                    // Debug.DrawRay(myPosition, _curTarget - myPosition, Color.blue);
-                    // Debug.DrawRay(myPosition, transform.forward * 10, Color.white);
+#if UNITY_EDITOR
+                    Debug.DrawRay(myPosition, _curTarget - myPosition, Color.blue);
+#endif
                     transform.Translate(transform1.forward * (Time.deltaTime * freeMoveSpeed), Space.World);
                     if (dist < 0.1)
                     {
                         EnemyState = EnemyState.LookRound;
                         _rotateValue = 0;
+                        _rotateL = Random.Range(30, 180);
+                        _rotateR = Random.Range(30, 180);
+                        _rotateDir = Random.Range(0, 1.0f) < 0.5f ? -1 : 1;
                     }
 
                     break;
                 case EnemyState.LookRound:
-                    transform.Rotate(Vector3.up * (freeRotateSpeed * Time.deltaTime * (_rotateValue >= 270 ? -1 : 1)));
+                    transform.Rotate(Vector3.up * (freeRotateSpeed * Time.deltaTime *
+                                                   (_rotateValue >= _rotateL ? _rotateDir : -_rotateDir)));
                     _rotateValue += freeRotateSpeed * Time.deltaTime;
-                    if (_rotateValue >= Random.Range(300, 450))
+                    if (_rotateValue >= _rotateL + _rotateR)
                     {
                         _nextMove = Time.time + Random.Range(minNextMoveCoolDown, maxNextMoveCoolDown);
                         EnemyState = EnemyState.Stand;

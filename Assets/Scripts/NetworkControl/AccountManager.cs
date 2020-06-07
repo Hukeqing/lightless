@@ -18,6 +18,7 @@ namespace NetworkControl
         private EventSystem _system;
         private WebConnector _webConnector;
         private GameManager.GameController _gameController;
+        private AudioSource _mouseAudio;
 
         private static readonly int OnRegister = Animator.StringToHash("OnRegister");
 
@@ -27,6 +28,7 @@ namespace NetworkControl
             messageText.text = "Login";
             _system = EventSystem.current;
             _webConnector = GetComponent<WebConnector>();
+            _mouseAudio = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
         }
 
@@ -76,15 +78,21 @@ namespace NetworkControl
                 }
             }
 
-            if (!Input.GetKeyDown(KeyCode.Return)) return;
-            if (_onRegister)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                Register();
+                if (_onRegister)
+                {
+                    Register();
+                }
+                else
+                {
+                    Login();
+                }
             }
-            else
-            {
-                Login();
-            }
+
+            if (!Input.GetMouseButtonDown(0)) return;
+            _mouseAudio.Stop();
+            _mouseAudio.Play();
         }
 
         private void Login()

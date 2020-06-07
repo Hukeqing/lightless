@@ -67,8 +67,6 @@ namespace GameManager
         private void Start()
         {
             packageMessage.SetActive(false);
-            roomMessageText.text = "";
-            roomMessageTextDescribe.text = "";
         }
     }
 }

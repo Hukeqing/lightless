@@ -34,6 +34,7 @@ namespace Room
             gdm = gm;
             StartCoroutine(NewRoom());
             _messageManager = GetComponent<MessageManager>();
+            _messageManager.RoomMessage(curRoom.GetComponent<Room>().roomData);
         }
 
         private void Update()
