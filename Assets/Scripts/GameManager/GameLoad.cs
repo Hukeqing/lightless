@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,9 +16,6 @@ namespace GameManager
 
         private void Start()
         {
-            _async = SceneManager.LoadSceneAsync(3);
-            _async.allowSceneActivation = false;
-            _curImage = 0;
             StartCoroutine(ShowProgress());
         }
 
@@ -33,6 +29,10 @@ namespace GameManager
 
         private IEnumerator ShowProgress()
         {
+            yield return new WaitForSeconds(0.5f);
+            _async = SceneManager.LoadSceneAsync(3);
+            _async.allowSceneActivation = false;
+            _curImage = 0;
             while (_curImage != 9)
             {
                 yield return new WaitForSeconds(0.3f);

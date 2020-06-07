@@ -1,4 +1,5 @@
-﻿using CameraScripts;
+﻿using System;
+using CameraScripts;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +54,7 @@ namespace Player
         private void Update()
         {
             if (_cc.GameOver) return;
+            if (Mathf.Abs(Time.deltaTime) < Mathf.Epsilon) return;
             if (weapon != null)
             {
                 if (Input.GetMouseButtonDown(0))

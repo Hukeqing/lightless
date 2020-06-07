@@ -32,7 +32,7 @@ namespace Weapon
 
         public override void AttackDown()
         {
-            if (curWeaponCost <= 0) return;
+            if (curWeaponCost <= 0.001f) return;
             if (nextAttack > Time.time) return;
             nextAttack = Time.time + coolDown;
             WeaponCost(weaponCost);

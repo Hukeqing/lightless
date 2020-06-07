@@ -78,21 +78,15 @@ namespace NetworkControl
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (!Input.GetKeyDown(KeyCode.Return)) return;
+            if (_onRegister)
             {
-                if (_onRegister)
-                {
-                    Register();
-                }
-                else
-                {
-                    Login();
-                }
+                Register();
             }
-
-            if (!Input.GetMouseButtonDown(0)) return;
-            _mouseAudio.Stop();
-            _mouseAudio.Play();
+            else
+            {
+                Login();
+            }
         }
 
         private void Login()

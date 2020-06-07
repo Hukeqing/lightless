@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Highlight("Highlight", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -34,6 +35,7 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float4 _Highlight;
 
             v2f vert (appdata v)
             {
@@ -49,7 +51,7 @@
                 fixed4 col = tex2D(_MainTex, i.uv);
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 float tmp = frac(_Time.y / 2) * 2;
-                col = lerp(col, 1, lerp(tmp, 2 - tmp,step(1, tmp)));
+                col = lerp(col, _Highlight, lerp(tmp, 2 - tmp,step(1, tmp)));
                 return col;
             }
             ENDCG

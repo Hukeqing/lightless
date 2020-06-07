@@ -2694,9 +2694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomData:
-    dataName: 
+    dataName: "\u57CE\u5E02"
     dataRarity: 0
-    dataPrefab: {fileID: 0}
+    dataPrefab: {fileID: 5129479067036151964}
     roomDescribe: "\u66FE\u7ECF\u8FD9\u91CC\u662F\u6700\u7E41\u8363\u7684\u5730\u5757\uFF0C\u73B0\u5728\u597D\u50CF\u4E5F\u662F"
 --- !u!1 &5182966901790608434
 GameObject:
@@ -7950,7 +7950,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.2
+      value: 16.65
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -7960,7 +7960,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.4
+      value: -6.29
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}

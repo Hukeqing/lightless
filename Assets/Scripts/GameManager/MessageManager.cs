@@ -44,7 +44,6 @@ namespace GameManager
             roomMessageText.text = roomData.dataName;
             roomMessageText.color = GameDataManager.GetColor(roomData.dataRarity);
             roomMessageTextDescribe.text = roomData.roomDescribe;
-
             StartCoroutine(OffShowRoomName());
         }
 
@@ -61,7 +60,10 @@ namespace GameManager
             roomMessage.SetTrigger(EndTrigger);
             _onRoomMessage = false;
             yield return new WaitForSeconds(1);
-            roomMessage.gameObject.SetActive(false);
+            if (!_onRoomMessage)
+            {
+                roomMessage.gameObject.SetActive(false);
+            }
         }
 
         #endregion

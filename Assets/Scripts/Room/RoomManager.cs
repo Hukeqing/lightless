@@ -32,7 +32,7 @@ namespace Room
         public void Init(GameDataManager gm)
         {
             gdm = gm;
-            StartCoroutine(NewRoom());
+            StartCoroutine(InitRoom());
             _messageManager = GetComponent<MessageManager>();
             _messageManager.RoomMessage(curRoom.GetComponent<Room>().roomData);
         }
@@ -43,36 +43,48 @@ namespace Room
             for (var i = 0; i < 4; i++)
             {
                 if (!(defDist > Vector3.Distance(player.position, transform.position + _arr[i]))) continue;
+
                 Destroy(_existenceRoom[i ^ 1]);
                 Destroy(_existenceRoom[i ^ 2]);
                 Destroy(_existenceRoom[i ^ 3]);
 
+                _existenceRoom[i ^ 1] = curRoom;
+                curRoom = _existenceRoom[i];
                 curRoom.GetComponent<Room>().Exit();
                 _existenceRoom[i].GetComponent<Room>().Enter();
 
                 _messageManager.RoomMessage(_existenceRoom[i].GetComponent<Room>().roomData);
 
-                _existenceRoom[i ^ 1] = curRoom;
-                curRoom = _existenceRoom[i];
-                _existenceRoom[i] = null;
-                _existenceRoom[i ^ 2] = null;
-                _existenceRoom[i ^ 3] = null;
                 transform.position += _arr[i];
-                StartCoroutine(NewRoom());
+                StartCoroutine(NewRoom(i));
                 return;
             }
         }
 
-
-        private IEnumerator NewRoom()
+        private IEnumerator InitRoom()
         {
             for (var i = 0; i < 4; i++)
             {
-                if (_existenceRoom[i] != null) continue;
                 _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().dataPrefab,
                     curRoom.transform.position + _arr[i], curRoom.transform.rotation);
-                yield return new WaitForFixedUpdate();
+                yield return new WaitForSeconds(0.1f);
             }
+        }
+
+        private IEnumerator NewRoom(int i)
+        {
+            var rotation = curRoom.transform.rotation;
+            var position = curRoom.transform.position;
+
+            yield return new WaitForSeconds(0.1f);
+            _existenceRoom[i] = Instantiate(gdm.GetRandomRoom().dataPrefab,
+                position + _arr[i], rotation);
+            yield return new WaitForSeconds(0.1f);
+            _existenceRoom[i ^ 2] = Instantiate(gdm.GetRandomRoom().dataPrefab,
+                position + _arr[i ^ 2], rotation);
+            yield return new WaitForSeconds(0.1f);
+            _existenceRoom[i ^ 3] = Instantiate(gdm.GetRandomRoom().dataPrefab,
+                position + _arr[i ^ 3], rotation);
         }
     }
 }

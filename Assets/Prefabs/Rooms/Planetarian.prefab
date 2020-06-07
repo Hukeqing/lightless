@@ -3912,7 +3912,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b16faf82c3b076c4484d8dfa351901da, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1aa8130af695f83489e5964ecab2cb34, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5334,10 +5334,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomData:
-    roomName: 
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
     roomDescribe: 
-    roomRarity: 0
-    roomPrefab: {fileID: 0}
   planetarian: {fileID: 3720501834559143411}
 --- !u!1 &9158349445135386177
 GameObject:
