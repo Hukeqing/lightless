@@ -25,6 +25,14 @@ namespace Point
             }
         }
 
+        // public void ReNew()
+        // {
+        //     if (_item != null)
+        //     {
+        //         Start();
+        //     }
+        // }
+
         private void InsItem()
         {
             var gdm = GameObject.FindWithTag("GameManager").GetComponent<GameDataManager>();

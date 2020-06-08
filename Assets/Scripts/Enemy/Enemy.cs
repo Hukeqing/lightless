@@ -6,17 +6,17 @@ namespace Enemy
 {
     public enum EnemyState
     {
-        Stand,
-        Move,
-        FreeMove,
-        LookRound,
-        Attack,
-        Death
+        Stand = 0,
+        Move = 1,
+        FreeMove = 2,
+        LookRound = 3,
+        Attack = 4,
+        Death = 5
     }
 
     public class Enemy : Unit
     {
-        public Transform player;
+        [HideInInspector] public Transform player;
         public float findPlayerMoveSpeed;
         public float freeMoveSpeed;
         public float findPlayerRotateSpeed;
@@ -43,6 +43,10 @@ namespace Enemy
         private float _rotateR;
         private int _rotateDir;
 
+        private Animator _enemyAnimator;
+        private static readonly int AttackHash = Animator.StringToHash("Attack");
+        private static readonly int EnemyStatusHash = Animator.StringToHash("EnemyStatus");
+
         protected void Init()
         {
             if (player == null)
@@ -53,6 +57,7 @@ namespace Enemy
             EnemyState = EnemyState.Stand;
             _nextAttack = 0;
             _nextMove = Time.time + Random.Range(1, 5.0f);
+            _enemyAnimator = GetComponent<Animator>();
             InitUnit();
         }
 
@@ -96,6 +101,7 @@ namespace Enemy
             // 没有看到玩家
             Quaternion rotation;
             var dist = _curTarget != null ? Vector3.Distance(_curTarget, transform.position) : 0;
+            _enemyAnimator.SetInteger(EnemyStatusHash, (int) EnemyState);
             switch (EnemyState)
             {
                 case EnemyState.Stand:
@@ -163,6 +169,7 @@ namespace Enemy
                     if (Time.time >= _nextAttack)
                     {
                         _nextAttack = Time.time + attackCoolDown;
+                        _enemyAnimator.SetTrigger(AttackHash);
                         Attack();
                     }
 

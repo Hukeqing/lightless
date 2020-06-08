@@ -27,12 +27,14 @@ namespace GameManager
     {
         // ReSharper disable once UnassignedField.Global
         public string dataName;
+
         // ReSharper disable once UnassignedField.Global
         public Rarity dataRarity;
+
         // ReSharper disable once UnassignedField.Global
         public GameObject dataPrefab;
     }
-    
+
     [Serializable]
     public class ItemData : Data
     {
@@ -72,6 +74,7 @@ namespace GameManager
             {
                 roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
+
             // itemDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
             // enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
             // roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
@@ -153,6 +156,22 @@ namespace GameManager
 
             return enemyDataList[0];
         }
+
+        // public int GetRandomRoomIndex(Rarity baseRarity = Rarity.White)
+        // {
+        //     var raritySum = roomDataList.Sum(roomData =>
+        //         roomData.dataRarity >= baseRarity ? GetRarity(roomData.dataRarity) : 0);
+        //     var cur = Random.Range(0, raritySum);
+        //     var tmp = 0.0f;
+        //     for (var i = 0; i < roomDataList.Count; i++)
+        //     {
+        //         var roomData = roomDataList[i];
+        //         if (roomData.dataRarity < baseRarity) continue;
+        //         tmp += GetRarity(roomData.dataRarity);
+        //         if (tmp >= cur) return i;
+        //     }
+        //     return 0;
+        // }
 
         public RoomData GetRandomRoom(Rarity baseRarity = Rarity.White)
         {

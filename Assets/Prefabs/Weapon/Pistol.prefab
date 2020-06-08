@@ -274,7 +274,7 @@ MonoBehaviour:
   weaponImage: {fileID: 0}
   weaponCost: 0.1
   curWeaponCost: 0
-  damage: 50
+  damage: 35
   maxRange: 15
   lineDisableInt: 0.03
   firePoint: {fileID: 2964378816605477780}

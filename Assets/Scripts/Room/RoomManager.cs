@@ -1,16 +1,30 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using GameManager;
 using UnityEngine;
 
 namespace Room
 {
+    // public class RoomPoolData
+    // {
+    //     public GameObject room;
+    //     public bool onUse;
+    // }
+
     public class RoomManager : MonoBehaviour
     {
         public GameObject curRoom;
         public Transform player;
         public GameDataManager gdm;
+        // [Range(5, 20)] public int maxPoolCount = 10;
 
         private MessageManager _messageManager;
+
+        private Coroutine _coroutine;
+        private Queue<Vector3> _newRoomList;
+
+        // private List<RoomPoolData>[] _roomPool;
+        // private int _poolCount;
 
         /**
          * 0 for left
@@ -32,6 +46,13 @@ namespace Room
         public void Init(GameDataManager gm)
         {
             gdm = gm;
+            // _roomPool = new List<RoomPoolData>[gm.roomDataList.Count];
+            // _poolCount = 0;
+            // for (var index = 0; index < _roomPool.Length; index++)
+            // {
+                // _roomPool[index] = new List<RoomPoolData>();
+            // }
+
             StartCoroutine(InitRoom());
             _messageManager = GetComponent<MessageManager>();
         }
@@ -85,5 +106,34 @@ namespace Room
             _existenceRoom[i ^ 3] = Instantiate(gdm.GetRandomRoom().dataPrefab,
                 position + _arr[i ^ 3], rotation);
         }
+
+        // private IEnumerator InstantiateRoom(Vector3 pos)
+        // {
+        //     var roomData = gdm.GetRandomRoomIndex();
+        //     var curList = _roomPool[roomData];
+        //     var i = 0;
+        //     for (; i < curList.Count; i++)
+        //     {
+        //         if (!curList[i].onUse) break;
+        //     }
+        //
+        //     if (i == curList.Count)
+        //     {
+        //         curList.Add(new RoomPoolData()
+        //         {
+        //             room = Instantiate(gdm.roomDataList[roomData].dataPrefab, pos, Quaternion.identity), onUse = true
+        //         });
+        //         _poolCount++;
+        //     }
+        //     else
+        //     {
+        //         curList[i].onUse = true;
+        //         curList[i].room.SetActive(true);
+        //         curList[i].room.GetComponent<Room>().Flush();
+        //         curList[i].room.transform.position = pos;
+        //     }
+        //
+        //     yield return new WaitForSeconds(0.1f);
+        // }
     }
 }

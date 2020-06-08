@@ -6,20 +6,21 @@ namespace Enemy
     {
         public int maxHealth;
 
-        public bool IsDie => _curHealth <= 0;
+        public bool IsDie => curHealth <= 0;
 
-        private int _curHealth;
+        protected int curHealth;
 
         protected void InitUnit()
         {
-            _curHealth = maxHealth;
+            curHealth = maxHealth;
         }
 
-        public void ApplyDamage(int damage)
+        public virtual void ApplyDamage(int getDamage)
         {
-            _curHealth -= damage;
-            if (_curHealth > 0) return;
-            _curHealth = 0;
+            if (curHealth <= 0) return;
+            curHealth -= getDamage;
+            if (curHealth > 0) return;
+            curHealth = 0;
             Die();
         }
 
