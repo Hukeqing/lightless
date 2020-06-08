@@ -54,7 +54,7 @@ namespace Player
         private void Update()
         {
             if (_cc.GameOver) return;
-            if (Mathf.Abs(Time.deltaTime) < Mathf.Epsilon) return;
+            if (Mathf.Abs(Time.deltaTime) < 0.01f) return;
             if (weapon != null)
             {
                 if (Input.GetMouseButtonDown(0))

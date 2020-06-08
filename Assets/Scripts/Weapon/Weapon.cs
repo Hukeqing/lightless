@@ -38,6 +38,7 @@ namespace Weapon
         protected virtual void WeaponCost(float value)
         {
             curWeaponCost -= value;
+            if (curWeaponCost < 0.001f) curWeaponCost = 0;
             weaponImage.fillAmount = curWeaponCost;
         }
     }

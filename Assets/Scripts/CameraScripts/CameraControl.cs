@@ -209,11 +209,10 @@ namespace CameraScripts
             _countDownAudio.Play();
             for (var i = 3; i > 0; --i)
             {
-                yield return new WaitForSecondsRealtime(1);
                 countDownText.text = i.ToString();
+                yield return new WaitForSecondsRealtime(1);
             }
 
-            yield return new WaitForSecondsRealtime(1);
             countDownText.text = "";
             _gameStatus = GameStatus.UnStop;
             Time.timeScale = 1;
