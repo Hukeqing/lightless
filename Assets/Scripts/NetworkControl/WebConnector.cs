@@ -69,6 +69,7 @@ namespace NetworkControl
         public int gameId;
     }
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class ScoreResponse
     {
         // ReSharper disable once UnassignedField.Global
@@ -118,7 +119,21 @@ namespace NetworkControl
 #if UNITY_EDITOR
                         Debug.Log(Account.accountNa);
 #endif
-                        SceneManager.LoadScene(1);
+                        param.Clear();
+                        param["account"] = Account.accountId.ToString();
+                        StartCoroutine(WebRequestGet<GameResponse>(_basicUrl + "clear_login.php", param,
+                            gameResponse =>
+                            {
+                                if (gameResponse.gameId != -1)
+                                {
+                                    param.Clear();
+                                    param["id"] = gameResponse.gameId.ToString();
+                                    StartCoroutine(WebRequestGet(_basicUrl + "report_competition.php", param,
+                                        () => { OnConnect = false; }));
+                                }
+
+                                SceneManager.LoadScene(1);
+                            }));
                     }
                     else
                     {
@@ -138,8 +153,6 @@ namespace NetworkControl
                                 break;
                         }
                     }
-
-                    OnConnect = false;
                 }));
         }
 

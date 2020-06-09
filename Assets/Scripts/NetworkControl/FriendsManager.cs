@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameManager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,12 +25,28 @@ namespace NetworkControl
         private void Start()
         {
             _friends = new List<Friend>();
+#if UNITY_EDITOR
+            try
+            {
+                _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+                _homeMessageManager = GetComponent<HomeMessageManager>();
+                _webConnector.GetFriends(this);
+                _webConnector.GetScore();
+                _pos = -130;
+                SetMine(_webConnector.Account);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+#else
             _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
             _homeMessageManager = GetComponent<HomeMessageManager>();
             _webConnector.GetFriends(this);
             _webConnector.GetScore();
             _pos = -130;
             SetMine(_webConnector.Account);
+#endif
         }
 
         private void SetMine(AccountResponse accountResponse)

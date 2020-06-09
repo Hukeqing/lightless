@@ -32,8 +32,18 @@ namespace GameManager
                 DontDestroyOnLoad(gameObject);
                 _onScene = true;
             }
-
+#if UNITY_EDITOR
+            try
+            {
+                _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+#else
             _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+#endif
             _homeMessageManager = GetComponent<HomeMessageManager>();
         }
 
@@ -47,8 +57,7 @@ namespace GameManager
         public void HighScore()
         {
             _homeMessageManager.GetYesOrNoMessage(
-                "This game will be recorded by the server and will affect your ranking",
-                b =>
+                "这场比赛将会被服务器记录\n并且影响你的Rank分\n请确保在网络畅通下进行", b =>
                 {
                     if (!b) return;
                     gameMode = -1;
@@ -72,7 +81,7 @@ namespace GameManager
         public void AcceptGame()
         {
             _homeMessageManager.GetYesOrNoMessage(
-                "This game will be recorded by the server and will affect your ranking", b =>
+                "这场比赛将会被服务器记录\n并且影响你的Rank分\n请确保在网络畅通下进行", b =>
                 {
                     if (!b) return;
                     _gameStatus = GameStatus.AcceptGame;
@@ -84,7 +93,7 @@ namespace GameManager
 #if UNITY_EDITOR
                             Debug.Log("Unknown error on accept game");
 #endif
-                            _homeMessageManager.ShowImportantMessage("There is no game for you", b1 => { });
+                            _homeMessageManager.ShowImportantMessage("抱歉，当前比赛池中\n未能找到匹配\n您当前Rank的比赛", b1 => { });
                         }
                         else
                         {
