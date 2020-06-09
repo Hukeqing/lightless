@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 2886808}
   - component: {fileID: 2886807}
   - component: {fileID: 2886810}
+  - component: {fileID: 2886811}
   m_Layer: 0
   m_Name: MovieCamera
   m_TagString: Untagged
@@ -230,11 +231,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b44634875ea48044b87e542a7caf8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 534669904}
+  cameras: {fileID: 622117342}
   uiList:
   - {fileID: 821279063}
   - {fileID: 654382995}
   - {fileID: 1716335001}
+--- !u!81 &2886811
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886806}
+  m_Enabled: 1
 --- !u!1 &11802197
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,7 +849,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
@@ -902,6 +911,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf98efb946e5f74780444e23ff4b6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: b9b9389e4f441414b9409bd5e2560dce, type: 2}
+  noiseMaterial: {fileID: 2100000, guid: 1334a58412b5cfc49a4bd2760f3d2b87, type: 2}
+  dimMaterial: {fileID: 2100000, guid: c338458a7831c284d8e07d207685c487, type: 2}
   maxHealth: 100
   decreaseSpeed: 0.1
   maxCameraValue: 1.5
@@ -998,7 +1010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &622117343
 Transform:
   m_ObjectHideFlags: 0
@@ -2139,6 +2151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 773071781}
+  curShader: {fileID: 4800000, guid: a2e26cdf944a47348885613154df8338, type: 3}
 --- !u!20 &1565547193
 Camera:
   m_ObjectHideFlags: 0

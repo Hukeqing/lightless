@@ -5,7 +5,7 @@ namespace CameraScripts
 {
     public class StartCamera : MonoBehaviour
     {
-        public Camera mainCamera;
+        public GameObject cameras;
         public GameObject[] uiList;
 
         private void Start()
@@ -20,8 +20,7 @@ namespace CameraScripts
         // ReSharper disable once UnusedMember.Global
         public void EndMovie()
         {
-            GetComponent<Camera>().enabled = false;
-            mainCamera.enabled = true;
+            cameras.SetActive(true);
             foreach (var o in uiList)
             {
                 o.SetActive(true);
@@ -31,6 +30,7 @@ namespace CameraScripts
 
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<MessageManager>().RoomMessage(roomData);
             Time.timeScale = 1;
+            Destroy(gameObject);
         }
     }
 }

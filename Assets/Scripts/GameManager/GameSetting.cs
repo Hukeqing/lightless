@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +20,12 @@ namespace GameManager
 
         private void Start()
         {
+            // var byteArray = Encoding.Default.GetBytes("%E6%B5%8B%E8%AF%95");
+            // var decoder = Encoding.GetEncoding("utf-8").GetDecoder();
+            // var res = new char[50];
+            // decoder.GetChars(byteArray, 0, byteArray.Length, res, 0);
+            // Debug.Log(new string(res));
+
             DontDestroyOnLoad(gameObject);
             _onSetting = false;
 
@@ -47,13 +55,7 @@ namespace GameManager
         public void SetScreen()
         {
             var value = screenResolutions.value;
-            if (Screen.currentResolution.width == _resolutions[value].width &&
-                Screen.currentResolution.height == _resolutions[value].height)
-            {
-                return;
-            }
-
-            Screen.SetResolution(_resolutions[value].width, _resolutions[value].height, Screen.fullScreen);
+            Screen.SetResolution(_resolutions[value].width, _resolutions[value].height, fullScreenToggle.isOn);
         }
 
         public void SetFrame()

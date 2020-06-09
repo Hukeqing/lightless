@@ -23,9 +23,9 @@ namespace CameraScripts
         private static readonly int SampleStrength = Shader.PropertyToID("_SampleStrength");
         private static readonly int SampleDist = Shader.PropertyToID("_SampleDist");
 
-        private Material _material;
-        private Material _noiseMaterial;
-        private Material _dimMaterial;
+        public Material material;
+        public Material noiseMaterial;
+        public Material dimMaterial;
 
         public int maxHealth;
         public float decreaseSpeed;
@@ -52,12 +52,6 @@ namespace CameraScripts
 
         private void Start()
         {
-            _material = new Material(Shader.Find("CameraGrey/CameraGreyShader"))
-                {hideFlags = HideFlags.HideAndDontSave};
-            _noiseMaterial = new Material(Shader.Find("CameraGrey/Drift"))
-                {hideFlags = HideFlags.HideAndDontSave};
-            _dimMaterial = new Material(Shader.Find("CameraGrey/Dim"))
-                {hideFlags = HideFlags.HideAndDontSave};
             _countDownAudio = countDownText.GetComponent<AudioSource>();
             // _beats = pc.GetComponent<AudioSource>();
             countDownText.text = "";
@@ -110,7 +104,7 @@ namespace CameraScripts
                     if (Time.time - _stopTime > stopCostTime)
                     {
                         _gameStatus = GameStatus.Normal;
-                        _material.SetFloat(ColorStop, -1);
+                        material.SetFloat(ColorStop, -1);
                     }
 
                     break;
@@ -121,20 +115,20 @@ namespace CameraScripts
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            _material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * maxCameraValue);
-            _material.SetFloat(ColorReRange,
+            material.SetFloat(ColorGreyRangeId, _showHealth / maxHealth * maxCameraValue);
+            material.SetFloat(ColorReRange,
                 _gameStatus == GameStatus.ToStop ||
                 _gameStatus == GameStatus.Stop ||
                 _gameStatus == GameStatus.CountDown
                     ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
                     : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
 
-            _dimMaterial.SetFloat(SampleStrength, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
-            _dimMaterial.SetFloat(SampleDist, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
+            dimMaterial.SetFloat(SampleStrength, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
+            dimMaterial.SetFloat(SampleDist, (maxCameraValue - _showHealth / maxHealth * maxCameraValue) * 2);
 
             var rt1 = RenderTexture.GetTemporary(src.width, src.height);
             var rt2 = RenderTexture.GetTemporary(src.width, src.height);
-            Graphics.Blit(src, rt1, _material);
+            Graphics.Blit(src, rt1, material);
 
             switch (_gameStatus)
             {
@@ -145,19 +139,19 @@ namespace CameraScripts
                 case GameStatus.Stop:
                 case GameStatus.CountDown:
                 case GameStatus.UnStop:
-                    _noiseMaterial.SetFloat(ColorReRange,
+                    noiseMaterial.SetFloat(ColorReRange,
                         _gameStatus == GameStatus.ToStop ||
                         _gameStatus == GameStatus.Stop ||
                         _gameStatus == GameStatus.CountDown
                             ? Mathf.Abs(Time.time - _stopTime) / stopCostTime
                             : 1 - Mathf.Abs(Time.time - _stopTime) / stopCostTime);
-                    Graphics.Blit(rt1, rt2, _noiseMaterial);
+                    Graphics.Blit(rt1, rt2, noiseMaterial);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            Graphics.Blit(rt2, dest, _dimMaterial);
+            Graphics.Blit(rt2, dest, dimMaterial);
             RenderTexture.ReleaseTemporary(rt2);
             RenderTexture.ReleaseTemporary(rt1);
         }
@@ -187,7 +181,7 @@ namespace CameraScripts
                 case GameStatus.Normal:
                     _stopTime = Time.time;
                     _gameStatus = GameStatus.ToStop;
-                    _material.SetFloat(ColorStop, -1);
+                    material.SetFloat(ColorStop, -1);
                     break;
                 case GameStatus.ToStop:
                     break;
