@@ -3018,12 +3018,16 @@ MonoBehaviour:
     dataRarity: 0
     dataPrefab: {fileID: 1018997094542117440, guid: ffc3e142dc0de9a478b59bae9b5aa79f,
       type: 3}
-  - dataName: "\u8718\u86DB"
+  - dataName: "\u50F5\u5C38"
     dataRarity: 1
+    dataPrefab: {fileID: 1138495451299325100, guid: e159df922b000c24d8565d01ad3bcda9,
+      type: 3}
+  - dataName: "\u8718\u86DB"
+    dataRarity: 2
     dataPrefab: {fileID: 306445913011013722, guid: 27f5b0dfb0fc8024e84dff7a17bc7df5,
       type: 3}
   - dataName: "\u5DEB\u5E08"
-    dataRarity: 3
+    dataRarity: 5
     dataPrefab: {fileID: 7175367590524446479, guid: fbf0b9435a658cb41a0a16c7998cf3d9,
       type: 3}
   roomDataList:
@@ -3166,7 +3170,7 @@ PrefabInstance:
     - target: {fileID: 2641480227300850284, guid: 8c98c3f29c254fd42b4091b2e22c89a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2641480227300850284, guid: 8c98c3f29c254fd42b4091b2e22c89a1,
         type: 3}

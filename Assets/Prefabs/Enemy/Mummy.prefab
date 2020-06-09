@@ -584,11 +584,11 @@ MonoBehaviour:
   minMoveDist: 1
   viewRange: 10
   attackRange: 1.4
-  attackCoolDown: 1
+  attackCoolDown: 0.5
   lookObstacle:
     serializedVersion: 2
     m_Bits: 230400
-  damage: 10
+  damage: 5
 --- !u!1 &1018997094542117442
 GameObject:
   m_ObjectHideFlags: 0
