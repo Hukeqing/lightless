@@ -35,14 +35,14 @@ namespace GameManager
 #if UNITY_EDITOR
             try
             {
+#endif
                 _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
+#if UNITY_EDITOR
             }
             catch (Exception)
             {
                 // ignored
             }
-#else
-            _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
 #endif
             _homeMessageManager = GetComponent<HomeMessageManager>();
         }

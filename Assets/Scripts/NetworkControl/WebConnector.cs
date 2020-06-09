@@ -86,6 +86,8 @@ namespace NetworkControl
 
     public class WebConnector : MonoBehaviour
     {
+        public GameObject versionGameObject;
+
         public AccountResponse Account { get; private set; }
 
         private FriendsResponse _friends;
@@ -102,6 +104,7 @@ namespace NetworkControl
         {
             OnConnect = false;
             _accountManager = GetComponent<AccountManager>();
+            StartCoroutine(WebRequestVersion());
         }
 
         #region Account
@@ -195,7 +198,7 @@ namespace NetworkControl
                 }));
         }
 
-        public void GetScore()
+        public void GetScore(Action callback)
         {
             var param = new Dictionary<string, string>
                 {["id"] = Account.accountId.ToString()};
@@ -206,6 +209,7 @@ namespace NetworkControl
                     if (response.errorId == 0)
                     {
                         Account = response;
+                        callback();
                     }
                     else
                     {
@@ -440,6 +444,17 @@ namespace NetworkControl
         }
 
         #endregion
+
+        private IEnumerator WebRequestVersion()
+        {
+            var webUrl = _basicUrl + "gameVersion.txt";
+            var webRequest = UnityWebRequest.Get(webUrl);
+            yield return webRequest.SendWebRequest();
+            if (webRequest.downloadHandler.text != Application.version)
+            {
+                versionGameObject.SetActive(true);
+            }
+        }
 
         private static IEnumerator WebRequestGet<T>(string url, Dictionary<string, string> param, Action<T> callback)
         {

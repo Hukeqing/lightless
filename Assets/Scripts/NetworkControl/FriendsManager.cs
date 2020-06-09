@@ -28,24 +28,18 @@ namespace NetworkControl
 #if UNITY_EDITOR
             try
             {
+#endif
                 _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
                 _homeMessageManager = GetComponent<HomeMessageManager>();
                 _webConnector.GetFriends(this);
-                _webConnector.GetScore();
+                _webConnector.GetScore(() => { SetMine(_webConnector.Account); });
                 _pos = -130;
-                SetMine(_webConnector.Account);
+#if UNITY_EDITOR
             }
             catch (Exception)
             {
                 // ignored
             }
-#else
-            _webConnector = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<WebConnector>();
-            _homeMessageManager = GetComponent<HomeMessageManager>();
-            _webConnector.GetFriends(this);
-            _webConnector.GetScore();
-            _pos = -130;
-            SetMine(_webConnector.Account);
 #endif
         }
 
@@ -179,35 +173,25 @@ namespace NetworkControl
 
             if (score < 1600)
             {
-                return new Color(0.47f, 0.87f, 0.73f);
+                return new Color(0.16f, 0.71f, 0.67f);
             }
 
             if (score < 1900)
             {
-                return new Color(0.67f, 0.67f, 1f);
+                return new Color(0.06f, 0.07f, 0.92f);
             }
 
             if (score < 2100)
             {
-                return new Color(1f, 0.53f, 1f);
-            }
-
-            if (score < 2300)
-            {
-                return new Color(1f, 0.8f, 0.53f);
+                return new Color(0.71f, 0.15f, 0.71f);
             }
 
             if (score < 2400)
             {
-                return new Color(1f, 0.73f, 0.33f);
+                return new Color(1f, 0.61f, 0.15f);
             }
 
-            if (score < 2600)
-            {
-                return new Color(1f, 0.47f, 0.47f);
-            }
-
-            return score < 3000 ? new Color(1f, 0.2f, 0.2f) : new Color(0.67f, 0f, 0f);
+            return score < 3000 ? new Color(1f, 0.15f, 0.15f) : new Color(0.67f, 0f, 0f);
         }
     }
 }

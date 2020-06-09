@@ -9,7 +9,6 @@ namespace Item
 
         public virtual void ApplyItem(Player.PlayerControl pc)
         {
-            Debug.Log("Item miss~");
         }
 
         public void BeGet()

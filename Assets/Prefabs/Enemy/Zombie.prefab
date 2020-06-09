@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 6277425853548362693}
   - component: {fileID: 1103987466198054818}
   - component: {fileID: 8653613511413248827}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ MonoBehaviour:
   maxNextMoveCoolDown: 10
   minMoveDist: 1
   viewRange: 25
-  attackRange: 1.2
+  attackRange: 1.5
   attackCoolDown: 1
   lookObstacle:
     serializedVersion: 2

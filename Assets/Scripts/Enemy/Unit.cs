@@ -26,7 +26,6 @@ namespace Enemy
 
         protected virtual void Die()
         {
-            Debug.Log("Enemy Miss~");
         }
     }
 }

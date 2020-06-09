@@ -1142,11 +1142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f511378142a14d977e87c5c275390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
   roomData:
-    roomName: 
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
     roomDescribe: 
-    roomRarity: 0
-    roomPrefab: {fileID: 0}
 --- !u!1 &1782591575915182481
 GameObject:
   m_ObjectHideFlags: 0
@@ -3123,16 +3124,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4161349980838199148}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5762087, w: 0.8173026}
+  m_LocalRotation: {x: -0.000000059604638, y: -0.000000029802319, z: 0.8174851, w: 0.57594985}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.12811132, y: 1.8396953, z: 0}
   m_Children: []
   m_Father: {fileID: 9051407713124018988}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 109.66801}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.79, y: -0.94}
+  m_AnchoredPosition: {x: 1.7899965, y: -0.94002897}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4161349980838199145

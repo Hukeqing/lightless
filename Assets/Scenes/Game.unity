@@ -3027,7 +3027,7 @@ MonoBehaviour:
     dataPrefab: {fileID: 306445913011013722, guid: 27f5b0dfb0fc8024e84dff7a17bc7df5,
       type: 3}
   - dataName: "\u5DEB\u5E08"
-    dataRarity: 5
+    dataRarity: 3
     dataPrefab: {fileID: 7175367590524446479, guid: fbf0b9435a658cb41a0a16c7998cf3d9,
       type: 3}
   roomDataList:

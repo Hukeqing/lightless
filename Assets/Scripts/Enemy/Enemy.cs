@@ -120,8 +120,9 @@ namespace Enemy
                             EnemyState = EnemyState.FreeMove;
                             break;
                         }
-
+#if UNITY_EDITOR
                         Debug.Log("Find Fail");
+#endif
                         _nextMove = Time.time + Random.Range(minNextMoveCoolDown, maxNextMoveCoolDown);
                     }
 
@@ -183,7 +184,6 @@ namespace Enemy
 
         protected virtual void Attack()
         {
-            Debug.Log("Enemy Miss~");
         }
     }
 }

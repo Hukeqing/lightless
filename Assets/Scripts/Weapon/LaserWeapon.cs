@@ -47,7 +47,6 @@ namespace Weapon
                 {
                     var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
                     if (enemyUnit.IsDie) return;
-                    Debug.Log((int) Mathf.Ceil(damage * Time.deltaTime));
                     enemyUnit.ApplyDamage((int) Mathf.Ceil(damage * Time.deltaTime));
                 }
             }
