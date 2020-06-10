@@ -73,6 +73,7 @@ namespace NetworkControl
     public class ScoreResponse
     {
         // ReSharper disable once UnassignedField.Global
+        // ReSharper disable once UnusedMember.Global
         public int errorId;
 
         // ReSharper disable once UnassignedField.Global
@@ -111,7 +112,8 @@ namespace NetworkControl
 
         public void GetAccount(string email, string password)
         {
-            var param = new Dictionary<string, string> {["account"] = email, ["pwd"] = password};
+            var param = new Dictionary<string, string>
+                {["account"] = email, ["pwd"] = password, ["version"] = "0.2"};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "login_in.php",
                 param, response =>
@@ -162,7 +164,7 @@ namespace NetworkControl
         public void CreateAccount(string accountName, string email, string password)
         {
             var param = new Dictionary<string, string>
-                {["account"] = email, ["pwd"] = password, ["name"] = accountName};
+                {["account"] = email, ["pwd"] = password, ["name"] = accountName, ["version"] = "0.2"};
             OnConnect = true;
             StartCoroutine(WebRequestGet<AccountResponse>(_basicUrl + "register.php",
                 param, response =>

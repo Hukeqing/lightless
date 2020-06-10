@@ -37,6 +37,13 @@ $arr_query = convertUrlQuery($_SERVER["QUERY_STRING"]);
 $account = $arr_query['account'];
 $pwd = $arr_query['pwd'];
 $name = $arr_query['name'];
+$gameVersion = $arr_query['version'];
+if ($gameVersion != "0.2") {
+    $ans->errorId = 200;
+    $ans->errorMsg = "Game version error!";
+    return;
+}
+
 $sqlStr = 'select * from account where email = "'.$account.'";';
 
 $rs = querySQL($sqlStr);
