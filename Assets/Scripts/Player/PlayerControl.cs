@@ -96,6 +96,7 @@ namespace Player
 
         public void ApplySlowDamage(float value)
         {
+            value = 1 + (value - 1) * Mathf.Exp(-0.005f * gm.GameScore);
             _curDamageTime *= value;
         }
 

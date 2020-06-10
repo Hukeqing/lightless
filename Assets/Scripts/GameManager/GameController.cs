@@ -17,7 +17,7 @@ namespace GameManager
 
     public class GameController : MonoBehaviour
     {
-        public float gameMode;
+        [HideInInspector]public float gameMode;
 
         private static bool _onScene;
 

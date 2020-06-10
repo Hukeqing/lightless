@@ -159,6 +159,7 @@ namespace CameraScripts
         public void ApplyDamage(int damage)
         {
             if (GameOver) return;
+            damage = Mathf.RoundToInt(damage / Mathf.Exp(-0.005f * gm.GameScore));
             _curHealth -= damage;
             if (_curHealth > 0) return;
             GameOver = true;
@@ -169,6 +170,8 @@ namespace CameraScripts
 
         public void AddHealth(int cure)
         {
+            if (GameOver) return;
+            cure = Mathf.RoundToInt(cure * Mathf.Exp(-0.005f * gm.GameScore));
             _curHealth += cure;
             if (_curHealth <= maxHealth) return;
             _curHealth = maxHealth;

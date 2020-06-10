@@ -17,14 +17,18 @@ namespace NetworkControl
 
         public InputField addFriendInputField;
 
+        public float flushTime;
+
         private WebConnector _webConnector;
         private int _pos;
         private List<Friend> _friends;
         private HomeMessageManager _homeMessageManager;
+        private float _nextFlush;
 
         private void Start()
         {
             _friends = new List<Friend>();
+            _nextFlush = Time.time + flushTime;
 #if UNITY_EDITOR
             try
             {
@@ -146,6 +150,19 @@ namespace NetworkControl
             ClearFriend();
             var friendId = curSelectFriend.friendId;
             _webConnector.DeleteFriend(friendId, this);
+        }
+
+        public void Flush()
+        {
+            if (Time.time < _nextFlush)
+            {
+                _homeMessageManager.ShowMessage("刷新太频繁啦！！！", 3);
+            }
+
+            _nextFlush = Time.time + flushTime;
+            ClearFriend();
+            _webConnector.GetFriends(this);
+            _webConnector.GetScore(() => { SetMine(_webConnector.Account); });
         }
 
         private void ClearFriend()

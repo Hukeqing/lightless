@@ -22,7 +22,7 @@ namespace GameManager
 
         private static readonly int Over = Animator.StringToHash("GameOver");
 
-        private float GameScore => Mathf.Pow(_gameOver ? _gameEndTime - _gameStartTime : Time.time - _gameStartTime,
+        public float GameScore => Mathf.Pow(_gameOver ? _gameEndTime - _gameStartTime : Time.time - _gameStartTime,
             gameScoreValue);
 
         private void Start()

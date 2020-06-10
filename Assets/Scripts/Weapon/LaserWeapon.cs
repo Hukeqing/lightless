@@ -11,11 +11,15 @@ namespace Weapon
 
         private Ray _ray;
         private bool _onAttack;
+        private float _hsvH;
+        private float _hsvS;
+        private float _hsvV;
 
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
             _onAttack = false;
+            Color.RGBToHSV(Color.red, out _hsvH, out _hsvS, out _hsvV);
         }
 
         public override void Attack()
@@ -55,6 +59,11 @@ namespace Weapon
                 attackLine.SetPosition(1, firePointPosition + firePoint.forward * maxRange);
             }
 
+            _hsvH += Time.deltaTime;
+            _hsvH -= (int) _hsvH;
+            var tColor = Color.HSVToRGB(_hsvH, _hsvS, _hsvV);
+            attackLine.startColor = tColor;
+            attackLine.endColor = tColor;
             WeaponCost(weaponCost * Time.deltaTime);
         }
     }
