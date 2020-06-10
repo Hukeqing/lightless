@@ -4978,6 +4978,7 @@ MonoBehaviour:
   moveSpeed: 5
   a: {fileID: 2344416278291307523}
   b: {fileID: 2344416280292378717}
+  maxDistance: 3
 --- !u!1 &2465131838617240365
 GameObject:
   m_ObjectHideFlags: 0

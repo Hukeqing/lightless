@@ -15,7 +15,9 @@ namespace Player
         public Image weaponCostImage;
         public float damageTime;
         [Range(0.9f, 0.99f)] public float damageUpgradeTime = 0.99f;
-        public Weapon.Weapon weapon;
+        [HideInInspector] public Weapon.Weapon weapon;
+        public Animator beHurt;
+        public AudioClip playerDie;
         public float HealthValue => _cc.HealthValue;
 
         private float _curDamageTime;
@@ -23,9 +25,11 @@ namespace Player
         private PackageControl _pc;
         private CameraControl _cc;
         private Animator _playerAnimator;
+        private AudioSource _playerHurt;
 
         private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
         private static readonly int Death = Animator.StringToHash("Death");
+        private static readonly int Hurt = Animator.StringToHash("Hurt");
 
         private void Start()
         {
@@ -34,6 +38,7 @@ namespace Player
             _cc = mainCamera.GetComponent<CameraControl>();
             _pc = GetComponent<PackageControl>();
             _playerAnimator = GetComponent<Animator>();
+            _playerHurt = GetComponent<AudioSource>();
         }
 
         private void FixedUpdate()
@@ -86,7 +91,10 @@ namespace Player
 
         public void ApplyDamage(int damage)
         {
+            if (_cc.CurHealth <= 0) return;
             _cc.ApplyDamage(damage);
+            beHurt.SetTrigger(Hurt);
+            _playerHurt.Play();
         }
 
         public void AddHealth(int cure)
@@ -103,6 +111,8 @@ namespace Player
         public void GameOver()
         {
             _playerAnimator.SetTrigger(Death);
+            _playerHurt.clip = playerDie;
+            _playerHurt.Play();
         }
 
         [UsedImplicitly]

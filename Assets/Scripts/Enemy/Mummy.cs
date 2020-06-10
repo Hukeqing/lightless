@@ -21,7 +21,9 @@ namespace Enemy
 
         protected override void Die()
         {
-            Destroy(gameObject);
+            audioSource.clip = dieClip;
+            audioSource.Play();
+            Destroy(gameObject, 1);
         }
     }
 }

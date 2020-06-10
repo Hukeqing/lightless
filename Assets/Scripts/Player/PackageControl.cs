@@ -8,6 +8,9 @@ namespace Player
     {
         public MessageManager messageManager;
         public Image weaponImage;
+        public AudioClip pickUp, useMedication;
+        public AudioSource audioSource;
+
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -50,8 +53,14 @@ namespace Player
             if (_curItem.itemData.itemClass == ItemClass.Weapon)
             {
                 weaponImage.sprite = _curItem.itemData.itemSprite;
+                audioSource.clip = pickUp;
+            }
+            else
+            {
+                audioSource.clip = useMedication;
             }
 
+            audioSource.Play();
             _curItem.ApplyItem(_pc);
             _curItem.BeGet();
             messageManager.ClearPackageMessage();

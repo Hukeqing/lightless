@@ -26,11 +26,14 @@ namespace Enemy
         protected override void Attack()
         {
             var newMagic = Instantiate(attackMagic, firePos.position, firePos.rotation);
-            newMagic.GetComponent<Effect.WizardAttack>().pc = _pc;
+            var wa = newMagic.GetComponent<Effect.WizardAttack>();
+            wa.pc = _pc;
         }
 
         protected override void Die()
         {
+            audioSource.clip = dieClip;
+            audioSource.Play();
             StartCoroutine(Dead());
         }
 
@@ -45,6 +48,7 @@ namespace Enemy
         {
             if (curHealth <= 0) return;
             curHealth -= getDamage;
+            audioSource.Play();
             _wizardAnimator.SetTrigger(OnHit);
             hitEffect.Stop();
             hitEffect.Play();

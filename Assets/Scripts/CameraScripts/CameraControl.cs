@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace CameraScripts
 {
@@ -39,40 +40,56 @@ namespace CameraScripts
         public float stopCostTime;
         private GameStatus _gameStatus;
         private float _stopTime;
+
         private AudioSource _countDownAudio;
+        private AudioSource _breath;
 
-        // private AudioSource _beats;
-
-        private int _curHealth;
+        public int CurHealth { get; private set; }
         private float _showHealth;
 
         public bool GameOver { get; private set; }
 
         public float HealthValue => Mathf.Clamp01(_showHealth / maxHealth + 0.3f);
 
+        #region BGM
+
+        public AudioClip[] terrorAudioClips;
+        public AudioSource terrorAudioSource;
+
+        private float _nextAudioTime;
+
+        #endregion
+
         private void Start()
         {
-            _countDownAudio = countDownText.GetComponent<AudioSource>();
-            // _beats = pc.GetComponent<AudioSource>();
-            countDownText.text = "";
-            _curHealth = maxHealth;
-            _showHealth = _curHealth;
             _gameStatus = GameStatus.Normal;
+            _countDownAudio = countDownText.GetComponent<AudioSource>();
+            _breath = GetComponent<AudioSource>();
+            countDownText.text = "";
+            CurHealth = maxHealth;
+            _showHealth = CurHealth;
+            _gameStatus = GameStatus.Normal;
+            _nextAudioTime = Time.time + Random.Range(10, 30);
         }
 
         private void Update()
         {
-            _showHealth = Mathf.Lerp(_showHealth, _curHealth, decreaseSpeed);
-            // if (HealthValue <= 0.8f)
-            // {
-            //     _beats.Play();
-            //     _beats.pitch = 2 - HealthValue;
-            //     _beats.volume = 1.3f - HealthValue;
-            // }
-            // else
-            // {
-            //     _beats.Stop();
-            // }
+            _showHealth = Mathf.Lerp(_showHealth, CurHealth, decreaseSpeed);
+
+            if (HealthValue <= 0.6f)
+            {
+                if (!_breath.isPlaying)
+                {
+                    _breath.Play();
+                }
+
+                _breath.volume = 1 - HealthValue;
+            }
+
+            if ((HealthValue >= 0.7f || CurHealth <= 0) && _breath.isPlaying)
+            {
+                _breath.Stop();
+            }
 
             switch (_gameStatus)
             {
@@ -88,6 +105,7 @@ namespace CameraScripts
                     {
                         _gameStatus = GameStatus.Stop;
                         Time.timeScale = 0;
+                        if (terrorAudioSource.isPlaying) terrorAudioSource.Pause();
                     }
 
                     break;
@@ -111,6 +129,12 @@ namespace CameraScripts
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (!(Time.time >= _nextAudioTime) || terrorAudioSource.isPlaying) return;
+            var tmp = Random.Range(0, terrorAudioClips.Length);
+            terrorAudioSource.clip = terrorAudioClips[tmp];
+            terrorAudioSource.Play();
+            _nextAudioTime = Time.time + terrorAudioClips[tmp].length + Random.Range(10, 30);
         }
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -160,10 +184,10 @@ namespace CameraScripts
         {
             if (GameOver) return;
             damage = Mathf.RoundToInt(damage / Mathf.Exp(-0.005f * gm.GameScore));
-            _curHealth -= damage;
-            if (_curHealth > 0) return;
+            CurHealth -= damage;
+            if (CurHealth > 0) return;
             GameOver = true;
-            _curHealth = 0;
+            CurHealth = 0;
             pc.GameOver();
             gm.GameOver();
         }
@@ -172,13 +196,14 @@ namespace CameraScripts
         {
             if (GameOver) return;
             cure = Mathf.RoundToInt(cure * Mathf.Exp(-0.005f * gm.GameScore));
-            _curHealth += cure;
-            if (_curHealth <= maxHealth) return;
-            _curHealth = maxHealth;
+            CurHealth += cure;
+            if (CurHealth <= maxHealth) return;
+            CurHealth = maxHealth;
         }
 
         private void GameStop()
         {
+            if (GameOver) return;
             switch (_gameStatus)
             {
                 case GameStatus.Normal:
@@ -213,6 +238,7 @@ namespace CameraScripts
             countDownText.text = "";
             _gameStatus = GameStatus.UnStop;
             Time.timeScale = 1;
+            terrorAudioSource.UnPause();
             _stopTime = Time.time;
         }
     }

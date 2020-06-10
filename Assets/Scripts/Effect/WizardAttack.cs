@@ -9,22 +9,31 @@ namespace Effect
         public int damage;
         public float moveSpeed;
         public ParticleSystem a, b;
+        public float maxDistance = 3;
 
+        private Vector3 _target;
         private bool _hit;
 
         private void Start()
         {
             _hit = false;
+            _target = pc.transform.position + Vector3.up;
+            transform.LookAt(_target);
         }
 
         private void Update()
         {
             if (_hit) return;
-            Transform transform1;
-            (transform1 = transform).LookAt(pc.transform.position + Vector3.up);
-            transform.Translate(transform1.forward * (Time.deltaTime * moveSpeed), Space.World);
-            if (!(Vector3.Distance(transform1.position, pc.transform.position + Vector3.up) < 0.1f)) return;
+
+            transform.Translate(Vector3.forward * (moveSpeed * Time.deltaTime));
+            if (Vector3.Distance(_target, transform.position) > 0.1f) return;
+
             _hit = true;
+
+            damage = Mathf.CeilToInt(Mathf.Clamp(
+                damage * (1 - Vector3.Distance(_target, pc.transform.position + Vector3.up) /
+                    maxDistance), 0, damage));
+
             pc.ApplyDamage(damage);
             a.Play();
             b.Play();

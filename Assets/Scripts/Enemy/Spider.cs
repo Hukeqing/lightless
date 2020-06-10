@@ -32,6 +32,8 @@ namespace Enemy
 
         protected override void Die()
         {
+            audioSource.clip = dieClip;
+            audioSource.Play();
             StartCoroutine(Dead());
         }
 
@@ -46,6 +48,7 @@ namespace Enemy
         {
             if (curHealth <= 0) return;
             curHealth -= getDamage;
+            audioSource.Play();
             _spiderAnimator.SetTrigger(OnHit);
             if (curHealth > 0) return;
             curHealth = 0;

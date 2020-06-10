@@ -28,6 +28,8 @@ namespace Enemy
 
         protected override void Die()
         {
+            audioSource.clip = dieClip;
+            audioSource.Play();
             StartCoroutine(Dead());
         }
 
@@ -42,6 +44,7 @@ namespace Enemy
         {
             if (curHealth <= 0) return;
             curHealth -= getDamage;
+            audioSource.Play();
             if (curHealth > 0) return;
             curHealth = 0;
             Die();

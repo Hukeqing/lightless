@@ -10,12 +10,14 @@ namespace Weapon
         public Transform firePoint;
         public LineRenderer attackLine;
 
+        private AudioSource _weaponAudioSource;
         private Ray _ray;
         private float _lineDisableTime;
 
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
+            _weaponAudioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -34,6 +36,10 @@ namespace Weapon
         {
             if (curWeaponCost <= 0.001f) return;
             if (nextAttack > Time.time) return;
+
+            _weaponAudioSource.Stop();
+            _weaponAudioSource.Play();
+
             nextAttack = Time.time + coolDown;
             WeaponCost(weaponCost);
             var firePointPosition = firePoint.position;
@@ -46,7 +52,6 @@ namespace Weapon
                 if (hitInfo.collider.gameObject.layer == 13)
                 {
                     var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
-                    if (enemyUnit.IsDie) return;
                     enemyUnit.ApplyDamage(damage);
                 }
             }

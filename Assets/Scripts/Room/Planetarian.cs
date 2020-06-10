@@ -9,6 +9,7 @@ namespace Room
         public override void Enter()
         {
             planetarian.Play();
+            GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
         }
 
         public override void Exit()

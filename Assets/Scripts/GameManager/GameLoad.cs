@@ -29,13 +29,13 @@ namespace GameManager
 
         private IEnumerator ShowProgress()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
             _async = SceneManager.LoadSceneAsync(3);
             _async.allowSceneActivation = false;
             _curImage = 0;
             while (_curImage != 9)
             {
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.1f);
                 yield return new WaitUntil(() => _async.progress * 10 >= _curImage);
                 loadImage[_curImage].sprite = loadOverSprite;
                 _curImage++;

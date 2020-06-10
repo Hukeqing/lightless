@@ -11,6 +11,7 @@ namespace Weapon
         public LineRenderer attackLine;
         public float backForce;
 
+        private AudioSource _weaponAudioSource;
         private Ray _ray;
         private float _lineDisableTime;
         private Rigidbody _playerRigid;
@@ -19,6 +20,7 @@ namespace Weapon
         {
             attackLine.gameObject.SetActive(false);
             _playerRigid = transform.parent.GetComponent<Rigidbody>();
+            _weaponAudioSource = GetComponent<AudioSource>();
         }
 
         public override void Attack()
@@ -36,6 +38,10 @@ namespace Weapon
         {
             if (curWeaponCost <= 0.001f) return;
             if (nextAttack > Time.time) return;
+
+            _weaponAudioSource.Stop();
+            _weaponAudioSource.Play();
+
             nextAttack = Time.time + coolDown;
             WeaponCost(weaponCost);
             var firePointPosition = firePoint.position;
@@ -48,7 +54,6 @@ namespace Weapon
                 if (hitInfo.collider.gameObject.layer == 13)
                 {
                     var enemyUnit = hitInfo.collider.GetComponent<Enemy.Unit>();
-                    if (enemyUnit.IsDie) return;
                     enemyUnit.ApplyDamage(damage);
                 }
             }

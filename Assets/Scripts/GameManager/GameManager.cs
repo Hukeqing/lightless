@@ -32,16 +32,15 @@ namespace GameManager
 #if UNITY_EDITOR
             try
             {
+#endif
                 _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
                 _gameMode = _gameController.gameMode;
+#if UNITY_EDITOR
             }
             catch (Exception)
             {
                 // ignored
             }
-#else
-            _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-            _gameMode = _gameController.gameMode;
 #endif
         }
 
@@ -61,14 +60,14 @@ namespace GameManager
 #if UNITY_EDITOR
             try
             {
+#endif
                 _gameController.GameOver(GameScore);
+#if UNITY_EDITOR
             }
             catch (Exception)
             {
                 // ignored
             }
-#else
-            _gameController.GameOver(GameScore);
 #endif
         }
 

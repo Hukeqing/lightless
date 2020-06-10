@@ -11,6 +11,7 @@ namespace Weapon
         [HideInInspector] public Image weaponImage;
         [Range(0, 1)] public float weaponCost;
         [HideInInspector] public float curWeaponCost;
+        
 
         protected float nextAttack;
 
