@@ -157,6 +157,7 @@ namespace NetworkControl
             if (Time.time < _nextFlush)
             {
                 _homeMessageManager.ShowMessage("刷新太频繁啦！！！", 3);
+                return;
             }
 
             _nextFlush = Time.time + flushTime;
