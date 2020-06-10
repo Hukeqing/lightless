@@ -48,7 +48,7 @@ namespace GameManager
         private void Update()
         {
             gameScoreText.text = ((int) (GameScore * 10.0f) / 10.0f).ToString(CultureInfo.InvariantCulture);
-            if (_gameMode > 0 && _gameMode < GameScore && !_gameOver)
+            if (_gameMode > -0.5 && _gameMode < GameScore && !_gameOver)
             {
                 gameScoreText.color = Color.green;
             }
