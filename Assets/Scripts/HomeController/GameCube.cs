@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameManager;
+using UnityEngine;
 
 namespace HomeController
 {
@@ -14,9 +15,16 @@ namespace HomeController
         private Vector3 _speed;
         private bool _onDrag;
 
+        #region Game
+
+        private GameController _gameController;
+
+        #endregion
+
         private void Start()
         {
             _onDrag = false;
+            _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         }
 
         private void OnMouseDrag()
@@ -45,5 +53,22 @@ namespace HomeController
         {
             _onDrag = false;
         }
+        
+        
+        public void Leisure()
+        {
+            _gameController.Leisure();
+        }
+
+        public void HighScore()
+        {
+            _gameController.HighScore();
+        }
+
+        public void AcceptGame()
+        {
+            _gameController.AcceptGame();
+        }
+
     }
 }

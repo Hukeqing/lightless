@@ -18,7 +18,7 @@ namespace GameManager
 
     public class GameController : MonoBehaviour
     {
-        [HideInInspector]public float gameMode;
+        [HideInInspector] public float gameMode;
 
         private static bool _onScene;
 
@@ -33,6 +33,10 @@ namespace GameManager
                 DontDestroyOnLoad(gameObject);
                 _onScene = true;
             }
+            else
+            {
+                Destroy(gameObject);
+            }
 #if UNITY_EDITOR
             try
             {
@@ -45,7 +49,7 @@ namespace GameManager
                 // ignored
             }
 #endif
-            _homeMessageManager = GetComponent<HomeMessageManager>();
+            _homeMessageManager = GameObject.FindGameObjectWithTag("HomeManager").GetComponent<HomeMessageManager>();
         }
 
         public void Leisure()
@@ -57,6 +61,12 @@ namespace GameManager
 
         public void HighScore()
         {
+            if (_homeMessageManager == null)
+            {
+                _homeMessageManager =
+                    GameObject.FindGameObjectWithTag("HomeManager").GetComponent<HomeMessageManager>();
+            }
+
             _homeMessageManager.GetYesOrNoMessage(
                 "这场比赛将会被服务器记录\n并且影响你的Rank分\n请确保在网络畅通下进行", b =>
                 {
@@ -81,6 +91,12 @@ namespace GameManager
 
         public void AcceptGame()
         {
+            if (_homeMessageManager == null)
+            {
+                _homeMessageManager =
+                    GameObject.FindGameObjectWithTag("HomeManager").GetComponent<HomeMessageManager>();
+            }
+
             _homeMessageManager.GetYesOrNoMessage(
                 "这场比赛将会被服务器记录\n并且影响你的Rank分\n请确保在网络畅通下进行", b =>
                 {

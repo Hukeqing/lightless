@@ -136,7 +136,10 @@ namespace NetworkControl
                                     StartCoroutine(WebRequestGet(_basicUrl + "report_competition.php", param,
                                         () => { OnConnect = false; }));
                                 }
-
+                                else
+                                {
+                                    OnConnect = false;
+                                }
                                 SceneManager.LoadScene(1);
                             }));
                     }
@@ -157,6 +160,7 @@ namespace NetworkControl
                                 _accountManager.Error(response.errorMsg, 3);
                                 break;
                         }
+                        OnConnect = false;
                     }
                 }));
         }
@@ -408,7 +412,7 @@ namespace NetworkControl
                                                 response3 =>
                                                 {
                                                     OnConnect = false;
-                                                    switch (response2.errorId)
+                                                    switch (response3.errorId)
                                                     {
                                                         case 200:
 #if UNITY_EDITOR

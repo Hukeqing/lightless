@@ -61,9 +61,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _ColorGreyRange: 0.000000006131343
+    - _ColorGreyRange: 4.2865475e-20
     - _ColorMixRange: 0.2
-    - _ColorReRange: -319.22092
+    - _ColorReRange: -886.55066
     - _ColorStop: -1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1

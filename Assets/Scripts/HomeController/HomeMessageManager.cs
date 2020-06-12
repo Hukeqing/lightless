@@ -54,7 +54,8 @@ namespace HomeController
         }
 
         public void GetYesOrNoMessage(string msg, Action<bool> callback)
-        {            if (_check == 0)
+        {
+            if (_check == 0)
             {
 #if UNITY_EDITOR
                 Debug.Log("Message miss");
