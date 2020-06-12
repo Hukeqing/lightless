@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 namespace CameraScripts
 {
+    /// <summary>
+    /// 游戏的暂停状态
+    /// </summary>
     public enum GameStatus
     {
         Normal,
@@ -15,18 +18,29 @@ namespace CameraScripts
         UnStop
     }
 
+    /// <summary>
+    /// 主摄像机控制
+    /// </summary>
     [ExecuteInEditMode]
     public class CameraControl : MonoBehaviour
     {
+        #region shader的属性值
+
         private static readonly int ColorGreyRangeId = Shader.PropertyToID("_ColorGreyRange");
         private static readonly int ColorReRange = Shader.PropertyToID("_ColorReRange");
         private static readonly int ColorStop = Shader.PropertyToID("_ColorStop");
         private static readonly int SampleStrength = Shader.PropertyToID("_SampleStrength");
         private static readonly int SampleDist = Shader.PropertyToID("_SampleDist");
 
+        #endregion
+
+        #region 三层主摄像机shader渲染材质
+
         public Material material;
         public Material noiseMaterial;
         public Material dimMaterial;
+
+        #endregion
 
         public int maxHealth;
         public float decreaseSpeed;

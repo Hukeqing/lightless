@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameManager;
+using HomeController;
 using UnityEngine;
 using UnityEngine.UI;
 

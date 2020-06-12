@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameManager
+namespace HomeController
 {
     public class HomeButton : MonoBehaviour
     {

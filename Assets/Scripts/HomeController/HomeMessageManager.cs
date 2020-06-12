@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameManager
+namespace HomeController
 {
     public class HomeMessageManager : MonoBehaviour
     {

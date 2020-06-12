@@ -2693,11 +2693,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f511378142a14d977e87c5c275390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
   roomData:
     dataName: "\u57CE\u5E02"
     dataRarity: 0
     dataPrefab: {fileID: 5129479067036151964}
-    roomDescribe: "\u66FE\u7ECF\u8FD9\u91CC\u662F\u6700\u7E41\u8363\u7684\u5730\u5757\uFF0C\u73B0\u5728\u597D\u50CF\u4E5F\u662F"
+    roomDescribe: 
 --- !u!1 &5182966901790608434
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using HomeController;
 using NetworkControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
