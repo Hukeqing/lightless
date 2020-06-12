@@ -97,7 +97,7 @@ namespace NetworkControl
                 @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
             if (!System.Text.RegularExpressions.Regex.IsMatch(email, expression))
             {
-                Error("Email Error", 0);
+                Error("邮箱不存在", 0);
                 return;
             }
 
@@ -114,7 +114,7 @@ namespace NetworkControl
             const string nameExpression = @"[A-Za-z0-9]{3,10}";
             if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, nameExpression))
             {
-                Error("Name does not conform to the specification", -1);
+                Error("名字不符合规范，请使用3-10个英文字符或数字组成", -1);
                 return;
             }
 
@@ -123,19 +123,19 @@ namespace NetworkControl
 
             if (!System.Text.RegularExpressions.Regex.IsMatch(email, emailExpression))
             {
-                Error("Email Error", 0);
+                Error("邮箱错误", 0);
                 return;
             }
 
             if (pwd.Length < 6)
             {
-                Error("Password is too short", 1);
+                Error("密码太短了", 1);
                 return;
             }
 
             if (pwd != repeat)
             {
-                Error("Password is not same", 2);
+                Error("密码不相同", 2);
                 return;
             }
 

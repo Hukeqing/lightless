@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameManager;
 using HomeController;
 using UnityEngine;
 using UnityEngine.UI;
@@ -122,16 +121,16 @@ namespace NetworkControl
                 switch (errorId)
                 {
                     case 0:
-                        msg = "Friend request sent";
+                        msg = "好友申请已发送";
                         break;
                     case 404:
-                        msg = "Email is not found";
+                        msg = "此邮箱未被注册";
                         break;
                     case 100:
-                        msg = "You have this friend";
+                        msg = "你已经拥有这个好友了";
                         break;
                     case 200:
-                        msg = "You are add yourself";
+                        msg = "你试图添加自己为好友";
                         break;
                 }
 
@@ -144,7 +143,7 @@ namespace NetworkControl
         {
             if (curSelectFriend == null)
             {
-                _homeMessageManager.ShowMessage("Please select a friend", 3);
+                _homeMessageManager.ShowMessage("请先选择一个好友", 3);
                 return;
             }
 
