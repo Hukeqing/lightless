@@ -42,8 +42,6 @@ namespace Weapon
             if (nextAttack > Time.time) return;
 
 
-            shotCamera.transform.position = _mainCamera.transform.position;
-
             if (curWeaponCost <= 0.001f)
             {
                 PlayAudio();
@@ -52,6 +50,7 @@ namespace Weapon
 
             Time.timeScale = 0;
             _animator.SetTrigger(ShotTrigger);
+            _mainCamera.enabled = false;
             _message.SetActive(true);
         }
 
@@ -87,6 +86,7 @@ namespace Weapon
         // ReSharper disable once UnusedMember.Global
         public void OverAnimation()
         {
+            _mainCamera.enabled = true;
             Time.timeScale = 1;
         }
     }

@@ -13,23 +13,26 @@ namespace Weapon
 
         private float _curDistance;
         private Ray _ray;
+        private int _curDir;
 
         private void Start()
         {
             _curDistance = 0;
+            _curDir = 1;
             Init();
         }
 
         public override void Attack()
         {
             if (curWeaponCost <= 0.001f) return;
-            _curDistance += distanceUp * Time.deltaTime;
-            if (_curDistance > maxDistance) _curDistance = 0;
+            _curDistance += distanceUp * Time.deltaTime * _curDir;
 
             _ray = new Ray(firePoint.position, firePoint.forward);
             if (!Physics.Raycast(_ray, out var hitInfo, 10000, hitLayerMask)) return;
-            var maxBuildDistance = Vector3.Distance(hitInfo.point, firePoint.position);
-            target.localPosition = Vector3.up * Mathf.Clamp(_curDistance, 0, maxBuildDistance);
+            var maxBuildDistance = Mathf.Min(Vector3.Distance(hitInfo.point, firePoint.position), maxDistance);
+
+            if (_curDistance > maxBuildDistance || _curDistance <= 0) _curDir = -_curDir;
+            target.localPosition = Vector3.up * _curDistance;
         }
 
         public override void AttackDown()
