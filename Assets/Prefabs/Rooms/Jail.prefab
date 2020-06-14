@@ -12181,11 +12181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f511378142a14d977e87c5c275390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
   roomData:
-    roomName: "\u76D1\u72F1"
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
     roomDescribe: "\u6781\u6743\u653F\u5E9C\u7684\u7EDF\u6CBB\u66FE\u7ECF\u5BFC\u81F4\u8FD9\u91CC\u975E\u5E38\u7E41\u5FD9"
-    roomRarity: 3
-    roomPrefab: {fileID: 7465083231437918393}
 --- !u!1 &7466572780041536303
 GameObject:
   m_ObjectHideFlags: 0
@@ -13312,6 +13313,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7707203799786828452}
     m_Modifications:
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13476,6 +13482,11 @@ PrefabInstance:
         type: 3}
       propertyPath: itemValue
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
