@@ -46,7 +46,7 @@ namespace Player
             if (_cc.GameOver) return;
             var moveVec3 = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveVec3.Normalize();
-            transform.Translate(Time.deltaTime * moveSpeed * HealthValue * moveVec3, Space.World);
+            transform.Translate(Time.fixedDeltaTime * moveSpeed * HealthValue * moveVec3, Space.World);
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hitInfo, 1000.0f, 1 << 9)) return;
             var target = hitInfo.point;

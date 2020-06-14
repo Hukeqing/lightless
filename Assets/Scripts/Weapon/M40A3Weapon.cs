@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Weapon
 {
@@ -9,21 +10,27 @@ namespace Weapon
         public float lineDisableInt;
         public Transform firePoint;
         public LineRenderer attackLine;
-        public Camera shotCamera;
+
+        public Transform targetTransform;
+
+        public float waitTime;
 
         private Ray _ray;
+        private float _startTime;
+        private Vector3 _cameraBasicPos;
+        private Quaternion _cameraBasicQuaternion;
+
         private float _lineDisableTime;
-        private Animator _animator;
+        private GameObject _mainCameraObject;
         private Camera _mainCamera;
-        private static readonly int ShotTrigger = Animator.StringToHash("Shot");
         private GameObject _message;
 
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
             Init();
-            _animator = GetComponent<Animator>();
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _mainCameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+            _mainCamera = _mainCameraObject.GetComponent<Camera>();
             _message = GameObject.FindGameObjectWithTag("MouthHitMessage").transform.GetChild(0).gameObject;
         }
 
@@ -37,10 +44,45 @@ namespace Weapon
             attackLine.gameObject.SetActive(false);
         }
 
+        private IEnumerator AttackTime()
+        {
+            _startTime = 0;
+            Time.timeScale = 0f;
+
+            _message.SetActive(true);
+
+            var transform1 = _mainCamera.transform;
+            _cameraBasicPos = transform1.position;
+            _cameraBasicQuaternion = transform1.rotation;
+            while (_startTime <= 1)
+            {
+                transform1.position = Vector3.Lerp(_cameraBasicPos, targetTransform.position, _startTime);
+                transform1.rotation = Quaternion.Lerp(_cameraBasicQuaternion, targetTransform.rotation, _startTime);
+                _startTime += 0.01f;
+                yield return new WaitForSecondsRealtime(0.01f);
+            }
+
+            yield return new WaitForSecondsRealtime(waitTime);
+
+            Shot();
+
+            yield return new WaitForSecondsRealtime(waitTime / 2.0f);
+
+            while (_startTime >= 0)
+            {
+                transform1.position = Vector3.Lerp(_cameraBasicPos, targetTransform.position, _startTime);
+                transform1.rotation = Quaternion.Lerp(_cameraBasicQuaternion, targetTransform.rotation, _startTime);
+                _startTime -= 0.01f;
+                yield return new WaitForSecondsRealtime(0.01f);
+            }
+
+            Time.timeScale = 1;
+        }
+
         public override void AttackDown()
         {
             if (nextAttack > Time.time) return;
-
+            nextAttack = Time.time + coolDown;
 
             if (curWeaponCost <= 0.001f)
             {
@@ -48,20 +90,16 @@ namespace Weapon
                 return;
             }
 
-            Time.timeScale = 0;
-            _animator.SetTrigger(ShotTrigger);
-            _mainCamera.enabled = false;
-            _message.SetActive(true);
+            StartCoroutine(AttackTime());
         }
 
-        // ReSharper disable once UnusedMember.Global
-        public void Shot()
+        private void Shot()
         {
             _message.SetActive(false);
             attackLine.gameObject.SetActive(true);
             attackLine.SetPosition(0, firePoint.position);
 
-            var ray = shotCamera.ScreenPointToRay(Input.mousePosition);
+            var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hitInfo, maxRange, hitLayerMask))
             {
                 attackLine.SetPosition(1, hitInfo.point);
@@ -78,16 +116,8 @@ namespace Weapon
 
             PlayAudio();
 
-            nextAttack = Time.time + coolDown;
             WeaponCost(weaponCost);
             _lineDisableTime = Time.time + lineDisableInt;
-        }
-
-        // ReSharper disable once UnusedMember.Global
-        public void OverAnimation()
-        {
-            _mainCamera.enabled = true;
-            Time.timeScale = 1;
         }
     }
 }

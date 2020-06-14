@@ -5,7 +5,7 @@ namespace Room
 {
     public class Room : MonoBehaviour
     {
-        public Point.Point[] points;
+        // public Point.Point[] points;
         public RoomData roomData;
 
         public virtual void Enter()

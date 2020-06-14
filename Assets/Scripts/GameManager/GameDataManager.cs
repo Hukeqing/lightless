@@ -9,6 +9,7 @@ namespace GameManager
     public enum ItemClass
     {
         Weapon,
+
         // ReSharper disable once UnusedMember.Global
         Medication
     }
@@ -38,7 +39,6 @@ namespace GameManager
     [Serializable]
     public class ItemData : Data
     {
-        public string describe;
         public ItemClass itemClass;
         public Sprite itemSprite;
     }
@@ -63,7 +63,15 @@ namespace GameManager
 
         private Room.RoomManager _rm;
 
+        private float[] _rarityValueList;
+
         private void Start()
+        {
+            _rm = GetComponent<Room.RoomManager>();
+            _rm.Init(this);
+        }
+
+        public void Sort()
         {
             foreach (var itemData in itemDataList)
             {
@@ -75,12 +83,6 @@ namespace GameManager
                 roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
 
-            _rm = GetComponent<Room.RoomManager>();
-            _rm.Init(this);
-        }
-
-        public void Sort()
-        {
             itemDataList.Sort((a, b) =>
             {
                 if (a.itemClass != b.itemClass) return a.itemClass == ItemClass.Weapon ? 1 : -1;
@@ -92,15 +94,20 @@ namespace GameManager
 
         private float GetRarity(Rarity rarity)
         {
-            var tmp = Rarity.White;
+            if (_rarityValueList != null) return _rarityValueList[(int) rarity];
+            _rarityValueList = new float[6];
+
+            var tmp = Rarity.White;    
             var res = 1.0f;
-            while (tmp != rarity)
+            _rarityValueList[0] = 1.0f;
+            while (tmp != Rarity.Red)
             {
                 res *= rarityValue;
                 tmp += 1;
+                _rarityValueList[(int) tmp] = res;
             }
 
-            return res;
+            return _rarityValueList[(int) rarity];
         }
 
         public static Color GetColor(Rarity rarity)
@@ -134,6 +141,7 @@ namespace GameManager
 
         public ItemData GetRandomItem(Rarity baseRarity)
         {
+            // return itemDataList[12];
             var raritySum = itemDataList.Sum(itemData =>
                 itemData.dataRarity >= baseRarity ? GetRarity(itemData.dataRarity) : 0);
             var cur = Random.Range(0, raritySum);
