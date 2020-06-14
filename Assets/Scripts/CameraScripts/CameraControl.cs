@@ -108,7 +108,7 @@ namespace CameraScripts
             switch (_gameStatus)
             {
                 case GameStatus.Normal:
-                    if (Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale > 0.5f)
                     {
                         GameStop();
                     }

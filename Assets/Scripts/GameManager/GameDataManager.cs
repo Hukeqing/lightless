@@ -9,6 +9,7 @@ namespace GameManager
     public enum ItemClass
     {
         Weapon,
+        // ReSharper disable once UnusedMember.Global
         Medication
     }
 
@@ -73,7 +74,7 @@ namespace GameManager
             {
                 roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
-            
+
             _rm = GetComponent<Room.RoomManager>();
             _rm.Init(this);
         }
@@ -88,7 +89,7 @@ namespace GameManager
             enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
             roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
         }
-        
+
         private float GetRarity(Rarity rarity)
         {
             var tmp = Rarity.White;

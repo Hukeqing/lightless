@@ -9,6 +9,7 @@ TagManager:
   - BGM
   - GameSetting
   - HomeManager
+  - MouthHitMessage
   layers:
   - Default
   - TransparentFX
