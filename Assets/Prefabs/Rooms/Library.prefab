@@ -17431,11 +17431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996f511378142a14d977e87c5c275390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
   roomData:
-    roomName: "\u56FE\u4E66\u9986"
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
     roomDescribe: "\u73B0\u5728\u5DF2\u7ECF\u65E0\u6687\u770B\u4E66\u4E86\u5427"
-    roomRarity: 2
-    roomPrefab: {fileID: 3230867602478964773}
 --- !u!1 &3273063826785817149
 GameObject:
   m_ObjectHideFlags: 0
@@ -19590,7 +19591,12 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.7
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -19675,7 +19681,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -19760,7 +19766,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -19845,7 +19851,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -19930,7 +19936,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -20015,7 +20021,7 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}

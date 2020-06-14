@@ -35,16 +35,16 @@ namespace Point
 
         private void Start()
         {
+            _prdValue += PrdUp[RandomPos(itemValue)];
             var tmp = Random.Range(0.0f, 1.0f);
             if (tmp < _prdValue)
             {
                 InsItem();
-                _prdValue = PrdUp[RandomPos(itemValue)];
+                _prdValue = 0;
             }
             else
             {
                 InsEnemy();
-                _prdValue += PrdUp[RandomPos(itemValue)];
             }
         }
 

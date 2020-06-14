@@ -5333,6 +5333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf884b32964ab5499d3db19d27f65db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
   roomData:
     dataName: 
     dataRarity: 0
@@ -5394,6 +5395,11 @@ PrefabInstance:
         type: 3}
       propertyPath: itemValue
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
@@ -5473,6 +5479,11 @@ PrefabInstance:
     - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: itemValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
@@ -5555,6 +5566,11 @@ PrefabInstance:
       propertyPath: itemValue
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5634,6 +5650,11 @@ PrefabInstance:
         type: 3}
       propertyPath: itemValue
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422761797627558936, guid: f3bb683eb60dcd2408146fac303032de,
+        type: 3}
+      propertyPath: rarity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4422761797627558937, guid: f3bb683eb60dcd2408146fac303032de,
         type: 3}

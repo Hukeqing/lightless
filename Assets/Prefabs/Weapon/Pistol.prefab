@@ -275,6 +275,7 @@ MonoBehaviour:
   weaponImage: {fileID: 0}
   weaponCost: 0.1
   curWeaponCost: 0
+  weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
   damage: 35
   maxRange: 15
   lineDisableInt: 0.03

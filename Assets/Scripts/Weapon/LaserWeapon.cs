@@ -9,11 +9,7 @@ namespace Weapon
         public Transform firePoint;
         public LineRenderer attackLine;
 
-        private AudioSource _weaponAudioSource;
-        private bool _lastOnAttack;
-
         private Ray _ray;
-        private bool _onAttack;
         private float _hsvH;
         private float _hsvS;
         private float _hsvV;
@@ -21,40 +17,13 @@ namespace Weapon
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
-            _onAttack = false;
             Color.RGBToHSV(Color.red, out _hsvH, out _hsvS, out _hsvV);
-            _weaponAudioSource = GetComponent<AudioSource>();
+            Init();
         }
 
         public override void Attack()
         {
-        }
-
-        public override void AttackDown()
-        {
-            _onAttack = true;
-        }
-
-        public override void AttackUp()
-        {
-            _onAttack = false;
-        }
-
-        private void Update()
-        {
-            if (curWeaponCost <= 0) _onAttack = false;
-            attackLine.gameObject.SetActive(_onAttack);
-
-            if (!_onAttack)
-            {
-                if (!_lastOnAttack) return;
-                _weaponAudioSource.Stop();
-                _lastOnAttack = _onAttack;
-
-                return;
-            }
-
-            if (!_lastOnAttack) _weaponAudioSource.Play();
+            if (curWeaponCost <= 0) return;
 
             var firePointPosition = firePoint.position;
             _ray = new Ray(firePointPosition, firePoint.forward);
@@ -79,7 +48,18 @@ namespace Weapon
             attackLine.startColor = tColor;
             attackLine.endColor = tColor;
             WeaponCost(weaponCost * Time.deltaTime);
-            _lastOnAttack = _onAttack;
+        }
+
+        public override void AttackDown()
+        {
+            attackLine.gameObject.SetActive(true);
+            PlayAudio();
+        }
+
+        public override void AttackUp()
+        {
+            attackLine.gameObject.SetActive(false);
+            weaponAudioSource.Stop();
         }
     }
 }

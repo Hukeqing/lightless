@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GameManager
@@ -74,14 +73,22 @@ namespace GameManager
             {
                 roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
             }
-
-            // itemDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
-            // enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
-            // roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+            
             _rm = GetComponent<Room.RoomManager>();
             _rm.Init(this);
         }
 
+        public void Sort()
+        {
+            itemDataList.Sort((a, b) =>
+            {
+                if (a.itemClass != b.itemClass) return a.itemClass == ItemClass.Weapon ? 1 : -1;
+                return a.dataRarity.CompareTo(b.dataRarity);
+            });
+            enemyDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+            roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
+        }
+        
         private float GetRarity(Rarity rarity)
         {
             var tmp = Rarity.White;

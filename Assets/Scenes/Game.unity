@@ -3325,6 +3325,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataList:
+  - dataName: "\u5C0F\u74F6\u6CBB\u7597\u836F\u6C34"
+    dataRarity: 0
+    dataPrefab: {fileID: 2944897226157324729, guid: b6d43ec144bb03548aa368c5d9dd6d1e,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5C0F\u74F6\u6291\u5236\u836F\u6C34"
+    dataRarity: 1
+    dataPrefab: {fileID: 3712071458715007267, guid: a4358110c99c6df499b826667ce8884f,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5F39\u836F\u7BB1"
+    dataRarity: 1
+    dataPrefab: {fileID: 4888997163191971050, guid: ed7a06d37cf1c7d47b9fc1a6b8447d36,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5C0F\u74F6\u6DF7\u5408\u836F\u6C34"
+    dataRarity: 2
+    dataPrefab: {fileID: 3948535194783322601, guid: 23064f3c42d954f4092957ac2b39c887,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5927\u74F6\u6DF7\u5408\u836F\u6C34"
+    dataRarity: 3
+    dataPrefab: {fileID: 1190041887096818280, guid: 56ad47c02d5496c4ca3ed8aaaa3877f1,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5927\u74F6\u6CBB\u7597\u836F\u6C34"
+    dataRarity: 4
+    dataPrefab: {fileID: 8253727751242705002, guid: 33faf6f7eb4b87c4f86d827e2a512f26,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+  - dataName: "\u5927\u74F6\u6291\u5236\u836F\u6C34"
+    dataRarity: 5
+    dataPrefab: {fileID: 2117074732623840900, guid: 8b87e2a382747a14189ffaebcc66a48f,
+      type: 3}
+    describe: 
+    itemClass: 1
+    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
   - dataName: "\u624B\u67AA"
     dataRarity: 0
     dataPrefab: {fileID: 5240020490694776369, guid: 529d57c27aeb60844af8f2cd33220b33,
@@ -3336,44 +3385,30 @@ MonoBehaviour:
     dataRarity: 1
     dataPrefab: {fileID: 99278544330772716, guid: 6c0991fb1fccec14fb7bec56f5cd480b,
       type: 3}
-    describe: DemoGun Describe
+    describe: 
     itemClass: 0
     itemSprite: {fileID: 21300000, guid: 311381ca9e8fdb54494b7277a828eeda, type: 3}
   - dataName: "\u72D9\u51FB\u6B65\u67AA"
     dataRarity: 2
     dataPrefab: {fileID: 5855209536220229825, guid: ee5f0da7afb54cc4993514adcbe98af1,
       type: 3}
-    describe: DemoGun Describe
+    describe: 
     itemClass: 0
     itemSprite: {fileID: 21300000, guid: d8c0272507ab3894cb47222d4340a885, type: 3}
   - dataName: "\u6FC0\u5149\u6B66\u5668"
     dataRarity: 3
     dataPrefab: {fileID: 3878941383052395943, guid: 6ec83e256915d0741bc69c63db62cd04,
       type: 3}
-    describe: DemoGun Describe
+    describe: 
     itemClass: 0
     itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
-  - dataName: "\u6CBB\u7597\u836F\u6C34"
-    dataRarity: 0
-    dataPrefab: {fileID: 2944897226157324729, guid: b6d43ec144bb03548aa368c5d9dd6d1e,
-      type: 3}
-    describe: DemoGun Describe
-    itemClass: 1
-    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
-  - dataName: "\u6291\u5236\u836F\u6C34"
+  - dataName: "\u624B\u96F7"
     dataRarity: 1
-    dataPrefab: {fileID: 3712071458715007267, guid: a4358110c99c6df499b826667ce8884f,
+    dataPrefab: {fileID: 3888568686279578843, guid: fa8694323f6a1444fa23f7b8023a6cd8,
       type: 3}
-    describe: DemoGun Describe
-    itemClass: 1
-    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
-  - dataName: "\u6DF7\u5408\u836F\u6C34"
-    dataRarity: 2
-    dataPrefab: {fileID: 3948535194783322601, guid: 23064f3c42d954f4092957ac2b39c887,
-      type: 3}
-    describe: DemoGun Describe
-    itemClass: 1
-    itemSprite: {fileID: 21300000, guid: a17b04048fbd06b4b80d32c45f548da4, type: 3}
+    describe: 
+    itemClass: 0
+    itemSprite: {fileID: 21300000, guid: e1c304517d9b2404f99aa79dfb4108e0, type: 3}
   enemyDataList:
   - dataName: "\u6728\u4E43\u4F0A"
     dataRarity: 0

@@ -6,7 +6,7 @@ namespace CameraScripts
     {
         public Transform player;
         public Shader curShader;
-
+        
         private Player.PlayerControl _pc;
         private Material _material;
         private static readonly int Probability = Shader.PropertyToID("_Probability");

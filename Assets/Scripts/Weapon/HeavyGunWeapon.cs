@@ -10,14 +10,13 @@ namespace Weapon
         public Transform firePoint;
         public LineRenderer attackLine;
 
-        private AudioSource _weaponAudioSource;
         private Ray _ray;
         private float _lineDisableTime;
 
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
-            _weaponAudioSource = GetComponent<AudioSource>();
+            Init();
         }
 
         private void Update()
@@ -30,8 +29,6 @@ namespace Weapon
 
         protected override void ToAttack()
         {
-            _weaponAudioSource.Stop();
-            _weaponAudioSource.Play();
             var firePointPosition = firePoint.position;
             _ray = new Ray(firePointPosition, firePoint.forward);
             attackLine.gameObject.SetActive(true);

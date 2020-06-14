@@ -10,14 +10,13 @@ namespace Weapon
         public Transform firePoint;
         public LineRenderer attackLine;
 
-        private AudioSource _weaponAudioSource;
         private Ray _ray;
         private float _lineDisableTime;
 
         private void Start()
         {
             attackLine.gameObject.SetActive(false);
-            _weaponAudioSource = GetComponent<AudioSource>();
+            Init();
         }
 
         private void Update()
@@ -34,11 +33,11 @@ namespace Weapon
 
         public override void AttackDown()
         {
-            if (curWeaponCost <= 0.001f) return;
             if (nextAttack > Time.time) return;
 
-            _weaponAudioSource.Stop();
-            _weaponAudioSource.Play();
+            PlayAudio();
+
+            if (curWeaponCost <= 0.001f) return;
 
             nextAttack = Time.time + coolDown;
             WeaponCost(weaponCost);
