@@ -59,11 +59,29 @@ namespace GameManager
         public List<ItemData> itemDataList;
         public List<EnemyData> enemyDataList;
         public List<RoomData> roomDataList;
-        [Range(0.1f, 0.9f)] public float rarityValue = 0.5f;
+        [Range(0.1f, 0.9f)] private const float RarityValue = 0.5f;
 
         private Room.RoomManager _rm;
 
-        private float[] _rarityValueList;
+        private static readonly float[] BasicRarityValue =
+        {
+            1.000000f,
+            0.302103f,
+            0.084744f,
+            0.022702f,
+            0.005894f,
+            0.001503f
+        };
+
+        private static readonly float[] RarityValueList =
+        {
+            1.000000f,
+            0.302103f,
+            0.084744f,
+            0.022702f,
+            0.005894f,
+            0.001503f
+        };
 
         private void Start()
         {
@@ -101,22 +119,9 @@ namespace GameManager
             roomDataList.Sort((a, b) => a.dataRarity.CompareTo(b.dataRarity));
         }
 
-        private float GetRarity(Rarity rarity)
+        private static float GetRarity(Rarity rarity)
         {
-            if (_rarityValueList != null) return _rarityValueList[(int) rarity];
-            _rarityValueList = new float[6];
-
-            var tmp = Rarity.White;    
-            var res = 1.0f;
-            _rarityValueList[0] = 1.0f;
-            while (tmp != Rarity.Red)
-            {
-                res *= rarityValue;
-                tmp += 1;
-                _rarityValueList[(int) tmp] = res;
-            }
-
-            return _rarityValueList[(int) rarity];
+            return RarityValueList[(int) rarity];
         }
 
         public static Color GetColor(Rarity rarity)
@@ -158,10 +163,15 @@ namespace GameManager
             foreach (var itemData in itemDataList.Where(itemData => itemData.dataRarity >= baseRarity))
             {
                 tmp += GetRarity(itemData.dataRarity);
-                if (tmp >= cur)
+                if (!(tmp >= cur)) continue;
+
+                for (var i = 0; i < 6; i++)
                 {
-                    return itemData;
+                    RarityValueList[i] += BasicRarityValue[i];
                 }
+
+                RarityValueList[(int) itemData.dataRarity] = BasicRarityValue[(int) itemData.dataRarity];
+                return itemData;
             }
 
             return itemDataList[0];
@@ -176,27 +186,19 @@ namespace GameManager
             foreach (var enemyData in enemyDataList.Where(enemyData => enemyData.dataRarity >= baseRarity))
             {
                 tmp += GetRarity(enemyData.dataRarity);
-                if (tmp >= cur) return enemyData;
+                if (!(tmp >= cur)) continue;
+
+                for (var i = 0; i < 6; i++)
+                {
+                    RarityValueList[i] += BasicRarityValue[i];
+                }
+
+                RarityValueList[(int) enemyData.dataRarity] = BasicRarityValue[(int) enemyData.dataRarity];
+                return enemyData;
             }
 
             return enemyDataList[0];
         }
-
-        // public int GetRandomRoomIndex(Rarity baseRarity = Rarity.White)
-        // {
-        //     var raritySum = roomDataList.Sum(roomData =>
-        //         roomData.dataRarity >= baseRarity ? GetRarity(roomData.dataRarity) : 0);
-        //     var cur = Random.Range(0, raritySum);
-        //     var tmp = 0.0f;
-        //     for (var i = 0; i < roomDataList.Count; i++)
-        //     {
-        //         var roomData = roomDataList[i];
-        //         if (roomData.dataRarity < baseRarity) continue;
-        //         tmp += GetRarity(roomData.dataRarity);
-        //         if (tmp >= cur) return i;
-        //     }
-        //     return 0;
-        // }
 
         public RoomData GetRandomRoom(Rarity baseRarity = Rarity.White)
         {
@@ -207,7 +209,15 @@ namespace GameManager
             foreach (var roomData in roomDataList.Where(roomData => roomData.dataRarity >= baseRarity))
             {
                 tmp += GetRarity(roomData.dataRarity);
-                if (tmp >= cur) return roomData;
+                if (!(tmp >= cur)) continue;
+
+                for (var i = 0; i < 6; i++)
+                {
+                    RarityValueList[i] += BasicRarityValue[i];
+                }
+
+                RarityValueList[(int) roomData.dataRarity] = BasicRarityValue[(int) roomData.dataRarity];
+                return roomData;
             }
 
             return roomDataList[0];

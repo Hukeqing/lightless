@@ -47,7 +47,7 @@ namespace Weapon
             var curM26 = Instantiate(m26, firePoint.position, firePoint.rotation);
             curM26.GetComponent<M26>().target = target.position;
             target.gameObject.SetActive(false);
-            WeaponCost(1);
+            WeaponCost(weaponCost);
         }
     }
 }
