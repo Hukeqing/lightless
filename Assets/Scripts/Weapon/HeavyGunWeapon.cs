@@ -7,7 +7,6 @@ namespace Weapon
         public int damage;
         public float maxRange;
         public float lineDisableInt;
-        public Transform firePoint;
         public LineRenderer attackLine;
 
         private Ray _ray;

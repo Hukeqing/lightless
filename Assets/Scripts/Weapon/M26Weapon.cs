@@ -7,7 +7,6 @@ namespace Weapon
     {
         public float maxDistance;
         public float distanceUp;
-        public Transform firePoint;
         public GameObject m26;
         public Transform target;
 

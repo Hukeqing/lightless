@@ -3726,7 +3726,7 @@ GameObject:
   - component: {fileID: 2121738750}
   - component: {fileID: 2121738749}
   m_Layer: 5
-  m_Name: M40A3Gun
+  m_Name: MouthHitMessage
   m_TagString: MouthHitMessage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

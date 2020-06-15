@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
-  damage: 150
+  damage: 200
   moveSpeed: 20
   a: {fileID: 6927612719438493049}
   b: {fileID: 6927612721438515495}

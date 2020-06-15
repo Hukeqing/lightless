@@ -69,6 +69,15 @@ namespace GameManager
         {
             _rm = GetComponent<Room.RoomManager>();
             _rm.Init(this);
+            foreach (var itemData in itemDataList)
+            {
+                itemData.dataPrefab.GetComponent<Item.Item>().itemData = itemData;
+            }
+
+            foreach (var roomData in roomDataList)
+            {
+                roomData.dataPrefab.GetComponent<Room.Room>().roomData = roomData;
+            }
         }
 
         public void Sort()

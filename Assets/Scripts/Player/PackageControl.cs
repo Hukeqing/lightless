@@ -10,7 +10,7 @@ namespace Player
         public Image weaponImage;
         public AudioClip pickUp, useMedication;
         public AudioSource audioSource;
-
+        public Transform firePoint;
 
         private Item.Item _curItem;
         private PlayerControl _pc;
@@ -50,10 +50,13 @@ namespace Player
         public void ApplyItem()
         {
             if (_curItem == null) return;
+            _curItem.ApplyItem(_pc);
+
             if (_curItem.itemData.itemClass == ItemClass.Weapon)
             {
                 weaponImage.sprite = _curItem.itemData.itemSprite;
                 audioSource.clip = pickUp;
+                _pc.weapon.firePoint = firePoint;
             }
             else
             {
@@ -61,7 +64,6 @@ namespace Player
             }
 
             audioSource.Play();
-            _curItem.ApplyItem(_pc);
             _curItem.BeGet();
             messageManager.ClearPackageMessage();
         }

@@ -255,7 +255,7 @@ MonoBehaviour:
   weaponItem: {fileID: 3888568686279578843, guid: fa8694323f6a1444fa23f7b8023a6cd8,
     type: 3}
   weaponImage: {fileID: 0}
-  weaponCost: 1
+  weaponCost: 0.35
   curWeaponCost: 0
   weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
   maxDistance: 20

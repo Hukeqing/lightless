@@ -12,6 +12,7 @@ namespace Weapon
         [Range(0, 1)] public float weaponCost;
         [HideInInspector] public float curWeaponCost;
         public AudioClip weaponOut;
+        [HideInInspector] public Transform firePoint;
 
         private AudioClip _weaponNormal;
         protected float nextAttack;

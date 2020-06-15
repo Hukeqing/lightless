@@ -507,6 +507,7 @@ MonoBehaviour:
   pickUp: {fileID: 8300000, guid: 7cbe3d23fba4ed84c927b8f2c60f5d2f, type: 3}
   useMedication: {fileID: 8300000, guid: c096f5c265d8dee4fa355574945bb557, type: 3}
   audioSource: {fileID: 921479543}
+  firePoint: {fileID: 2641480227300850234}
 --- !u!54 &2641480227300712625
 Rigidbody:
   m_ObjectHideFlags: 0
