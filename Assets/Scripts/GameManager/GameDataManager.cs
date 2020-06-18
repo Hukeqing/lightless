@@ -59,6 +59,7 @@ namespace GameManager
         public List<ItemData> itemDataList;
         public List<EnemyData> enemyDataList;
         public List<RoomData> roomDataList;
+        // ReSharper disable once UnusedMember.Local
         [Range(0.1f, 0.9f)] private const float RarityValue = 0.5f;
 
         private Room.RoomManager _rm;
@@ -155,7 +156,7 @@ namespace GameManager
 
         public ItemData GetRandomItem(Rarity baseRarity)
         {
-            // return itemDataList[12];
+            // return itemDataList[11];
             var raritySum = itemDataList.Sum(itemData =>
                 itemData.dataRarity >= baseRarity ? GetRarity(itemData.dataRarity) : 0);
             var cur = Random.Range(0, raritySum);

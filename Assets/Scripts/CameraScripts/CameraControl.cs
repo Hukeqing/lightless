@@ -70,7 +70,7 @@ namespace CameraScripts
         public AudioClip[] terrorAudioClips;
         public AudioSource terrorAudioSource;
 
-        private float _nextAudioTime;
+        public float nextAudioTime;
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace CameraScripts
             CurHealth = maxHealth;
             _showHealth = CurHealth;
             _gameStatus = GameStatus.Normal;
-            _nextAudioTime = Time.time + Random.Range(10, 30);
+            nextAudioTime = Time.time + Random.Range(10, 30);
         }
 
         private void Update()
@@ -144,11 +144,11 @@ namespace CameraScripts
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (!(Time.time >= _nextAudioTime) || terrorAudioSource.isPlaying) return;
+            if (!(Time.time >= nextAudioTime) || terrorAudioSource.isPlaying) return;
             var tmp = Random.Range(0, terrorAudioClips.Length);
             terrorAudioSource.clip = terrorAudioClips[tmp];
             terrorAudioSource.Play();
-            _nextAudioTime = Time.time + terrorAudioClips[tmp].length + Random.Range(10, 30);
+            nextAudioTime = Time.time + terrorAudioClips[tmp].length + Random.Range(10, 30);
         }
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)

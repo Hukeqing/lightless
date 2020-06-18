@@ -7,6 +7,7 @@ namespace Enemy
         public int maxHealth;
         public AudioClip dieClip;
 
+        public float score;
         public bool IsDie => curHealth <= 0;
 
         protected int curHealth;
@@ -32,6 +33,14 @@ namespace Enemy
         {
             audioSource.clip = dieClip;
             audioSource.Play();
+        }
+
+        protected void OnDestroy()
+        {
+            if (IsDie)
+            {
+                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager.GameManager>().AddScore(score);
+            }
         }
     }
 }

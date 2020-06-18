@@ -53,8 +53,7 @@ namespace HomeController
         {
             _onDrag = false;
         }
-        
-        
+
         public void Leisure()
         {
             _gameController.Leisure();
@@ -69,6 +68,5 @@ namespace HomeController
         {
             _gameController.AcceptGame();
         }
-
     }
 }

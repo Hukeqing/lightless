@@ -11,6 +11,7 @@ namespace NetworkControl
         public InputField emailField;
         public InputField pwdField;
         public InputField repeatField;
+        public Toggle rememberMeToggle;
 
         public Text messageText;
 
@@ -29,6 +30,16 @@ namespace NetworkControl
             _webConnector = GetComponent<WebConnector>();
             GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
+
+            if (PlayerPrefs.HasKey("UserName"))
+            {
+                emailField.text = PlayerPrefs.GetString("UserName");
+            }
+
+            if (PlayerPrefs.HasKey("Password"))
+            {
+                pwdField.text = PlayerPrefs.GetString("Password");
+            }
         }
 
         public void LoginButton()
@@ -38,6 +49,7 @@ namespace NetworkControl
                 _onRegister = false;
                 loginRegister.SetBool(OnRegister, _onRegister);
                 messageText.text = "Login";
+                pwdField.text = "";
             }
             else
             {
@@ -56,6 +68,7 @@ namespace NetworkControl
                 _onRegister = true;
                 loginRegister.SetBool(OnRegister, _onRegister);
                 messageText.text = "Register";
+                pwdField.text = "";
             }
         }
 
@@ -97,8 +110,18 @@ namespace NetworkControl
                 @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
             if (!System.Text.RegularExpressions.Regex.IsMatch(email, expression))
             {
-                Error("邮箱不存在", 0);
+                Error("邮箱格式非法", 0);
                 return;
+            }
+
+            PlayerPrefs.SetString("UserName", email);
+            if (rememberMeToggle.isOn)
+            {
+                PlayerPrefs.SetString("Password", pwd);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("Password");
             }
 
             _webConnector.GetAccount(email, pwd);
@@ -137,6 +160,16 @@ namespace NetworkControl
             {
                 Error("密码不相同", 2);
                 return;
+            }
+
+            PlayerPrefs.SetString("UserName", email);
+            if (rememberMeToggle.isOn)
+            {
+                PlayerPrefs.SetString("Password", pwd);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("Password");
             }
 
             _webConnector.CreateAccount(accountName, email, pwd);

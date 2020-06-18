@@ -25,7 +25,7 @@ namespace Effect
 
             transform.LookAt(target);
             transform.Translate(Vector3.forward * (moveSpeed * Time.deltaTime));
-            if (Vector3.Distance(target, transform.position) > 0.1f) return;
+            if (Vector3.Distance(target, transform.position) > 0.3f) return;
 
             _hit = true;
 

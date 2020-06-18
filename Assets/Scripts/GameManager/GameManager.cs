@@ -19,15 +19,19 @@ namespace GameManager
 
         private GameController _gameController;
         private float _gameMode;
+        private float _extraScore;
 
         private static readonly int Over = Animator.StringToHash("GameOver");
+        private static readonly int ScoreUp = Animator.StringToHash("ScoreUp");
 
-        public float GameScore => Mathf.Pow(_gameOver ? _gameEndTime - _gameStartTime : Time.time - _gameStartTime,
-            gameScoreValue);
+        public float GameScore => _extraScore + Mathf.Pow(
+                                      _gameOver ? _gameEndTime - _gameStartTime : Time.time - _gameStartTime,
+                                      gameScoreValue);
 
         private void Start()
         {
             _gameOver = false;
+            _extraScore = 0;
             _gameStartTime = Time.time;
 #if UNITY_EDITOR
             try
@@ -79,6 +83,12 @@ namespace GameManager
         public void ShowScore()
         {
             gameOverImage.SetTrigger(Over);
+        }
+
+        public void AddScore(float value)
+        {
+            _extraScore += value;
+            gameOverImage.SetTrigger(ScoreUp);
         }
     }
 }

@@ -93,8 +93,9 @@ namespace Player
         {
             if (_cc.CurHealth <= 0) return;
             _cc.ApplyDamage(damage);
+            if (damage <= 0) return;
+            _playerHurt.Play();
             beHurt.SetTrigger(Hurt);
-            if (damage > 0) _playerHurt.Play();
         }
 
         public void AddHealth(int cure)

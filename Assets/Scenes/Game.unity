@@ -1091,6 +1091,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67afd6ed85ba7f74d9b614473dff2b48, type: 3}
   - {fileID: 8300000, guid: f461294cab96f4c4eb1a4ce07e0ce157, type: 3}
   terrorAudioSource: {fileID: 133397199}
+  nextAudioTime: 0
 --- !u!82 &534669907
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2813,7 +2814,7 @@ GameObject:
   - component: {fileID: 1716335002}
   - component: {fileID: 1716335006}
   m_Layer: 5
-  m_Name: UIcanvas
+  m_Name: GameScoreUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3680,7 +3681,6 @@ MonoBehaviour:
       type: 3}
     roomDescribe: "\u6B22\u8FCE\u6765\u5230\u661F\u8C61\u9986\uFF0C\u8FD9\u91CC\u6709\u7F8E\u4E3D\u7684\u3001\u65E0\u7A77\u7684\u5149\u8F89\uFF0C
       \u6EE1\u5929\u7684\u661F\u661F\u6B63\u7B49\u7740\u5927\u5BB6\u7684\u5230\u6765"
-  rarityValue: 0.5
 --- !u!114 &2078163235
 MonoBehaviour:
   m_ObjectHideFlags: 0

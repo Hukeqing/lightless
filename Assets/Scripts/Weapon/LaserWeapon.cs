@@ -22,7 +22,12 @@ namespace Weapon
 
         public override void Attack()
         {
-            if (curWeaponCost <= 0) return;
+            if (curWeaponCost <= 0)
+            {
+                attackLine.gameObject.SetActive(false);
+                weaponAudioSource.Stop();
+                return;
+            }
 
             var firePointPosition = firePoint.position;
             _ray = new Ray(firePointPosition, firePoint.forward);
@@ -51,7 +56,11 @@ namespace Weapon
 
         public override void AttackDown()
         {
-            attackLine.gameObject.SetActive(true);
+            if (curWeaponCost >= 0.01)
+            {
+                attackLine.gameObject.SetActive(true);
+            }
+
             PlayAudio();
         }
 

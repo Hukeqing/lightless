@@ -576,6 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   dieClip: {fileID: 8300000, guid: 13f385fb3aabea741961ebdf65891319, type: 3}
+  score: 5
   player: {fileID: 0}
   findPlayerMoveSpeed: 3
   freeMoveSpeed: 1.5
