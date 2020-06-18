@@ -3912,7 +3912,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1aa8130af695f83489e5964ecab2cb34, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 103fb441461d32a4189a46ad4c4eee43, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5333,7 +5333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf884b32964ab5499d3db19d27f65db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: []
   roomData:
     dataName: 
     dataRarity: 0
