@@ -40,6 +40,11 @@ namespace NetworkControl
             {
                 pwdField.text = PlayerPrefs.GetString("Password");
             }
+
+            if (PlayerPrefs.HasKey("Remember"))
+            {
+                rememberMeToggle.isOn = PlayerPrefs.GetInt("Remember") == 1;
+            }
         }
 
         public void LoginButton()
@@ -50,6 +55,7 @@ namespace NetworkControl
                 loginRegister.SetBool(OnRegister, _onRegister);
                 messageText.text = "Login";
                 pwdField.text = "";
+                rememberMeToggle.isOn = false;
             }
             else
             {
@@ -69,6 +75,7 @@ namespace NetworkControl
                 loginRegister.SetBool(OnRegister, _onRegister);
                 messageText.text = "Register";
                 pwdField.text = "";
+                rememberMeToggle.isOn = false;
             }
         }
 
@@ -115,6 +122,7 @@ namespace NetworkControl
             }
 
             PlayerPrefs.SetString("UserName", email);
+            PlayerPrefs.SetInt("Remember", rememberMeToggle.isOn ? 1 : 0);
             if (rememberMeToggle.isOn)
             {
                 PlayerPrefs.SetString("Password", pwd);
@@ -163,6 +171,7 @@ namespace NetworkControl
             }
 
             PlayerPrefs.SetString("UserName", email);
+            PlayerPrefs.SetInt("Remember", rememberMeToggle.isOn ? 1 : 0);
             if (rememberMeToggle.isOn)
             {
                 PlayerPrefs.SetString("Password", pwd);

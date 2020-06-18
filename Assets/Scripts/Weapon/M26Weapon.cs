@@ -48,6 +48,7 @@ namespace Weapon
             curM26.GetComponent<M26>().target = target.position;
             target.gameObject.SetActive(false);
             WeaponCost(weaponCost);
+            _curDistance = 0;
         }
     }
 }
