@@ -156,7 +156,7 @@ namespace GameManager
 
         public ItemData GetRandomItem(Rarity baseRarity)
         {
-            // return itemDataList[11];
+            // return itemDataList[12];
             var raritySum = itemDataList.Sum(itemData =>
                 itemData.dataRarity >= baseRarity ? GetRarity(itemData.dataRarity) : 0);
             var cur = Random.Range(0, raritySum);

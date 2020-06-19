@@ -9,6 +9,7 @@ namespace HomeController
         public float rotateSpeed;
         [Range(0, 1)] public float speedDrag;
 
+        private Animator _cubeAnimator;
         private float _dragSpeed;
 
         private Vector3 _lastMousePos;
@@ -24,6 +25,7 @@ namespace HomeController
         private void Start()
         {
             _onDrag = false;
+            _cubeAnimator = cube.GetComponent<Animator>();
             _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         }
 
@@ -47,6 +49,7 @@ namespace HomeController
         {
             _onDrag = true;
             _lastMousePos = Input.mousePosition;
+            _cubeAnimator.enabled = false;
         }
 
         private void OnMouseUp()

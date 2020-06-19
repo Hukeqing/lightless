@@ -67,8 +67,8 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SampleDist: 0.8323512
-    - _SampleStrength: 0.8323512
+    - _SampleDist: 0.02344368
+    - _SampleStrength: 0.02344368
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
