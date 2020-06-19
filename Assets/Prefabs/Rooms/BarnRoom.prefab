@@ -790,10 +790,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomData:
-    roomName: "\u4ED3\u5E93"
-    roomDescribe: "\u5728\u6838\u6CC4\u6F0F\u4E4B\u540E\uFF0C\u8FD9\u91CC\u7684\u98DF\u7269\u4FBF\u88AB\u54C4\u62A2\u4E00\u7A7A"
-    roomRarity: 1
-    roomPrefab: {fileID: 673135245381958153}
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
+    roomDescribe: 
 --- !u!1 &690596757207418535
 GameObject:
   m_ObjectHideFlags: 0

@@ -9385,10 +9385,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomData:
-    roomName: "\u5065\u8EAB\u623F"
-    roomDescribe: "\u6216\u8005\u53EB\u62F3\u9986\u66F4\u5408\u9002"
-    roomRarity: 2
-    roomPrefab: {fileID: 8515350869508453855}
+    dataName: 
+    dataRarity: 0
+    dataPrefab: {fileID: 0}
+    roomDescribe: 
 --- !u!1 &8569946127409252721
 GameObject:
   m_ObjectHideFlags: 0

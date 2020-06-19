@@ -2255,6 +2255,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2213102939223348235, guid: 2ccc1e9ddbe7afb4b8aa1be603c70388,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 1.15282e-40
+      objectReference: {fileID: 0}
     - target: {fileID: 2441870077090113987, guid: 2ccc1e9ddbe7afb4b8aa1be603c70388,
         type: 3}
       propertyPath: m_Sprite
@@ -3650,19 +3655,19 @@ MonoBehaviour:
     dataPrefab: {fileID: 1781978838891768327, guid: 6786850bfffa9e24b8655640d630ed82,
       type: 3}
     roomDescribe: 
-  - dataName: "\u5065\u8EAB\u623F"
-    dataRarity: 2
-    dataPrefab: {fileID: 8515350869508453855, guid: dca5f6fd6be12664699218cd86de528a,
-      type: 3}
-    roomDescribe: 
   - dataName: "\u5B66\u6821"
     dataRarity: 2
     dataPrefab: {fileID: 1189693023697159587, guid: 2b37b42f66ec4e448af871f7035a6944,
       type: 3}
     roomDescribe: 
   - dataName: "\u76D1\u72F1"
-    dataRarity: 3
+    dataRarity: 2
     dataPrefab: {fileID: 7465083231437918393, guid: 0982a1aaf8fd4024bbb381d8756a8974,
+      type: 3}
+    roomDescribe: 
+  - dataName: "\u62F3\u51FB\u9986"
+    dataRarity: 3
+    dataPrefab: {fileID: 8515350869508453855, guid: dca5f6fd6be12664699218cd86de528a,
       type: 3}
     roomDescribe: 
   - dataName: "\u6CF3\u6C60"
