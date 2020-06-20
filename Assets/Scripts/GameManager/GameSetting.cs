@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace GameManager
@@ -12,6 +13,11 @@ namespace GameManager
         public Toggle fullScreenToggle;
 
         public GameObject settingGameObject;
+
+        public AudioMixer audioMixer;
+        public Slider mainAudio;
+        public Slider bgmAudio;
+        public Slider effectAudio;
 
         private Resolution[] _resolutions;
         private bool _onSetting;
@@ -48,6 +54,14 @@ namespace GameManager
 
             screenFrame.value = frameList.Length - 1;
             fullScreenToggle.isOn = Screen.fullScreen;
+
+
+            audioMixer.GetFloat("MasterVolume", out var mainAudioValue);
+            mainAudio.value = mainAudioValue + 80;
+            audioMixer.GetFloat("BGMVolume", out var bgmAudioValue);
+            bgmAudio.value = bgmAudioValue + 80;
+            audioMixer.GetFloat("EffectVolume", out var effectAudioValue);
+            effectAudio.value = effectAudioValue + 80;
         }
 
         public void SetScreen()
@@ -70,6 +84,22 @@ namespace GameManager
         public void Quit()
         {
             Application.Quit();
+        }
+
+        public void ValueChange(int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    audioMixer.SetFloat("MasterVolume", mainAudio.value - 80);
+                    break;
+                case 1:
+                    audioMixer.SetFloat("BGMVolume", bgmAudio.value - 80);
+                    break;
+                case 2:
+                    audioMixer.SetFloat("EffectVolume", effectAudio.value - 80);
+                    break;
+            }
         }
     }
 }

@@ -258,9 +258,9 @@ MonoBehaviour:
   weaponCost: 0.35
   curWeaponCost: 0
   weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
+  firePoint: {fileID: 1349136014483574630}
   maxDistance: 20
   distanceUp: 10
-  firePoint: {fileID: 1349136014483574630}
   m26: {fileID: 6965338735270642341, guid: 8f0974c302e460042ad5a61fb0cfba9b, type: 3}
   target: {fileID: 255103987866375409}
 --- !u!82 &3479755061572395368
@@ -272,7 +272,8 @@ AudioSource:
   m_GameObject: {fileID: 4653127882588496893}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6031979501809774792, guid: 3d876f9d429c7c84199f5f8b857b13dc,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 56dbb0a023db17a4b8a529dbe3604181, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

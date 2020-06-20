@@ -55,10 +55,10 @@ MonoBehaviour:
   weaponCost: 0.1
   curWeaponCost: 0
   weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
+  firePoint: {fileID: 5290871321105194125}
   damage: 100
   maxRange: 1000
   lineDisableInt: 0.1
-  firePoint: {fileID: 5290871321105194125}
   attackLine: {fileID: 236359505659832382}
   backForce: 1000
 --- !u!82 &3559963004919056087
@@ -70,7 +70,8 @@ AudioSource:
   m_GameObject: {fileID: 1965487288173146134}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6031979501809774792, guid: 3d876f9d429c7c84199f5f8b857b13dc,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8838e7bd4a3763e4b9611fab1074fb4a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 538496647121207311}
-  - component: {fileID: 242603350994865181}
   - component: {fileID: 2765516250952131950}
+  - component: {fileID: 242603350994865181}
   m_Layer: 10
   m_Name: M40A3
   m_TagString: Untagged
@@ -34,6 +34,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2765516250952131950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989459200880343772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d4bd58d3e5b864a9fd9187449359c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown: 2
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 237568
+  weaponItem: {fileID: 5097561124609475498, guid: c04deadc4528f9e4fadd1b4a277fb574,
+    type: 3}
+  weaponImage: {fileID: 0}
+  weaponCost: 0.2
+  curWeaponCost: 0
+  weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
+  firePoint: {fileID: 8887451875576845895}
+  damage: 500
+  maxRange: 1000
+  lineDisableInt: 0.1
+  attackLine: {fileID: 3566242584412152564}
+  targetTransform: {fileID: 7697138309369957156}
+  waitTime: 2
 --- !u!82 &242603350994865181
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43,7 +72,8 @@ AudioSource:
   m_GameObject: {fileID: 2989459200880343772}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6031979501809774792, guid: 3d876f9d429c7c84199f5f8b857b13dc,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8838e7bd4a3763e4b9611fab1074fb4a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -130,35 +160,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2765516250952131950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2989459200880343772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0d4bd58d3e5b864a9fd9187449359c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolDown: 2
-  hitLayerMask:
-    serializedVersion: 2
-    m_Bits: 237568
-  weaponItem: {fileID: 5097561124609475498, guid: c04deadc4528f9e4fadd1b4a277fb574,
-    type: 3}
-  weaponImage: {fileID: 0}
-  weaponCost: 0.2
-  curWeaponCost: 0
-  weaponOut: {fileID: 8300000, guid: 373ae0239d4fd31428f85537b26899dd, type: 3}
-  damage: 500
-  maxRange: 1000
-  lineDisableInt: 0.1
-  firePoint: {fileID: 8887451875576845895}
-  attackLine: {fileID: 3566242584412152564}
-  targetTransform: {fileID: 7697138309369957156}
-  waitTime: 2
 --- !u!1 &4784396261623913754
 GameObject:
   m_ObjectHideFlags: 0
