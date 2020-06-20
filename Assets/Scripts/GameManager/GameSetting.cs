@@ -37,31 +37,48 @@ namespace GameManager
             _resolutions = Screen.resolutions;
             screenResolutions.ClearOptions();
             screenFrame.ClearOptions();
+
+            Resolution curResolution;
+            var frame = -1;
+            if (PlayerPrefs.HasKey("Frame"))
+            {
+                curResolution = new Resolution
+                {
+                    width = PlayerPrefs.GetInt("Resolution_W"), height = PlayerPrefs.GetInt("Resolution_H")
+                };
+                frame = PlayerPrefs.GetInt("Frame");
+                fullScreenToggle.isOn = PlayerPrefs.GetInt("FullScreen") == 1;
+
+                mainAudio.value = PlayerPrefs.GetFloat("MasterVolume");
+                bgmAudio.value = PlayerPrefs.GetFloat("BGMVolume");
+                effectAudio.value = PlayerPrefs.GetFloat("EffectVolume");
+            }
+            else
+            {
+                curResolution = Screen.currentResolution;
+                fullScreenToggle.isOn = true;
+                mainAudio.value = 80;
+                bgmAudio.value = 80;
+                effectAudio.value = 80;
+            }
+
             for (var i = 0; i < _resolutions.Length; i++)
             {
                 screenResolutions.AddOptions(new List<string>
                     {_resolutions[i].width + "×" + _resolutions[i].height});
 
-                if (Screen.currentResolution.width != _resolutions[i].width ||
-                    Screen.currentResolution.height != _resolutions[i].height) continue;
+                if (curResolution.width != _resolutions[i].width ||
+                    curResolution.height != _resolutions[i].height) continue;
                 screenResolutions.value = i;
             }
 
-            foreach (var item in frameList)
+            for (var i = 0; i < frameList.Length; i++)
             {
+                var item = frameList[i];
                 screenFrame.AddOptions(item == -1 ? new List<string> {"无限制"} : new List<string> {item.ToString()});
+                if (item == frame)
+                    screenFrame.value = i;
             }
-
-            screenFrame.value = frameList.Length - 1;
-            fullScreenToggle.isOn = Screen.fullScreen;
-
-
-            audioMixer.GetFloat("MasterVolume", out var mainAudioValue);
-            mainAudio.value = mainAudioValue + 80;
-            audioMixer.GetFloat("BGMVolume", out var bgmAudioValue);
-            bgmAudio.value = bgmAudioValue + 80;
-            audioMixer.GetFloat("EffectVolume", out var effectAudioValue);
-            effectAudio.value = effectAudioValue + 80;
         }
 
         public void SetScreen()
@@ -83,7 +100,11 @@ namespace GameManager
 
         public void Quit()
         {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
+#endif
         }
 
         public void ValueChange(int type)
@@ -100,6 +121,18 @@ namespace GameManager
                     audioMixer.SetFloat("EffectVolume", effectAudio.value - 80);
                     break;
             }
+        }
+
+        public void OnApplicationQuit()
+        {
+            PlayerPrefs.SetFloat("MasterVolume", mainAudio.value);
+            PlayerPrefs.SetFloat("BGMVolume", bgmAudio.value);
+            PlayerPrefs.SetFloat("EffectVolume", effectAudio.value);
+            var value = screenResolutions.value;
+            PlayerPrefs.SetInt("Resolution_W", _resolutions[value].width);
+            PlayerPrefs.SetInt("Resolution_H", _resolutions[value].height);
+            PlayerPrefs.SetInt("Frame", frameList[screenFrame.value]);
+            PlayerPrefs.SetInt("FullScreen", fullScreenToggle.isOn ? 1 : 0);
         }
     }
 }
